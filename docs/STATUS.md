@@ -62,7 +62,8 @@ A target's qualification is the `engine` and `python-binding` jobs of
 [`ci.yml`](../.github/workflows/ci.yml), run in an Ubuntu 24.04 container of
 that architecture, followed by the whole differential corpus. On CPython 3.11
 the accepted-debt map does not apply as such (it is calibrated on 3.12): the
-check is that no test fails there that does not fail on 3.12.
+check is that no test fails there that does not fail on 3.12, which is what
+`scripts/check_known_failures.py` enforces for a log of another version.
 
 ## Decisions
 

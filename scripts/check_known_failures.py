@@ -6,9 +6,14 @@
 Every FAIL or ERROR in the log must be a known failure or an accepted
 divergence, and each of those must still fail with the same kind: a test that
 now passes is removed from the map in the same change, and an accepted
-divergence that changes is a change to its documented difference. The log must end with the unittest summary, so a crashed or truncated
-run is not read as a pass. The map is also validated against the contract
-catalog.
+divergence that changes is a change to its documented difference. The log
+must end with the unittest summary, so a crashed or truncated run is not read
+as a pass. The map is also validated against the contract catalog.
+
+The map is calibrated on the CPython version it names. On another version the
+differences it pins can depend on the interpreter, so there only a failure the
+map does not list fails the check; `--python` names the version of the log
+when it is not the interpreter running this script.
 
 Exit status: 0 the log matches the map, 1 it does not, 2 the map is invalid.
 """
@@ -95,6 +100,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("log", type=Path, help="output of unittest discover -v")
     parser.add_argument("--map", type=Path, default=MAP)
     parser.add_argument("--catalog", type=Path, default=CATALOG)
+    parser.add_argument("--python", default=f"{sys.version_info.major}.{sys.version_info.minor}",
+                        help="CPython version of the log (default: this interpreter's)")
     arguments = parser.parse_args(argv)
     known = json.loads(arguments.map.read_text())
     contracts = {contract["id"] for contract in json.loads(arguments.catalog.read_text())["contracts"]}
@@ -113,6 +120,10 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps({"known": len(known["failures"]), "accepted_divergences": len(known.get("divergences", [])),
                       "observed": len(failures),
                       **{label: len(identifiers) for label, identifiers in result.items()}}))
+    if arguments.python != known["python"]:
+        print(f"CPython {arguments.python}: the map is calibrated on {known['python']}, "
+              "so only a failure it does not list fails the check")
+        return 1 if result["new"] else 0
     return 1 if any(result.values()) else 0
 
 

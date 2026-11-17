@@ -92,7 +92,8 @@ class KnownFailureMapTests(unittest.TestCase):
             with self.subTest(label):
                 self.assertTrue(self.checker.validate(mutated, self.contracts))
 
-    def run_checker(self, log: str, known: dict[str, Any] | None = None) -> tuple[int, str]:
+    def run_checker(self, log: str, known: dict[str, Any] | None = None,
+                    python: str | None = None) -> tuple[int, str]:
         with tempfile.TemporaryDirectory() as directory:
             log_path = Path(directory) / "suite.log"
             map_path = Path(directory) / "known.json"
@@ -100,7 +101,8 @@ class KnownFailureMapTests(unittest.TestCase):
             map_path.write_text(json.dumps(known if known is not None else self.known))
             output = io.StringIO()
             with redirect_stdout(output), redirect_stderr(output):
-                status = self.checker.main([str(log_path), "--map", str(map_path)])
+                status = self.checker.main([str(log_path), "--map", str(map_path),
+                                            "--python", python or self.known["python"]])
             return status, output.getvalue()
 
     def all_entries(self) -> dict[str, str]:
@@ -149,6 +151,22 @@ class KnownFailureMapTests(unittest.TestCase):
                 status, output = self.run_checker(log_with(observed))
                 self.assertEqual(status, 1)
                 self.assertIn(label + ":", output)
+
+    def test_another_python_fails_only_on_a_failure_the_map_does_not_list(self) -> None:
+        # The pinned differences can depend on the interpreter; a failure that
+        # the calibrated version does not have cannot.
+        failures = self.all_entries()
+        first, second = list(failures)[:2]
+        other = "3.11" if self.known["python"] != "3.11" else "3.12"
+        fixed = {key: value for key, value in failures.items() if key != first}
+        changed = dict(failures, **{second: "error" if failures[second] == "fail" else "fail"})
+        for label, observed in {"fixed": fixed, "kind_changed": changed}.items():
+            with self.subTest(label):
+                self.assertEqual(self.run_checker(log_with(observed), python=other)[0], 0)
+        new = dict(failures, **{"test_new (test_x.T.test_new)": "fail"})
+        status, output = self.run_checker(log_with(new), python=other)
+        self.assertEqual(status, 1)
+        self.assertIn("new: test_new", output)
 
     def test_truncated_log_fails(self) -> None:
         failures = self.all_entries()
