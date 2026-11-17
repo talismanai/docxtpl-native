@@ -251,21 +251,6 @@ jobs:
           done
           .venv/bin/python scripts/spec_coverage.py "${smoke_args[@]}"
           cat artifacts/spec-coverage.md >> "$GITHUB_STEP_SUMMARY"
-      - name: Full compatibility traceability (unmapped APIs fail)
-        if: always()
-        run: |
-          # This leg can only prove its own platform target; the matrix
-          # qualifies `deployment.python_platform_matrix` when every declared
-          # target has a report of the same revision, which means collecting
-          # the reports of all the legs.
-          deployment_args=()
-          for smoke_report in artifacts/wheel-smoke/*.json; do
-            if test -f "$smoke_report"; then deployment_args+=(--deployment-report "$smoke_report"); fi
-          done
-          .venv/bin/python scripts/compatibility_matrix.py --check "${deployment_args[@]}"
-      - name: Specification test coverage (missing contracts and partitions fail)
-        if: always()
-        run: .venv/bin/python scripts/spec_test_coverage.py --check
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -273,3 +258,83 @@ jobs:
           path: |
             artifacts/
             Cargo.lock
+
+  # One installation report per declared deployment target, built and
+  # installed on that target's own architecture at this revision.
+  deployment-target:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+        python: ['3.11', '3.12']
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: Native dependencies
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
+      - name: Installation report of this target
+        run: scripts/qualify_deployment_target.sh ${{ matrix.python }} reports/linux-${{ runner.arch }}-py${{ matrix.python }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: deployment-${{ runner.arch }}-py${{ matrix.python }}
+          path: reports/
+
+  # The two gates of the contract, over the evidence of this revision: the
+  # differential corpus of the 3.12 leg and the reports of the four targets.
+  # A requirement whose evidence is manual is listed as pending, not run.
+  contract:
+    needs: [python-binding, deployment-target]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: Native dependencies
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
+      - name: Python environment with the pinned reference
+        run: |
+          uv venv .venv
+          uv pip install 'maturin==1.16.0' 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
+          source .venv/bin/activate
+          maturin develop --release --locked
+          python scripts/fetch_upstream.py
+          uv pip install --no-deps .upstream/docxtpl
+      - uses: actions/download-artifact@v4
+        with:
+          name: parity-evidence-and-lock-py3.12
+          path: collected/py3.12
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: deployment-*
+          path: collected/deployment
+          merge-multiple: true
+      - name: Compatibility matrix (unqualified machine-checkable requirements fail)
+        run: |
+          deployment_args=()
+          for report in collected/deployment/*.json; do deployment_args+=(--deployment-report "$report"); done
+          .venv/bin/python scripts/compatibility_matrix.py --check \
+            --report collected/py3.12/artifacts/parity/report.json "${deployment_args[@]}"
+      - name: Specification test coverage (missing contracts and partitions fail)
+        run: .venv/bin/python scripts/spec_test_coverage.py --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: contract
+          path: artifacts/

@@ -58,9 +58,10 @@ python scripts/compatibility_matrix.py --check \
   --deployment-report reports/linux-aarch64-cp312.json
 ```
 
-A target's qualification is the `engine` and `python-binding` jobs of
-[`ci.yml`](../.github/workflows/ci.yml), run in an Ubuntu 24.04 container of
-that architecture, followed by the whole differential corpus. On CPython 3.11
+CI qualifies every change this way: the `deployment-target` job of
+[`ci.yml`](../.github/workflows/ci.yml) runs the script on a runner of each
+target's architecture, and the `contract` job runs the two gates over those
+reports and the differential corpus of the 3.12 leg. On CPython 3.11
 the accepted-debt map does not apply as such (it is calibrated on 3.12): the
 check is that no test fails there that does not fail on 3.12, which is what
 `scripts/check_known_failures.py` enforces for a log of another version.
@@ -178,8 +179,10 @@ still run Python code:
 `rendering.word_and_real_documents` is the one requirement that does not
 qualify, because it names no test: its evidence is opening the output in
 Microsoft Word and running the corpus over a collection of real documents.
-The two catalog contracts that depend on it have no case, which is what keeps
-`spec_test_coverage --check` incomplete. The visual comparison that exists
+It and the two catalog contracts that depend on it are marked
+`"evidence": "manual"`: no automated run can produce that evidence, so both
+gates list them as pending instead of failing, and the matrix stays short of
+`fully_compatible` until it exists. The visual comparison that exists
 measures fidelity under LibreOffice, not equivalence in Word.
 
 No free tool answers the question, since the repair prompt is Word's own.

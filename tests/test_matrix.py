@@ -51,6 +51,22 @@ class MatrixTests(unittest.TestCase):
     def test_closed_reviewed_toy_contract_can_qualify(self):
         self.assertTrue(matrix(*self.inputs(),required_revision='current')['fully_compatible'])
 
+    def test_manual_evidence_is_pending_and_never_qualified(self):
+        contract,api,report=self.inputs()
+        contract['requirements'].append({'id':'word','symbols':[],'tests':[],'reviewed':True,'evidence':'manual'})
+        result=matrix(contract,api,report,required_revision='current')
+        self.assertTrue(result['automated_evidence_complete'])
+        self.assertFalse(result['fully_compatible'])
+        self.assertEqual(result['status'],'manual_evidence_pending')
+        self.assertFalse(result['requirements'][1]['qualified'])
+
+    def test_a_manual_requirement_names_no_test(self):
+        contract,api,report=self.inputs()
+        contract['requirements'][0]['evidence']='manual'
+        result=matrix(contract,api,report,required_revision='current')
+        self.assertFalse(result['automated_evidence_complete'])
+        self.assertIn('a manual-evidence requirement names tests: identity',result['issues'])
+
     def test_dirty_tree_evidence_names_no_revision(self):
         # A report measured with uncommitted changes must not qualify the
         # commit it was started from: the code that ran is not that commit.

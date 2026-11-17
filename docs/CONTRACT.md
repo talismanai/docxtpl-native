@@ -179,8 +179,16 @@ python scripts/compatibility_matrix.py --check \
 A report from another revision, two reports for one target and a target the
 contract does not declare are issues: they claim evidence that is not there. A
 declared target with no report stays unverified without an issue, because a
-workstation has no containers — one CI leg, likewise, can prove only its own
-target.
+workstation has no containers. CI collects all four on every change: the
+`deployment-target` job of [`ci.yml`](../.github/workflows/ci.yml) runs the
+script on a runner of each target's architecture, and the `contract` job runs
+both gates over those reports and the corpus of the 3.12 leg.
+
+A requirement or catalog contract marked `"evidence": "manual"` names no test:
+its evidence is a person's check that no automated run produces, such as
+opening the output in Microsoft Word. Both gates list it as pending and do not
+fail on it, and the matrix stays short of `fully_compatible` until that
+evidence exists.
 
 No partition and no known failure is pending, the full corpus passes with
 required visual comparison, and every declared platform target has its

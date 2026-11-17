@@ -1,4 +1,9 @@
-"""Generate API/test traceability; --check blocks any incomplete certification."""
+"""Generate API/test traceability.
+
+--check fails unless every requirement a machine can verify is qualified by
+evidence of this revision; a requirement whose evidence is manual is listed
+as pending and leaves `fully_compatible` false until that evidence exists.
+"""
 import argparse
 import json
 import os
@@ -29,7 +34,9 @@ def main():
     destination.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print('COMPATIBILITY MATRIX:',json.dumps(result['counts']),'status='+result['status'])
     for issue in result['issues']:print(issue)
-    return 1 if args.check and not result['fully_compatible'] else 0
+    for item in result['requirements']:
+        if item['manual_evidence'] and not item['qualified']:print('manual evidence pending: '+item['id'])
+    return 1 if args.check and not result['automated_evidence_complete'] else 0
 
 
 if __name__=='__main__':raise SystemExit(main())

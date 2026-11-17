@@ -1,4 +1,8 @@
-"""Fail explicitly while enumerated spec contracts/partitions lack test evidence."""
+"""Fail explicitly while enumerated spec contracts/partitions lack test evidence.
+
+A contract whose evidence is manual is listed under `manual_evidence` and does
+not fail the check: no automated run can produce it.
+"""
 import argparse
 import json
 from pathlib import Path

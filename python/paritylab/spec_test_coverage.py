@@ -9,11 +9,19 @@ def assess_tests(catalog, known_cases):
     unbound_partitions = []
     out_of_scope = []
     undecided = []
+    manual = []
     ids = [entry['id'] for entry in catalog['contracts']]
     if len(ids) != len(set(ids)):
         raise ValueError('duplicate contract id')
     for entry in catalog['contracts']:
         cases = entry['cases']
+        if entry.get('evidence') == 'manual':
+            # Its evidence is a person's check, which no automated run produces:
+            # listed as pending, never counted as covered or as a missing case.
+            if cases or entry.get('partitions'):
+                raise ValueError('a manual-evidence contract binds no case: '+entry['id'])
+            manual.append(entry['id'])
+            continue
         if not cases:
             missing.append(entry['id'])
         if len(cases) != len(set(cases)):
@@ -36,8 +44,8 @@ def assess_tests(catalog, known_cases):
             if not bindings or any(case not in cases or case not in known_cases for case in bindings):
                 unbound_partitions.append({'contract': entry['id'], 'partition': partition})
     return {'scope': 'enumerated catalog only; not the entire upstream object model',
-            'contracts': len(ids), 'bound_contracts': len(ids)-len(missing),
-            'missing_cases': missing, 'dangling_cases': dangling,
+            'contracts': len(ids), 'bound_contracts': len(ids)-len(missing)-len(manual),
+            'missing_cases': missing, 'manual_evidence': manual, 'dangling_cases': dangling,
             'pending_partitions': pending, 'missing_partition_evidence': undecomposed,
             'unbound_covered_partitions': unbound_partitions,
             'out_of_scope_partitions': out_of_scope, 'undecided_out_of_scope_partitions': undecided,

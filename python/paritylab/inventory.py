@@ -147,14 +147,17 @@ def matrix(contract,api,report=None,required_revision=None,deployment_reports=()
         for symbol in item['symbols']:bindings.setdefault(symbol,[]).append(item['id'])
         statuses={test:tested.get(test,'unverified') for test in item['tests']}
         passes=bool(statuses) and all(status=='pass' for status in statuses.values())
+        manual=item.get('evidence')=='manual'
+        if manual and item['tests']:issues.append('a manual-evidence requirement names tests: '+item['id'])
         requirements.append({**item,'test_statuses':statuses,'named_tests_passed':passes,
-                             'qualified':passes and item['reviewed'] and not unknown})
+                             'qualified':passes and item['reviewed'] and not unknown,'manual_evidence':manual})
     entries=[{**symbol,'requirements':bindings.get(symbol['id'],[]),
               'status':'bound_needs_review' if symbol['id'] in bindings else 'unmapped'} for symbol in api['symbols']]
     counts={'inventory_symbols':len(entries),'bound_symbols':sum(entry['status']!='unmapped' for entry in entries),
             'unmapped_symbols':sum(entry['status']=='unmapped' for entry in entries),
             'requirements':len(requirements),'unreviewed_requirements':sum(not item['reviewed'] for item in requirements),
             'qualified_requirements':sum(item['qualified'] for item in requirements),
+            'manual_requirements':sum(item['manual_evidence'] for item in requirements),
             'deployment_targets':len(deployment),'verified_deployment_targets':sum(status=='pass' for status in deployment.values())}
     # A registered divergence is the contract, not a gap: the laboratory only
     # labels a case so after checking it differs exactly as declared, and the
@@ -164,9 +167,15 @@ def matrix(contract,api,report=None,required_revision=None,deployment_reports=()
     undeclared=sorted(name for name,status in tested.items() if status=='divergence' and name not in DIVERGENCES)
     for name in undeclared:issues.append('unregistered divergence in the evidence: '+name)
     all_cases_accounted=bool(tested) and all(status in ('pass','divergence') for status in tested.values())
-    compatible=not issues and all_cases_accounted and not counts['unmapped_symbols'] and all(item['qualified'] for item in requirements)
+    # A requirement whose evidence is manual (a person's check no automated run
+    # produces) stays unqualified until that evidence exists; everything else
+    # must be qualified by the machine-checked evidence alone.
+    automated=not issues and all_cases_accounted and not counts['unmapped_symbols'] and all(
+        item['qualified'] for item in requirements if not item['manual_evidence'])
+    compatible=automated and all(item['qualified'] for item in requirements)
     return {'schema_version':1,'notice':contract['notice'],'reference_commit':contract['reference_commit'],
             'reference_versions':api['versions'],'tested_revision':report.get('source_revision') if report else None,
             'deployment_target_statuses':deployment,
-            'fully_compatible':compatible,'status':'qualified' if compatible else 'blocked' if issues else 'gaps',
+            'fully_compatible':compatible,'automated_evidence_complete':automated,
+            'status':'qualified' if compatible else 'blocked' if issues else 'manual_evidence_pending' if automated else 'gaps',
             'issues':issues,'counts':counts,'requirements':requirements,'api':entries,'inventory_errors':api['errors']}

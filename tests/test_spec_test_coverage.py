@@ -45,3 +45,15 @@ class SpecTestCoverageTests(unittest.TestCase):
         result = self.assess(self.entry())
         self.assertTrue(result['complete'])
         self.assertIn('enumerated catalog only', result['scope'])
+
+    def test_manual_evidence_is_pending_without_failing_the_check(self):
+        manual = {'id': 'word', 'cases': [], 'evidence': 'manual'}
+        result = assess_tests({'contracts': [self.entry(), manual]}, {'protocol/example'})
+        self.assertTrue(result['complete'])
+        self.assertEqual(result['manual_evidence'], ['word'])
+        self.assertEqual(result['missing_cases'], [])
+        self.assertEqual(result['bound_contracts'], 1)
+
+    def test_manual_evidence_binds_no_case(self):
+        with self.assertRaises(ValueError):
+            self.assess(self.entry(evidence='manual'))
