@@ -1,0 +1,12 @@
+# Only the GitHub Actions the workflows use. Rust and Python dependencies are
+# pinned on purpose (the reference versions are part of the contract, and the
+# forks are audited against their upstream), so they change by review only.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
