@@ -130,7 +130,8 @@ jobs:
       fail-fast: false
       matrix:
         python: ['3.11', '3.12']
-    timeout-minutes: 45
+    # The differential corpus alone takes about 50 minutes on a hosted runner.
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
