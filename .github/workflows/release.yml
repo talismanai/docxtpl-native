@@ -22,7 +22,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       publish: ${{ steps.version.outputs.publish }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Read the version and look for its tag
         id: version
         run: |
@@ -53,8 +53,8 @@ jobs:
     env:
       PYO3_PYTHON: /nonexistent/python
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: actions/checkout@v7
+      - uses: dtolnay/rust-toolchain@1.120.0
         with:
           targets: wasm32-unknown-unknown
           components: clippy
@@ -76,7 +76,7 @@ jobs:
           node scripts/check_wasm_imports.mjs target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm
           mkdir -p dist
           cp target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm "dist/docxtpl_wasm-${{ needs.plan.outputs.version }}.wasm"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-wasm
           path: dist/*.wasm
@@ -96,14 +96,14 @@ jobs:
       matrix:
         python: ['3.11', '3.12']
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: dtolnay/rust-toolchain@1.120.0
       - uses: Swatinem/rust-cache@v2
       - name: Native dependencies
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
@@ -131,7 +131,7 @@ jobs:
       - name: Source distribution
         if: matrix.python == '3.12'
         run: maturin sdist --out dist
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: release-python-${{ matrix.python }}
           path: dist/*
@@ -144,8 +144,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
         with:
           pattern: release-*
           path: dist
