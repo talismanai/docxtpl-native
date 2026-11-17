@@ -54,6 +54,12 @@ partial run qualifies nothing, because a selection that covers exactly the
 tests the contract names would qualify the matrix while most of the corpus
 never ran.
 
+To spread the corpus over several hosts and keep the timings, `--shard K/N`
+runs the K-th of N interleaved parts. A shard is partial by construction;
+`scripts/merge_parity_shards.py` joins the reports of all N into one, and the
+merge is complete only when the shards come from one run of one revision and
+cover the corpus they were cut from exactly once. CI runs the corpus this way.
+
 ## How a behaviour enters the catalog
 
 [compatibility/spec_contracts.json](../compatibility/spec_contracts.json) holds

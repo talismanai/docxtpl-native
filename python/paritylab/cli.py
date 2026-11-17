@@ -114,11 +114,28 @@ def selection(args):
     is, and the gates refuse an incomplete one.
     """
     chosen=sorted(getattr(args,'case',None) or []);protocols=sorted(getattr(args,'protocol_case',None) or [])
-    rerun=getattr(args,'rerun_from',None)
-    return {'suite':args.suite,'cases':chosen,'protocol_cases':protocols,
-            'real_manifest':bool(getattr(args,'real_manifest',None)),
-            'rerun_from':str(rerun) if rerun else None,
-            'complete':args.suite=='all' and not chosen and not protocols and not rerun}
+    rerun=getattr(args,'rerun_from',None);shard=getattr(args,'shard',None)
+    chosen_selection={'suite':args.suite,'cases':chosen,'protocol_cases':protocols,
+                      'real_manifest':bool(getattr(args,'real_manifest',None)),
+                      'rerun_from':str(rerun) if rerun else None}
+    # A shard is part of the corpus by construction: only the merge of all the
+    # shards of one run (scripts/merge_parity_shards.py) is complete.
+    return {**chosen_selection,'shard':shard,'complete':corpus_selection(chosen_selection) and not shard}
+
+
+def corpus_selection(chosen: dict) -> bool:
+    """Whether a selection, shards aside, asks for the whole corpus."""
+    return (chosen['suite']=='all' and not chosen['cases'] and not chosen['protocol_cases']
+            and not chosen['rerun_from'])
+
+
+def parse_shard(value: str) -> dict[str, int]:
+    """`K/N`: the K-th of N interleaved parts of the corpus, counting from 1."""
+    index,_,count=value.partition('/')
+    try:shard={'index':int(index),'count':int(count)}
+    except ValueError:raise argparse.ArgumentTypeError('expected K/N, such as 2/6') from None
+    if not 1<=shard['index']<=shard['count']:raise argparse.ArgumentTypeError('expected 1 <= K <= N')
+    return shard
 
 
 def run(args):
@@ -203,6 +220,12 @@ def run(args):
     own_clock=sorted(case['id'] for case in cases if case['id'] in FIXED_CLOCK_CASES
                      and not _frozen_by_options(case['id'],freeze_time,frozen_cases))
     if own_clock:report['fixed_clock_cases']={'epoch_seconds':FIXED_CLOCK_EPOCH,'cases':own_clock}
+    shard=getattr(args,'shard',None)
+    if shard:
+        # Interleaved, so every shard gets a similar mix of slow and fast cases.
+        # The corpus it was cut from lets the merge prove the shards cover it once.
+        report['corpus']=[case['id'] for case in cases]
+        cases=cases[shard['index']-1::shard['count']]
     def evaluate(i,case):
         folder=out/'cases'/case['id'];folder.mkdir(parents=True,exist_ok=True)
         row={'id':case['id'],'status':'gap','documents':[]}
@@ -334,6 +357,9 @@ def main():
                         'so it qualifies no revision')
     p.add_argument('--freeze-time',type=int,help='fix worker wall clock to this Unix timestamp')
     p.add_argument('--freeze-time-case',action='append',help='apply fixed clock only to this complete case ID; repeatable')
+    p.add_argument('--shard',type=parse_shard,metavar='K/N',
+                   help='run the K-th of N interleaved parts of the corpus; scripts/merge_parity_shards.py '
+                        'joins the reports of all N into one')
     args=p.parse_args()
     if args.repeat<1 or args.warmup<0:p.error('repeat >= 1 and warmup >= 0 required')
     try:return run(args)
