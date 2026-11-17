@@ -11,6 +11,29 @@ import zipfile
 from docxtpl_native import capabilities
 from paritylab.compare import compare_docx
 from paritylab.protocol_base import template
+from paritylab import cli as parity_cli
+from paritylab.upstream_manifest import UPSTREAM_EXAMPLE_SHA256
+
+
+class CaseClockTests(unittest.TestCase):
+    def test_a_case_that_embeds_its_own_output_never_runs_on_the_live_clock(self):
+        own, epoch = parity_cli.FIXED_CLOCK_EPOCH, 1.0
+        for case_id in parity_cli.FIXED_CLOCK_CASES:
+            with self.subTest(case_id):
+                self.assertEqual(parity_cli._case_clock(case_id, None, set()), own)
+                self.assertEqual(parity_cli._case_clock(case_id, epoch, set()), epoch)
+                self.assertEqual(parity_cli._case_clock(case_id, epoch, {'synthetic/plain'}), own)
+                self.assertEqual(parity_cli._case_clock(case_id, epoch, {case_id}), epoch)
+
+    def test_other_cases_keep_the_live_clock_unless_frozen(self):
+        self.assertIsNone(parity_cli._case_clock('synthetic/plain', None, set()))
+        self.assertEqual(parity_cli._case_clock('synthetic/plain', 1.0, set()), 1.0)
+        self.assertIsNone(parity_cli._case_clock('synthetic/plain', 1.0, {'synthetic/unicode'}))
+
+    def test_fixed_clock_cases_name_pinned_upstream_examples(self):
+        examples = {'upstream/' + Path(name).stem for name in UPSTREAM_EXAMPLE_SHA256}
+        self.assertLessEqual(parity_cli.FIXED_CLOCK_CASES, examples)
+
 
 @unittest.skipUnless(capabilities()['native_available'],'native extension not built; not a parity pass')
 class CliTests(unittest.TestCase):

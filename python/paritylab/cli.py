@@ -20,6 +20,24 @@ from .upstream_adapters import ADAPTERS
 from .upstream_manifest import MANIFEST_REFERENCE_COMMIT, UPSTREAM_EXAMPLE_SHA256, UPSTREAM_FIXTURE_SHA256
 from .reference_fingerprint import REFERENCE_COMMIT
 
+# A case whose output embeds a document it saved itself carries each side's
+# wall-clock time in bytes the comparison requires to be equal. Its clock is
+# fixed whatever the options, so its verdict never depends on when each side ran.
+FIXED_CLOCK_CASES = frozenset({'upstream/embedded'})
+FIXED_CLOCK_EPOCH = 1704067200.0
+
+
+def _frozen_by_options(case_id: str, freeze_time: float | None, frozen_cases: set[str]) -> bool:
+    return freeze_time is not None and (not frozen_cases or case_id in frozen_cases)
+
+
+def _case_clock(case_id: str, freeze_time: float | None, frozen_cases: set[str]) -> float | None:
+    """The fixed wall time of a case's workers, or None for the live clock."""
+    if _frozen_by_options(case_id, freeze_time, frozen_cases):
+        return freeze_time
+    return FIXED_CLOCK_EPOCH if case_id in FIXED_CLOCK_CASES else None
+
+
 def _upstream_examples(path: Path) -> list[Path]:
     if MANIFEST_REFERENCE_COMMIT != REFERENCE_COMMIT:
         raise ValueError('upstream example manifest revision does not match the reference')
@@ -182,6 +200,9 @@ def run(args):
                                'a partial run is not evidence for a revision.')
     unknown=frozen_cases-{case['id'] for case in cases}
     if unknown:raise ValueError('unknown frozen cases: '+', '.join(sorted(unknown)))
+    own_clock=sorted(case['id'] for case in cases if case['id'] in FIXED_CLOCK_CASES
+                     and not _frozen_by_options(case['id'],freeze_time,frozen_cases))
+    if own_clock:report['fixed_clock_cases']={'epoch_seconds':FIXED_CLOCK_EPOCH,'cases':own_clock}
     def evaluate(i,case):
         folder=out/'cases'/case['id'];folder.mkdir(parents=True,exist_ok=True)
         row={'id':case['id'],'status':'gap','documents':[]}
@@ -192,8 +213,9 @@ def run(args):
         for role in (('reference','candidate') if i%2==0 else ('candidate','reference')):
             working=folder/role;working.mkdir(exist_ok=True)
             request={**case,'backend':report[role],'output':str(working),'repeat':args.repeat,'warmup':args.warmup}
-            if freeze_time is not None and (not frozen_cases or case['id'] in frozen_cases):
-                request['freeze_time']=freeze_time
+            clock=_case_clock(case['id'],freeze_time,frozen_cases)
+            if clock is not None:
+                request['freeze_time']=clock
             results[role]=_worker(request,working)
             row[role]={'status':results[role]['status'],'stage':results[role].get('stage'),
                        'exception':results[role].get('exception'),
