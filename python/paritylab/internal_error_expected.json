@@ -1,0 +1,272 @@
+{
+ "internal_composer_add_diagrams_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_diagrams_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_footnotes_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_footnotes_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_images_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_images_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_numberings_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_numberings_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_referenced_parts_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_referenced_parts_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_relationship_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_relationship_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_shapes_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_shapes_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_styles_exceptions": {
+  "raises": true
+ },
+ "internal_composer_add_styles_from_other_parts_exceptions": {
+  "raises": false
+ },
+ "internal_composer_add_styles_from_other_parts_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_add_styles_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_attach_parts_exceptions": {
+  "raises": true
+ },
+ "internal_composer_attach_parts_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_create_style_id_mapping_exceptions": {
+  "raises": true
+ },
+ "internal_composer_create_style_id_mapping_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_fix_section_types_exceptions": {
+  "raises": false
+ },
+ "internal_composer_fix_section_types_invalid_input": {
+  "raises": false
+ },
+ "internal_composer_footnote_part_exceptions": {
+  "raises": true
+ },
+ "internal_composer_footnote_part_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_insert_abstract_num_exceptions": {
+  "raises": true
+ },
+ "internal_composer_insert_abstract_num_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_insert_num_exceptions": {
+  "raises": true
+ },
+ "internal_composer_insert_num_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_mapped_style_id_exceptions": {
+  "raises": true
+ },
+ "internal_composer_mapped_style_id_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_next_numbering_ids_exceptions": {
+  "raises": true
+ },
+ "internal_composer_next_numbering_ids_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_numbering_part_exceptions": {
+  "raises": true
+ },
+ "internal_composer_numbering_part_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_remove_header_and_footer_references_exceptions": {
+  "raises": true
+ },
+ "internal_composer_remove_header_and_footer_references_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_renumber_bookmarks_exceptions": {
+  "raises": true
+ },
+ "internal_composer_renumber_bookmarks_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_renumber_docpr_ids_exceptions": {
+  "raises": true
+ },
+ "internal_composer_renumber_docpr_ids_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_renumber_nvpicpr_ids_exceptions": {
+  "raises": true
+ },
+ "internal_composer_renumber_nvpicpr_ids_invalid_input": {
+  "raises": true
+ },
+ "internal_composer_replace_mapped_num_id_exceptions": {
+  "raises": false
+ },
+ "internal_composer_replace_mapped_num_id_invalid_input": {
+  "raises": false
+ },
+ "internal_composer_restart_first_numbering_exceptions": {
+  "raises": true
+ },
+ "internal_composer_restart_first_numbering_invalid_input": {
+  "raises": true
+ },
+ "internal_template_build_headers_footers_xml_exceptions": {
+  "raises": false
+ },
+ "internal_template_build_headers_footers_xml_invalid_input": {
+  "raises": false
+ },
+ "internal_template_build_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_build_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_fix_docpr_ids_exceptions": {
+  "raises": true
+ },
+ "internal_template_fix_docpr_ids_invalid_input": {
+  "raises": true
+ },
+ "internal_template_fix_tables_exceptions": {
+  "raises": true
+ },
+ "internal_template_fix_tables_invalid_input": {
+  "raises": true
+ },
+ "internal_template_get_headers_footers_encoding_exceptions": {
+  "raises": true
+ },
+ "internal_template_get_headers_footers_encoding_invalid_input": {
+  "raises": true
+ },
+ "internal_template_get_headers_footers_exceptions": {
+  "raises": false
+ },
+ "internal_template_get_headers_footers_invalid_input": {
+  "raises": false
+ },
+ "internal_template_get_part_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_get_part_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_get_pic_map_exceptions": {
+  "raises": true
+ },
+ "internal_template_get_pic_map_invalid_input": {
+  "raises": true
+ },
+ "internal_template_get_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_get_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_map_headers_footers_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_map_headers_footers_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_map_tree_exceptions": {
+  "raises": true
+ },
+ "internal_template_map_tree_invalid_input": {
+  "raises": true
+ },
+ "internal_template_patch_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_patch_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_post_processing_exceptions": {
+  "raises": false
+ },
+ "internal_template_post_processing_invalid_input": {
+  "raises": false
+ },
+ "internal_template_pre_processing_exceptions": {
+  "raises": true
+ },
+ "internal_template_pre_processing_invalid_input": {
+  "raises": true
+ },
+ "internal_template_render_footnotes_exceptions": {
+  "raises": false
+ },
+ "internal_template_render_footnotes_invalid_input": {
+  "raises": false
+ },
+ "internal_template_render_init_exceptions": {
+  "raises": true
+ },
+ "internal_template_render_init_invalid_input": {
+  "raises": true
+ },
+ "internal_template_render_properties_exceptions": {
+  "raises": true
+ },
+ "internal_template_render_properties_invalid_input": {
+  "raises": true
+ },
+ "internal_template_render_xml_part_exceptions": {
+  "raises": true
+ },
+ "internal_template_render_xml_part_invalid_input": {
+  "raises": true
+ },
+ "internal_template_resolve_listing_exceptions": {
+  "raises": true
+ },
+ "internal_template_resolve_listing_invalid_input": {
+  "raises": true
+ },
+ "internal_template_write_xml_exceptions": {
+  "raises": true
+ },
+ "internal_template_write_xml_invalid_input": {
+  "raises": true
+ },
+ "internal_template_xml_to_string_exceptions": {
+  "raises": true
+ },
+ "internal_template_xml_to_string_invalid_input": {
+  "raises": true
+ }
+}

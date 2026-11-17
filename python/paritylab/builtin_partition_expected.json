@@ -1,0 +1,5867 @@
+{
+ "partition_filter_abs_argument_variants": {
+  "scenarios": [
+   {
+    "message": "abs() takes no keyword arguments",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_abs_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_abs_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_abs_interactions": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_abs_invalid_type": {
+  "scenarios": [
+   {
+    "message": "bad operand type for abs(): 'Opaque'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_abs_mutation_order": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": [
+     "__abs__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_abs_undefined": {
+  "scenarios": [
+   {
+    "message": "bad operand type for abs(): 'Undefined'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "bad operand type for abs(): 'StrictUndefined'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_attr_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_attr() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_attr_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_attr_exceptions": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_attr_interactions": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_attr_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_attr_mutation_order": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_attr_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_batch_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_batch() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_batch_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_batch_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_batch_interactions": {
+  "scenarios": [
+   {
+    "text": "12|34|5",
+    "trace": []
+   },
+   {
+    "text": "7",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_batch_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_batch_mutation_order": {
+  "scenarios": [
+   {
+    "text": "12|34|5",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_batch_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_capitalize_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_capitalize() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_capitalize_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_capitalize_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_capitalize_interactions": {
+  "scenarios": [
+   {
+    "text": "Hello",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_capitalize_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_capitalize_mutation_order": {
+  "scenarios": [
+   {
+    "text": "Hello",
+    "trace": [
+     "capitalize"
+    ]
+   }
+  ]
+ },
+ "partition_filter_capitalize_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_center_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_center() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_center_empty": {
+  "scenarios": [
+   {
+    "text": "     ",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_center_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_center_interactions": {
+  "scenarios": [
+   {
+    "text": "  x  ",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_center_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_center_mutation_order": {
+  "scenarios": [
+   {
+    "text": "  x  ",
+    "trace": [
+     "center"
+    ]
+   }
+  ]
+ },
+ "partition_filter_center_undefined": {
+  "scenarios": [
+   {
+    "text": "     ",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_count_argument_variants": {
+  "scenarios": [
+   {
+    "message": "len() takes no keyword arguments",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_count_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_count_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_count_interactions": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_count_invalid_type": {
+  "scenarios": [
+   {
+    "message": "object of type 'Opaque' has no len()",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_count_mutation_order": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": [
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_count_undefined": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_d_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_default() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_d_empty": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_d_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_d_interactions": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   },
+   {
+    "text": "8",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_d_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_d_mutation_order": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": [
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_d_undefined": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   },
+   {
+    "text": "fallback",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_default_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_default() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_default_empty": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_default_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_default_interactions": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   },
+   {
+    "text": "8",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_default_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_default_mutation_order": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_default_undefined": {
+  "scenarios": [
+   {
+    "text": "fallback",
+    "trace": []
+   },
+   {
+    "text": "fallback",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_dictsort_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_dictsort() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_dictsort_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_dictsort_exceptions": {
+  "scenarios": [
+   {
+    "message": "'Failing' object has no attribute 'items'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_dictsort_interactions": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_dictsort_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object has no attribute 'items'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_dictsort_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": [
+     "items"
+    ]
+   }
+  ]
+ },
+ "partition_filter_dictsort_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_e_argument_variants": {
+  "scenarios": [
+   {
+    "message": "escape() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_e_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_e_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_e_interactions": {
+  "scenarios": [
+   {
+    "text": "<",
+    "trace": []
+   },
+   {
+    "text": "4",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_e_invalid_type": {
+  "scenarios": [
+   {
+    "text": "<opaque>",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_e_mutation_order": {
+  "scenarios": [
+   {
+    "text": "<",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_e_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_escape_argument_variants": {
+  "scenarios": [
+   {
+    "message": "escape() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_escape_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_escape_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_escape_interactions": {
+  "scenarios": [
+   {
+    "text": "<",
+    "trace": []
+   },
+   {
+    "text": "4",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_escape_invalid_type": {
+  "scenarios": [
+   {
+    "text": "<opaque>",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_escape_mutation_order": {
+  "scenarios": [
+   {
+    "text": "<",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_escape_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_filesizeformat() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_empty": {
+  "scenarios": [
+   {
+    "text": "0 Bytes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_interactions": {
+  "scenarios": [
+   {
+    "text": "1.0 kB",
+    "trace": []
+   },
+   {
+    "text": "6",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_invalid_type": {
+  "scenarios": [
+   {
+    "message": "float() argument must be a string or a real number, not 'Opaque'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1.0 kB",
+    "trace": [
+     "__float__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_filesizeformat_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_first_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_first() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_first_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_first_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_first_interactions": {
+  "scenarios": [
+   {
+    "text": "a",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_first_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_first_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_first_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_float_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_float() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_float_empty": {
+  "scenarios": [
+   {
+    "text": "0.0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_float_exceptions": {
+  "scenarios": [
+   {
+    "text": "0.0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_float_interactions": {
+  "scenarios": [
+   {
+    "text": "1.5",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_float_invalid_type": {
+  "scenarios": [
+   {
+    "text": "0.0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_float_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1.5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_float_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_forceescape_argument_variants": {
+  "scenarios": [
+   {
+    "message": "expected token 'end of print statement', got 'scape'",
+    "trace": [],
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   }
+  ]
+ },
+ "partition_filter_forceescape_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_forceescape_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_forceescape_interactions": {
+  "scenarios": [
+   {
+    "text": "&lt;",
+    "trace": []
+   },
+   {
+    "text": "4",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_forceescape_invalid_type": {
+  "scenarios": [
+   {
+    "text": "<opaque>",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_forceescape_mutation_order": {
+  "scenarios": [
+   {
+    "text": "<",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_forceescape_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_format_argument_variants": {
+  "scenarios": [
+   {
+    "message": "can't handle positional and keyword arguments at the same time",
+    "trace": [],
+    "type": "jinja2.exceptions.FilterArgumentError"
+   }
+  ]
+ },
+ "partition_filter_format_empty": {
+  "scenarios": [
+   {
+    "message": "not all arguments converted during string formatting",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_format_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_format_interactions": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_format_invalid_type": {
+  "scenarios": [
+   {
+    "message": "not all arguments converted during string formatting",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_format_mutation_order": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_format_undefined": {
+  "scenarios": [
+   {
+    "message": "not all arguments converted during string formatting",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_groupby_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_groupby() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_groupby_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_groupby_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_groupby_interactions": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_groupby_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_groupby_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": [
+     "__iter__",
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_groupby_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_indent_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_indent() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_indent_empty": {
+  "scenarios": [
+   {
+    "text": "  ",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_indent_exceptions": {
+  "scenarios": [
+   {
+    "message": "unsupported operand type(s) for +=: 'Failing' and 'str'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_indent_interactions": {
+  "scenarios": [
+   {
+    "text": "  X",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_indent_invalid_type": {
+  "scenarios": [
+   {
+    "message": "unsupported operand type(s) for +=: 'Opaque' and 'str'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_indent_mutation_order": {
+  "scenarios": [
+   {
+    "text": "  X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_indent_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_int_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_int() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_int_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_int_exceptions": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_int_interactions": {
+  "scenarios": [
+   {
+    "text": "42",
+    "trace": []
+   },
+   {
+    "text": "2",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_int_invalid_type": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_int_mutation_order": {
+  "scenarios": [
+   {
+    "text": "42",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_int_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_items_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_items() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_items_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_items_exceptions": {
+  "scenarios": [
+   {
+    "message": "Can only get item pairs from a mapping.",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_items_interactions": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_items_invalid_type": {
+  "scenarios": [
+   {
+    "message": "Can only get item pairs from a mapping.",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_items_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": [
+     "items"
+    ]
+   }
+  ]
+ },
+ "partition_filter_items_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_join_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_join() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_join_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_join_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_join_interactions": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_join_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_join_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a,b",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_join_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_last_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_last() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_last_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_last_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_last_interactions": {
+  "scenarios": [
+   {
+    "text": "b",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_last_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not reversible",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_last_mutation_order": {
+  "scenarios": [
+   {
+    "text": "b",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_last_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_length_argument_variants": {
+  "scenarios": [
+   {
+    "message": "len() takes no keyword arguments",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_length_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_length_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_length_interactions": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_length_invalid_type": {
+  "scenarios": [
+   {
+    "message": "object of type 'Opaque' has no len()",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_length_mutation_order": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": [
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_length_undefined": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_list_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_list() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_list_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_list_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_list_interactions": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_list_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_list_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": [
+     "__iter__",
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_list_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_lower_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_lower() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_lower_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_lower_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_lower_interactions": {
+  "scenarios": [
+   {
+    "text": "abc",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_lower_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_lower_mutation_order": {
+  "scenarios": [
+   {
+    "text": "abc",
+    "trace": [
+     "lower"
+    ]
+   }
+  ]
+ },
+ "partition_filter_lower_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_map_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_upper() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_map_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_map_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_map_interactions": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_map_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_map_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": [
+     "__len__",
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_map_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_max_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_max() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_max_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_max_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_max_interactions": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_max_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_max_mutation_order": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_max_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_min_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_min() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_min_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_min_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_min_interactions": {
+  "scenarios": [
+   {
+    "text": "1",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_min_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_min_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_min_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_pprint_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_pprint() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_pprint_empty": {
+  "scenarios": [
+   {
+    "text": "[]",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_pprint_exceptions": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_pprint_interactions": {
+  "scenarios": [
+   {
+    "text": "[1, 2]",
+    "trace": []
+   },
+   {
+    "text": "6",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_pprint_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_pprint_mutation_order": {
+  "scenarios": [
+   {
+    "text": "[1, 2]",
+    "trace": [
+     "__repr__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_pprint_undefined": {
+  "scenarios": [
+   {
+    "text": "Undefined",
+    "trace": []
+   },
+   {
+    "text": "Undefined",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_random_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_random() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_random_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_random_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_random_interactions": {
+  "scenarios": [
+   {
+    "text": "only",
+    "trace": []
+   },
+   {
+    "text": "4",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_random_invalid_type": {
+  "scenarios": [
+   {
+    "message": "object of type 'Opaque' has no len()",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_random_mutation_order": {
+  "scenarios": [
+   {
+    "text": "only",
+    "trace": [
+     "__len__",
+     "__len__",
+     "__getitem__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_random_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_reject_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_odd() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_reject_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_reject_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_reject_interactions": {
+  "scenarios": [
+   {
+    "text": "2,4",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_reject_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_reject_mutation_order": {
+  "scenarios": [
+   {
+    "text": "2,4",
+    "trace": [
+     "__len__",
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_reject_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_rejectattr_argument_variants": {
+  "scenarios": [
+   {
+    "text": "B",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_rejectattr_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_rejectattr_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_rejectattr_interactions": {
+  "scenarios": [
+   {
+    "text": "B",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_rejectattr_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_rejectattr_mutation_order": {
+  "scenarios": [
+   {
+    "text": "B",
+    "trace": [
+     "__len__",
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_rejectattr_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_replace_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_replace() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_replace_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_replace_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_replace_interactions": {
+  "scenarios": [
+   {
+    "text": "bXb",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_replace_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_replace_mutation_order": {
+  "scenarios": [
+   {
+    "text": "bXb",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_replace_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_reverse_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_reverse() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_reverse_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_reverse_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_reverse_interactions": {
+  "scenarios": [
+   {
+    "text": "cba",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_reverse_invalid_type": {
+  "scenarios": [
+   {
+    "message": "argument must be iterable",
+    "trace": [],
+    "type": "jinja2.exceptions.FilterArgumentError"
+   }
+  ]
+ },
+ "partition_filter_reverse_mutation_order": {
+  "scenarios": [
+   {
+    "text": "cba",
+    "trace": [
+     "__getitem__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_reverse_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_round_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_round() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_round_empty": {
+  "scenarios": [
+   {
+    "text": "0.0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_round_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_round_interactions": {
+  "scenarios": [
+   {
+    "text": "1.2",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_round_invalid_type": {
+  "scenarios": [
+   {
+    "message": "type Opaque doesn't define __round__ method",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_round_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1.2",
+    "trace": [
+     "__round__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_round_undefined": {
+  "scenarios": [
+   {
+    "message": "type Undefined doesn't define __round__ method",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "type StrictUndefined doesn't define __round__ method",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_safe_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_mark_safe() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_safe_empty": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_safe_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_safe_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "text": "4",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_safe_invalid_type": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_safe_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_safe_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_select_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_odd() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_select_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_select_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_select_interactions": {
+  "scenarios": [
+   {
+    "text": "1,3",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_select_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_select_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1,3",
+    "trace": [
+     "__len__",
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_select_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_selectattr_argument_variants": {
+  "scenarios": [
+   {
+    "text": "A",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_selectattr_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_selectattr_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_selectattr_interactions": {
+  "scenarios": [
+   {
+    "text": "A",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_selectattr_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_selectattr_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A",
+    "trace": [
+     "__len__",
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_selectattr_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_slice_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_slice() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_slice_empty": {
+  "scenarios": [
+   {
+    "text": "|",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_slice_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_slice_interactions": {
+  "scenarios": [
+   {
+    "text": "123|45",
+    "trace": []
+   },
+   {
+    "text": "6",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_slice_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_slice_mutation_order": {
+  "scenarios": [
+   {
+    "text": "123|45",
+    "trace": [
+     "__iter__",
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_slice_undefined": {
+  "scenarios": [
+   {
+    "text": "|",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_sort_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_sort() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_sort_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_sort_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_sort_interactions": {
+  "scenarios": [
+   {
+    "text": "1,2,3",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_sort_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_sort_mutation_order": {
+  "scenarios": [
+   {
+    "text": "1,2,3",
+    "trace": [
+     "__iter__",
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_sort_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_string_argument_variants": {
+  "scenarios": [
+   {
+    "message": "soft_str() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_string_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_string_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_string_interactions": {
+  "scenarios": [
+   {
+    "text": "42",
+    "trace": []
+   },
+   {
+    "text": "2",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_string_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_string_mutation_order": {
+  "scenarios": [
+   {
+    "text": "42",
+    "trace": [
+     "__str__",
+     "__repr__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_string_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_striptags_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_striptags() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_striptags_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_striptags_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_striptags_interactions": {
+  "scenarios": [
+   {
+    "text": "<b>hello</b>",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_striptags_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_striptags_mutation_order": {
+  "scenarios": [
+   {
+    "text": "hello",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_striptags_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_sum_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_sum() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_sum_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_sum_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_sum_interactions": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_sum_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_sum_mutation_order": {
+  "scenarios": [
+   {
+    "text": "3",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_sum_undefined": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_title_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_title() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_title_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_title_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_title_interactions": {
+  "scenarios": [
+   {
+    "text": "Hello World",
+    "trace": []
+   },
+   {
+    "text": "11",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_title_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_title_mutation_order": {
+  "scenarios": [
+   {
+    "text": "Hello World",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_title_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_tojson_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_tojson() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_tojson_empty": {
+  "scenarios": [
+   {
+    "text": "[]",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_tojson_exceptions": {
+  "scenarios": [
+   {
+    "message": "Object of type Failing is not JSON serializable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_tojson_interactions": {
+  "scenarios": [
+   {
+    "text": "[1, 2]",
+    "trace": []
+   },
+   {
+    "text": "6",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_tojson_invalid_type": {
+  "scenarios": [
+   {
+    "message": "Object of type Opaque is not JSON serializable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_tojson_mutation_order": {
+  "scenarios": [
+   {
+    "text": "[1, 2]",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_tojson_undefined": {
+  "scenarios": [
+   {
+    "message": "Object of type Undefined is not JSON serializable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "Object of type StrictUndefined is not JSON serializable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_trim_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_trim() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_trim_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_trim_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_trim_interactions": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_trim_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_trim_mutation_order": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": [
+     "strip"
+    ]
+   }
+  ]
+ },
+ "partition_filter_trim_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_truncate_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_truncate() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_truncate_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_truncate_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_truncate_interactions": {
+  "scenarios": [
+   {
+    "text": "ab...",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_truncate_invalid_type": {
+  "scenarios": [
+   {
+    "message": "object of type 'Opaque' has no len()",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_truncate_mutation_order": {
+  "scenarios": [
+   {
+    "text": "ab...",
+    "trace": [
+     "__len__",
+     "__getitem__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_truncate_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_unique_argument_variants": {
+  "scenarios": [
+   {
+    "message": "sync_do_unique() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_unique_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_unique_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_unique_interactions": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_unique_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_unique_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A,B",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_unique_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_upper_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_upper() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_upper_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_upper_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_upper_interactions": {
+  "scenarios": [
+   {
+    "text": "ABC",
+    "trace": []
+   },
+   {
+    "text": "3",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_upper_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_upper_mutation_order": {
+  "scenarios": [
+   {
+    "text": "ABC",
+    "trace": [
+     "upper"
+    ]
+   }
+  ]
+ },
+ "partition_filter_upper_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_urlencode_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_urlencode() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_urlencode_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlencode_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_urlencode_interactions": {
+  "scenarios": [
+   {
+    "text": "a%20b",
+    "trace": []
+   },
+   {
+    "text": "5",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlencode_invalid_type": {
+  "scenarios": [
+   {
+    "text": "%3Copaque%3E",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlencode_mutation_order": {
+  "scenarios": [
+   {
+    "text": "a%20b",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlencode_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_urlize_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_urlize() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_urlize_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlize_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_urlize_interactions": {
+  "scenarios": [
+   {
+    "text": "example.com",
+    "trace": []
+   },
+   {
+    "text": "11",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlize_invalid_type": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_urlize_mutation_order": {
+  "scenarios": [
+   {
+    "text": "example.com",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_filter_urlize_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_wordcount_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_wordcount() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_wordcount_empty": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordcount_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_filter_wordcount_interactions": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": []
+   },
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordcount_invalid_type": {
+  "scenarios": [
+   {
+    "text": "1",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordcount_mutation_order": {
+  "scenarios": [
+   {
+    "text": "2",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordcount_undefined": {
+  "scenarios": [
+   {
+    "text": "0",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_wordwrap_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_wordwrap() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_wordwrap_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordwrap_exceptions": {
+  "scenarios": [
+   {
+    "message": "'Failing' object has no attribute 'splitlines'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_wordwrap_interactions": {
+  "scenarios": [
+   {
+    "text": "one|two",
+    "trace": []
+   },
+   {
+    "text": "7",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordwrap_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object has no attribute 'splitlines'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_wordwrap_mutation_order": {
+  "scenarios": [
+   {
+    "text": "one|two",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_wordwrap_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_filter_xmlattr_argument_variants": {
+  "scenarios": [
+   {
+    "message": "do_xmlattr() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_filter_xmlattr_empty": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_xmlattr_exceptions": {
+  "scenarios": [
+   {
+    "message": "'Failing' object has no attribute 'items'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_xmlattr_interactions": {
+  "scenarios": [
+   {
+    "text": " a=\"1\"",
+    "trace": []
+   },
+   {
+    "text": "6",
+    "trace": []
+   }
+  ]
+ },
+ "partition_filter_xmlattr_invalid_type": {
+  "scenarios": [
+   {
+    "message": "'Opaque' object has no attribute 'items'",
+    "trace": [],
+    "type": "builtins.AttributeError"
+   }
+  ]
+ },
+ "partition_filter_xmlattr_mutation_order": {
+  "scenarios": [
+   {
+    "text": " a=\"1\"",
+    "trace": [
+     "items"
+    ]
+   }
+  ]
+ },
+ "partition_filter_xmlattr_undefined": {
+  "scenarios": [
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_global_cycler_argument_variants": {
+  "scenarios": [
+   {
+    "message": "Cycler.__init__() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_global_cycler_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_cycler_interactions": {
+  "scenarios": [
+   {
+    "text": "A",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_cycler_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_global_cycler_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_global_dict_argument_variants": {
+  "scenarios": [
+   {
+    "message": "'int' object is not iterable",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_global_dict_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_dict_interactions": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_dict_mutation_order": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_global_dict_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_global_joiner_argument_variants": {
+  "scenarios": [
+   {
+    "message": "Joiner.__init__() got an unexpected keyword argument 'bogus'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_global_joiner_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_joiner_interactions": {
+  "scenarios": [
+   {
+    "text": "A|B",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_joiner_mutation_order": {
+  "scenarios": [
+   {
+    "text": "A|B",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_global_joiner_undefined": {
+  "scenarios": [
+   {
+    "text": "AB",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_global_lipsum_argument_variants": {
+  "scenarios": [
+   {
+    "message": "invalid syntax for function call expression",
+    "trace": [],
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   }
+  ]
+ },
+ "partition_global_lipsum_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_lipsum_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_lipsum_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_lipsum_undefined": {
+  "scenarios": [
+   {
+    "message": "'Undefined' object cannot be interpreted as an integer",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "'StrictUndefined' object cannot be interpreted as an integer",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_global_namespace_argument_variants": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_namespace_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_namespace_interactions": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_namespace_mutation_order": {
+  "scenarios": [
+   {
+    "text": "X",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_global_namespace_undefined": {
+  "scenarios": [
+   {
+    "text": "",
+    "trace": []
+   },
+   {
+    "message": "'value' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_global_range_argument_variants": {
+  "scenarios": [
+   {
+    "message": "range() takes no keyword arguments",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_global_range_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_global_range_interactions": {
+  "scenarios": [
+   {
+    "text": "0,1,2",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_range_mutation_order": {
+  "scenarios": [
+   {
+    "text": "0,1,2",
+    "trace": []
+   }
+  ]
+ },
+ "partition_global_range_undefined": {
+  "scenarios": [
+   {
+    "message": "'Undefined' object cannot be interpreted as an integer",
+    "trace": [],
+    "type": "builtins.TypeError"
+   },
+   {
+    "message": "'StrictUndefined' object cannot be interpreted as an integer",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_alias_33_61_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_33_61_exceptions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_33_61_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_33_61_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_33_61_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_alias_60_61_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_60_61_exceptions": {
+  "scenarios": [
+   {
+    "message": "'<=' not supported between instances of 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_alias_60_61_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_60_61_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_60_61_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_alias_60_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_60_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_alias_60_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_60_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__lt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_alias_60_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_alias_61_61_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_61_61_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_61_61_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_61_61_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_61_61_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_alias_62_61_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_62_61_exceptions": {
+  "scenarios": [
+   {
+    "message": "'>=' not supported between instances of 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_alias_62_61_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_62_61_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_62_61_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_alias_62_argument_variants": {
+  "scenarios": [
+   {
+    "text": "TrueTrue",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_62_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_alias_62_interactions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_alias_62_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__gt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_alias_62_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_boolean_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_boolean() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_boolean_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_boolean_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_boolean_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_boolean_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_callable_argument_variants": {
+  "scenarios": [
+   {
+    "message": "callable() takes exactly one argument (2 given)",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_callable_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_callable_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_callable_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_callable_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_defined_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_defined() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_defined_exceptions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_defined_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_defined_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_defined_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_divisibleby_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_divisibleby() takes 2 positional arguments but 3 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_divisibleby_exceptions": {
+  "scenarios": [
+   {
+    "message": "unsupported operand type(s) for %: 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_divisibleby_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_divisibleby_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_divisibleby_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_eq_argument_variants": {
+  "scenarios": [
+   {
+    "message": "eq expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_eq_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_eq_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_eq_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_eq_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_equalto_argument_variants": {
+  "scenarios": [
+   {
+    "message": "eq expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_equalto_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_equalto_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_equalto_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_equalto_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_escaped_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_escaped() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_escaped_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_escaped_interactions": {
+  "scenarios": [
+   {
+    "text": "no",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_escaped_mutation_order": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_escaped_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_even_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_even() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_even_exceptions": {
+  "scenarios": [
+   {
+    "message": "unsupported operand type(s) for %: 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_even_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_even_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_even_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_false_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_false() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_false_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_false_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_false_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_false_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_filter_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_filter() takes 2 positional arguments but 3 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_filter_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_filter_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_filter_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_filter_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_float_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_float() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_float_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_float_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_float_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_float_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ge_argument_variants": {
+  "scenarios": [
+   {
+    "message": "ge expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_ge_exceptions": {
+  "scenarios": [
+   {
+    "message": "'>=' not supported between instances of 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_ge_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ge_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ge_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_greaterthan_argument_variants": {
+  "scenarios": [
+   {
+    "message": "gt expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_greaterthan_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_greaterthan_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_greaterthan_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__gt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_greaterthan_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_gt_argument_variants": {
+  "scenarios": [
+   {
+    "message": "gt expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_gt_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_gt_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_gt_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__gt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_gt_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_in_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_in() takes 2 positional arguments but 3 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_in_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_in_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_in_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_in_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_integer_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_integer() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_integer_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_integer_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_integer_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_integer_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_iterable_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_iterable() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_iterable_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_iterable_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_iterable_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__iter__"
+    ]
+   }
+  ]
+ },
+ "partition_test_iterable_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_le_argument_variants": {
+  "scenarios": [
+   {
+    "message": "le expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_le_exceptions": {
+  "scenarios": [
+   {
+    "message": "'<=' not supported between instances of 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_le_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_le_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_le_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_lessthan_argument_variants": {
+  "scenarios": [
+   {
+    "message": "lt expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_lessthan_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_lessthan_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_lessthan_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__lt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_lessthan_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_lower_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_lower() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_lower_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_lower_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_lower_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_test_lower_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_lt_argument_variants": {
+  "scenarios": [
+   {
+    "message": "lt expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_lt_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_lt_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_lt_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__lt__"
+    ]
+   }
+  ]
+ },
+ "partition_test_lt_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_mapping_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_mapping() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_mapping_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_mapping_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_mapping_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_mapping_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ne_argument_variants": {
+  "scenarios": [
+   {
+    "message": "ne expected 2 arguments, got 3",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_ne_exceptions": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ne_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ne_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_ne_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_none_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_none() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_none_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_none_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_none_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_none_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_number_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_number() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_number_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_number_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_number_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_number_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_odd_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_odd() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_odd_exceptions": {
+  "scenarios": [
+   {
+    "message": "unsupported operand type(s) for %: 'Failing' and 'int'",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_odd_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_odd_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_odd_undefined": {
+  "scenarios": [
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_sameas_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_sameas() takes 2 positional arguments but 3 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_sameas_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sameas_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sameas_mutation_order": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sameas_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sequence_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_sequence() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_sequence_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sequence_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_sequence_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__len__"
+    ]
+   }
+  ]
+ },
+ "partition_test_sequence_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_string_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_string() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_string_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_string_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_string_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_string_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_test_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_test() takes 2 positional arguments but 3 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_test_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_test_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_test_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_test_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ },
+ "partition_test_true_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_true() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_true_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_true_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_true_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_true_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_undefined_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_undefined() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_undefined_exceptions": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_undefined_interactions": {
+  "scenarios": [
+   {
+    "text": "no",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_undefined_mutation_order": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_undefined_undefined": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": []
+   },
+   {
+    "text": "True",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_upper_argument_variants": {
+  "scenarios": [
+   {
+    "message": "test_upper() takes 1 positional argument but 2 were given",
+    "trace": [],
+    "type": "builtins.TypeError"
+   }
+  ]
+ },
+ "partition_test_upper_exceptions": {
+  "scenarios": [
+   {
+    "message": "probe input failure",
+    "trace": [],
+    "type": "builtins.ValueError"
+   }
+  ]
+ },
+ "partition_test_upper_interactions": {
+  "scenarios": [
+   {
+    "text": "yes",
+    "trace": []
+   }
+  ]
+ },
+ "partition_test_upper_mutation_order": {
+  "scenarios": [
+   {
+    "text": "True",
+    "trace": [
+     "__str__"
+    ]
+   }
+  ]
+ },
+ "partition_test_upper_undefined": {
+  "scenarios": [
+   {
+    "text": "False",
+    "trace": []
+   },
+   {
+    "message": "'missing' is undefined",
+    "trace": [],
+    "type": "jinja2.exceptions.UndefinedError"
+   }
+  ]
+ }
+}

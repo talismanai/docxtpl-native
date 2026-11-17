@@ -1,0 +1,45 @@
+[build-system]
+requires = ["maturin>=1.9,<2"]
+build-backend = "maturin"
+
+[project]
+name = "docxtpl-native"
+version = "0.1.0"
+description = "Rust DOCX engine and an explicit differential parity laboratory"
+requires-python = ">=3.11"
+license = "LGPL-2.1-or-later"
+# docxtpl is not a dependency. The laboratory installs it from the pinned
+# checkout (see CONTRIBUTING.md); the package never imports it.
+dependencies = ["python-docx==1.2.0", "Jinja2==3.1.6", "lxml>=6.0,<7"]
+
+[project.optional-dependencies]
+# docxcompose 1.4.0 imports pkg_resources, which setuptools 81 removed.
+subdoc = ["docxcompose==1.4.0", "setuptools<81"]
+lab = ["docxcompose==1.4.0", "setuptools==80.9.0", "Babel==2.18.0", "Pillow==13.0.0", "PyMuPDF==2.1"]
+
+[project.scripts]
+docxtpl-parity = "paritylab.cli:main"
+
+[tool.maturin]
+manifest-path = "bindings/python/Cargo.toml"
+python-source = "python"
+python-packages = ["docxtpl_native", "paritylab"]
+module-name = "docxtpl_native._native"
+features = ["extension-module"]
+include = [
+  "python/paritylab/**", "LICENSE", "THIRD_PARTY.md",
+  {path = "vendor/notices/python-docx-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/UNICODE-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/corosensei-LICENSE-MIT", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/scoped-tls-LICENSE-MIT", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/scoped-tls-hkt-LICENSE-MIT", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/CPython-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/Jinja2-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/MarkupSafe-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/lxml-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/notices/libloading-LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/minijinja/LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/docxtplrs/LICENSE", format = ["sdist", "wheel"]},
+  {path = "vendor/zlib-rs/LICENSE", format = ["sdist", "wheel"]},
+]
+

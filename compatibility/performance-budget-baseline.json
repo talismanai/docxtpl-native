@@ -1,0 +1,310 @@
+{
+ "scope": "Baseline of the per-workload regression budget (scripts/check_performance_budget.py), measured in a Linux arm64 container (Ubuntu 24.04; 10 CPUs, 16 GB) with CPython 3.12 and isolated release wheels. The budget compares paired reference/native ratios, so the absolute times describe this host only; memory figures are RSS and allocation data, not timing.",
+ "commands": [
+  "study_performance.py --mode benchmark --repeat 41 --warmup 5",
+  "--mode scaling --repeat 17 --warmup 3",
+  "--mode routing --repeat 31 --warmup 3",
+  "--mode memory --repeat 20"
+ ],
+ "environment_variables": {
+  "PYTHONHASHSEED": "3"
+ },
+ "benchmark": {
+  "plain": {
+   "reference_p50_ms": 7.176296,
+   "reference_p95_ms": 7.554471000000001,
+   "native_p50_ms": 2.983028,
+   "native_p95_ms": 3.128616,
+   "paired_ratio_p50": 2.418823419371312,
+   "native_faster_pairs": 41,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.00336890243902439,
+    "inputs": 0.003064170731707317,
+    "render": 2.9806767073170732,
+    "save": 0.031722365853658535
+   }
+  },
+  "long_paragraphs": {
+   "reference_p50_ms": 43.272739,
+   "reference_p95_ms": 46.696111,
+   "native_p50_ms": 7.263216,
+   "native_p95_ms": 7.560472,
+   "paired_ratio_p50": 5.977547814967584,
+   "native_faster_pairs": 41,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.0034807804878048782,
+    "inputs": 0.0028668780487804877,
+    "render": 7.246624902439025,
+    "save": 0.03336160975609756
+   }
+  },
+  "pass_context": {
+   "reference_p50_ms": 7.147711,
+   "reference_p95_ms": 7.49147,
+   "native_p50_ms": 6.888288,
+   "native_p95_ms": 7.3291319999999995,
+   "paired_ratio_p50": 1.024347559219359,
+   "native_faster_pairs": 30,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.0034909024390243903,
+    "inputs": 0.024822658536585367,
+    "render": 3.1908503902439023,
+    "save": 3.7166199024390245
+   }
+  },
+  "loader": {
+   "reference_p50_ms": 7.222713000000001,
+   "reference_p95_ms": 7.675683000000001,
+   "native_p50_ms": 7.006083,
+   "native_p95_ms": 7.392467999999999,
+   "paired_ratio_p50": 1.0204260200280908,
+   "native_faster_pairs": 28,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.0032937317073170732,
+    "inputs": 0.022285073170731706,
+    "render": 3.3270354878048782,
+    "save": 3.688862219512195
+   }
+  },
+  "image": {
+   "reference_p50_ms": 7.370967,
+   "reference_p95_ms": 7.925438,
+   "native_p50_ms": 7.147921,
+   "native_p95_ms": 7.68635,
+   "paired_ratio_p50": 1.024392788363386,
+   "native_faster_pairs": 25,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.003424829268292683,
+    "inputs": 0.02359819512195122,
+    "render": 3.4094766341463414,
+    "save": 3.8342640243902437
+   }
+  },
+  "subdocument": {
+   "reference_p50_ms": 11.122682000000001,
+   "reference_p95_ms": 11.682819,
+   "native_p50_ms": 11.011179,
+   "native_p95_ms": 12.014287,
+   "paired_ratio_p50": 1.002198493004246,
+   "native_faster_pairs": 21,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.00355490243902439,
+    "inputs": 6.626236097560976,
+    "render": 0.6975297804878049,
+    "save": 3.928511268292683
+   }
+  },
+  "foreign_lookup": {
+   "reference_p50_ms": 8.002483,
+   "reference_p95_ms": 8.371407,
+   "native_p50_ms": 9.938444,
+   "native_p95_ms": 11.317145,
+   "paired_ratio_p50": 0.7928315606142281,
+   "native_faster_pairs": 1,
+   "pairs": 41,
+   "native_phase_mean_ms": {
+    "construct": 0.003533609756097561,
+    "inputs": 0.4079427317073171,
+    "render": 5.7086624390243905,
+    "save": 4.000077
+   }
+  }
+ },
+ "scaling_render_p50_ms": {
+  "objects/0": {
+   "reference": 0.994565,
+   "native": 0.784685
+  },
+  "formatted/0": {
+   "reference": 0.902813,
+   "native": 0.750143
+  },
+  "objects/10": {
+   "reference": 1.005357,
+   "native": 0.841062
+  },
+  "formatted/10": {
+   "reference": 0.942356,
+   "native": 0.776935
+  },
+  "objects/100": {
+   "reference": 1.065317,
+   "native": 1.074442
+  },
+  "formatted/100": {
+   "reference": 0.924772,
+   "native": 0.822061
+  },
+  "objects/1000": {
+   "reference": 1.236738,
+   "native": 3.077948
+  },
+  "formatted/1000": {
+   "reference": 1.111651,
+   "native": 1.350615
+  },
+  "objects/5000": {
+   "reference": 2.253304,
+   "native": 12.035579
+  },
+  "formatted/5000": {
+   "reference": 1.798376,
+   "native": 3.507
+  }
+ },
+ "routing_total_p50_ms": {
+  "plain": {
+   "reference": 7.130546,
+   "native": 2.95928
+  },
+  "plain_environment": {
+   "reference": 7.094461,
+   "native": 6.984666000000001
+  },
+  "plain_exposed": {
+   "reference": 7.061001,
+   "native": 6.994582
+  }
+ },
+ "memory": {
+  "plain": {
+   "reference": {
+    "baseline_rss_kib": 62996,
+    "first_python_peak_bytes": 2280713,
+    "first_rss_kib": 62996,
+    "repeated_python_peak_bytes": 4879348,
+    "repeated_python_retained_bytes": 1579863,
+    "repeated_rss_kib": 79332
+   },
+   "candidate": {
+    "baseline_rss_kib": 62996,
+    "first_python_peak_bytes": 1989418,
+    "first_rss_kib": 68364,
+    "repeated_python_peak_bytes": 440898,
+    "repeated_python_retained_bytes": 355235,
+    "repeated_rss_kib": 68364
+   }
+  },
+  "long_paragraphs": {
+   "reference": {
+    "baseline_rss_kib": 86260,
+    "first_python_peak_bytes": 14193375,
+    "first_rss_kib": 86260,
+    "repeated_python_peak_bytes": 16705926,
+    "repeated_python_retained_bytes": 3451767,
+    "repeated_rss_kib": 99616
+   },
+   "candidate": {
+    "baseline_rss_kib": 86260,
+    "first_python_peak_bytes": 762393,
+    "first_rss_kib": 86260,
+    "repeated_python_peak_bytes": 886147,
+    "repeated_python_retained_bytes": 316928,
+    "repeated_rss_kib": 86260
+   }
+  },
+  "pass_context": {
+   "reference": {
+    "baseline_rss_kib": 88820,
+    "first_python_peak_bytes": 2286863,
+    "first_rss_kib": 88820,
+    "repeated_python_peak_bytes": 5389369,
+    "repeated_python_retained_bytes": 2108967,
+    "repeated_rss_kib": 88820
+   },
+   "candidate": {
+    "baseline_rss_kib": 88820,
+    "first_python_peak_bytes": 2511135,
+    "first_rss_kib": 88820,
+    "repeated_python_peak_bytes": 5552714,
+    "repeated_python_retained_bytes": 1312246,
+    "repeated_rss_kib": 92024
+   }
+  },
+  "loader": {
+   "reference": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2287021,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 4925779,
+    "repeated_python_retained_bytes": 2648906,
+    "repeated_rss_kib": 89076
+   },
+   "candidate": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2509166,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 5588344,
+    "repeated_python_retained_bytes": 2309929,
+    "repeated_rss_kib": 96296
+   }
+  },
+  "image": {
+   "reference": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2282131,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 4884424,
+    "repeated_python_retained_bytes": 2129972,
+    "repeated_rss_kib": 89076
+   },
+   "candidate": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2502161,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 5556742,
+    "repeated_python_retained_bytes": 2289564,
+    "repeated_rss_kib": 96976
+   }
+  },
+  "subdocument": {
+   "reference": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2764522,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 7741508,
+    "repeated_python_retained_bytes": 5967144,
+    "repeated_rss_kib": 106824
+   },
+   "candidate": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2870345,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 9877887,
+    "repeated_python_retained_bytes": 6161652,
+    "repeated_rss_kib": 135388
+   }
+  },
+  "foreign_lookup": {
+   "reference": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2381326,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 2550402,
+    "repeated_python_retained_bytes": 670955,
+    "repeated_rss_kib": 89076
+   },
+   "candidate": {
+    "baseline_rss_kib": 89076,
+    "first_python_peak_bytes": 2602369,
+    "first_rss_kib": 89076,
+    "repeated_python_peak_bytes": 2805598,
+    "repeated_python_retained_bytes": 873461,
+    "repeated_rss_kib": 89076
+   }
+  }
+ },
+ "equivalent_pairs": {
+  "benchmark": 322,
+  "scaling": 200,
+  "routing": 102,
+  "memory": 7
+ },
+ "not_measured": "Rust heap allocations and copied bytes (no instrumented allocator); RSS includes the interpreter and libraries and is a process peak."
+}

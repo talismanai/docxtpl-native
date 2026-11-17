@@ -1,0 +1,61 @@
+--- zip_ref_proto.rs
++++ zip_ref_proto.rs
+@@ -1,6 +1,34 @@
+-//! Laboratory-only ZIP serializer: incomplete, does not support ZIP64 or
+-//! directory entries, and hardcodes the Unix creator. Not production code.
+ use docxtplrs::package::{crc32, Package};
++use std::collections::{HashMap, VecDeque};
++use std::sync::{Arc, Mutex, OnceLock};
++const CACHE_LIMIT: usize = 32 * 1024 * 1024;
++const ENTRY_LIMIT: usize = 64;
++#[derive(Default)]
++struct Cache { entries: HashMap<Arc<[u8]>, Arc<[u8]>>, order: VecDeque<Arc<[u8]>>, bytes: usize }
++static CACHE: OnceLock<Mutex<Cache>> = OnceLock::new();
++fn compress(data: Arc<[u8]>) -> Result<Arc<[u8]>, String> {
++    let cache = CACHE.get_or_init(|| Mutex::new(Cache::default()));
++    if let Some(value) = cache.lock().unwrap_or_else(|e| e.into_inner()).entries.get(data.as_ref()) { return Ok(value.clone()); }
++    let mut output=vec![0;zlib_rs_ref::compress_bound(data.len())];
++    let mut encoder=zlib_rs_ref::Deflate::new(-1,false,15);
++    encoder.compress(&data,&mut output,zlib_rs_ref::DeflateFlush::NoFlush).map_err(|e|format!("{e:?}"))?;
++    if encoder.total_in()!=data.len() as u64 { return Err("incomplete compression input".into()); }
++    let n=encoder.total_out() as usize;
++    let status=encoder.compress(&[],&mut output[n..],zlib_rs_ref::DeflateFlush::Finish).map_err(|e|format!("{e:?}"))?;
++    if status!=zlib_rs_ref::Status::StreamEnd { return Err("incomplete compression output".into()); }
++    output.truncate(encoder.total_out() as usize);
++    let compressed: Arc<[u8]> = output.into();
++    let size = data.len().saturating_add(compressed.len());
++    if size <= CACHE_LIMIT {
++        let mut guard=cache.lock().unwrap_or_else(|e|e.into_inner());
++        if let Some(value)=guard.entries.get(data.as_ref()){return Ok(value.clone());}
++        while guard.entries.len() >= ENTRY_LIMIT || guard.bytes+size > CACHE_LIMIT {
++            if let Some(key)=guard.order.pop_front(){if let Some(value)=guard.entries.remove(key.as_ref()){guard.bytes-=key.len()+value.len();}}else{break;}
++        }
++        guard.bytes+=size;guard.order.push_back(data.clone());guard.entries.insert(data,compressed.clone());
++    }
++    Ok(compressed)
++}
+ fn u16le(out: &mut Vec<u8>, n: u16) { out.extend_from_slice(&n.to_le_bytes()); }
+ fn u32le(out: &mut Vec<u8>, n: u32) { out.extend_from_slice(&n.to_le_bytes()); }
+ struct Entry { name: Vec<u8>, flags: u16, crc: u32, compressed: u32, original: u32, offset: u32 }
+@@ -14,19 +42,12 @@
+         let flags=if name.is_ascii(){0}else{1<<11};
+         let data=file.bytes();let original=u32::try_from(data.len()).map_err(|_|"prototype does not support ZIP64 entry size")?;
+         let crc=crc32(data);
+-        let mut compressed=vec![0;zlib_rs_ref::compress_bound(data.len())];
+-        let mut encoder=zlib_rs_ref::Deflate::new(-1,false,15);
+-        encoder.compress(data,&mut compressed,zlib_rs_ref::DeflateFlush::NoFlush).map_err(|e|format!("{e:?}"))?;
+-        if encoder.total_in()!=data.len() as u64 { return Err("incomplete compression input".into()); }
+-        let n=encoder.total_out() as usize;
+-        let status=encoder.compress(&[],&mut compressed[n..],zlib_rs_ref::DeflateFlush::Finish).map_err(|e|format!("{e:?}"))?;
+-        if status!=zlib_rs_ref::Status::StreamEnd { return Err("incomplete compression output".into()); }
+-        compressed.truncate(encoder.total_out() as usize);
++        let compressed=compress(file.bytes_arc())?;
+         let length=u32::try_from(compressed.len()).map_err(|_|"prototype does not support ZIP64 compressed size")?;
+         let offset=u32::try_from(output.len()).map_err(|_|"prototype does not support ZIP64 offsets")?;
+         u32le(&mut output,0x04034b50);u16le(&mut output,20);u16le(&mut output,flags);u16le(&mut output,8);
+         u16le(&mut output,0);u16le(&mut output,33);u32le(&mut output,crc);u32le(&mut output,length);u32le(&mut output,original);
+-        u16le(&mut output,name_len);u16le(&mut output,0);output.extend_from_slice(&name);output.extend_from_slice(&compressed);
++        u16le(&mut output,name_len);u16le(&mut output,0);output.extend_from_slice(&name);output.extend_from_slice(compressed.as_ref());
+         entries.push(Entry{name,flags,crc,compressed:length,original,offset});
+     }
+     let central=u32::try_from(output.len()).map_err(|_|"prototype does not support ZIP64 central directory")?;

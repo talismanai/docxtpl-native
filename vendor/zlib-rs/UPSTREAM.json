@@ -1,0 +1,226 @@
+{
+  "repository": "https://github.com/trifectatechfoundation/zlib-rs",
+  "commit": "0254e07204884bfc902d6ebb68c8b703d0ea49cf",
+  "version": "0.6.8",
+  "license": "Zlib",
+  "source": "crates.io archive; normalized manifest retained",
+  "files": [
+    {
+      "path": ".cargo_vcs_info.json",
+      "git_blob_sha": "002f437a870cdf9f6a6dcbbbe0da232ca094023f"
+    },
+    {
+      "path": "Cargo.lock",
+      "git_blob_sha": "3431a97864ce6bead7e488ea9de1ba147b3f968b"
+    },
+    {
+      "path": "Cargo.toml",
+      "git_blob_sha": "9bb01ea21b4e05bcc8927e52c4d452d12786c303"
+    },
+    {
+      "path": "Cargo.toml.orig",
+      "git_blob_sha": "aea2c66ef3a8df7f03c0859e8f068173438e13d1"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "f91124fc06a9b4969cefd994e60d45df37d26873"
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "5f8035933239fb42d883cd86f4ded6a992765125"
+    },
+    {
+      "path": "src/adler32/avx2.rs",
+      "git_blob_sha": "baedc226ba67d28854b4d188cd667dbc47457f1e"
+    },
+    {
+      "path": "src/adler32/avx512.rs",
+      "git_blob_sha": "c9a67ac1315ee9d3dff8191a6fe6fd1d7728a22a"
+    },
+    {
+      "path": "src/adler32/avx512_vnni.rs",
+      "git_blob_sha": "76cb7852f2be513ec8109e87dc5cca305c477952"
+    },
+    {
+      "path": "src/adler32/generic.rs",
+      "git_blob_sha": "5e3f552f3e5c91d27027340560df71bb5cb73c00"
+    },
+    {
+      "path": "src/adler32/lsx.rs",
+      "git_blob_sha": "2f68bd556226b99dfcd72e438ff23aaf23f0e954"
+    },
+    {
+      "path": "src/adler32/neon.rs",
+      "git_blob_sha": "e3ddbffa31f3a2dcc3709da7b11842b1c6f520dc"
+    },
+    {
+      "path": "src/adler32/wasm.rs",
+      "git_blob_sha": "234b38960768270cfb6b7e7f110d1a90b3f084ae"
+    },
+    {
+      "path": "src/adler32.rs",
+      "git_blob_sha": "969a7eaac798348d711782fa6f3a62c9898f79a8"
+    },
+    {
+      "path": "src/allocate.rs",
+      "git_blob_sha": "9f6a198759569388d3942cc08a902aa2028ed4e9"
+    },
+    {
+      "path": "src/c_api.rs",
+      "git_blob_sha": "7d9645680d0bcec26657076b59ce86f9b39b6dd0"
+    },
+    {
+      "path": "src/cpu_features.rs",
+      "git_blob_sha": "d1fe8ec57c46cf00d712addeb48961cca910759a"
+    },
+    {
+      "path": "src/crc32/acle.rs",
+      "git_blob_sha": "a2fbbf6bdeb6fd111e6d7f856b6f1ea9fec32aec"
+    },
+    {
+      "path": "src/crc32/braid.rs",
+      "git_blob_sha": "ee6679e3e1acfd9817840da4d063c52be07358ec"
+    },
+    {
+      "path": "src/crc32/combine.rs",
+      "git_blob_sha": "95f3fdd3c7177420ba0797a3eeab7662fb8687a7"
+    },
+    {
+      "path": "src/crc32/loongarch.rs",
+      "git_blob_sha": "6e679de9c3e9c36d586c83fa5523f9fbd22efeac"
+    },
+    {
+      "path": "src/crc32/pclmulqdq.rs",
+      "git_blob_sha": "76d00bba8514523a4a113329ad125c050e8c6114"
+    },
+    {
+      "path": "src/crc32/vpclmulqdq.rs",
+      "git_blob_sha": "ea1d49147a081ddba9e1f5a6ff8b53b07c6bda78"
+    },
+    {
+      "path": "src/crc32.rs",
+      "git_blob_sha": "88e2e30b96f021a72406dcecc6a37865db1a0407"
+    },
+    {
+      "path": "src/deflate/algorithm/fast.rs",
+      "git_blob_sha": "993a83c552b2bac6842dd7ee095173eea3d3d8da"
+    },
+    {
+      "path": "src/deflate/algorithm/huff.rs",
+      "git_blob_sha": "b1c3f20d8f1bc2a4a285269d21afdf458a75e3f0"
+    },
+    {
+      "path": "src/deflate/algorithm/medium.rs",
+      "git_blob_sha": "370a80ce58e07f7256a0241bec72be0d42d8f6a0"
+    },
+    {
+      "path": "src/deflate/algorithm/mod.rs",
+      "git_blob_sha": "cdbb1c43086a9f8e8612b2d58e32feac422c7456"
+    },
+    {
+      "path": "src/deflate/algorithm/quick.rs",
+      "git_blob_sha": "4c2650d25770033ca86f9d2b1bd6dd298ff5b745"
+    },
+    {
+      "path": "src/deflate/algorithm/rle.rs",
+      "git_blob_sha": "b8f8dda0ee82a6ea8c78cf95102e83e2308c342a"
+    },
+    {
+      "path": "src/deflate/algorithm/slow.rs",
+      "git_blob_sha": "73f955ad6dfd16a014241aaf230c2f835fffe8fa"
+    },
+    {
+      "path": "src/deflate/algorithm/stored.rs",
+      "git_blob_sha": "8982710598739809c201821c89a2a296886c8fb8"
+    },
+    {
+      "path": "src/deflate/compare256.rs",
+      "git_blob_sha": "f4bcfc45fe1c7945e81c0dac3cf5343c906abafc"
+    },
+    {
+      "path": "src/deflate/hash_calc.rs",
+      "git_blob_sha": "8e3b73b0e5460d80cadc8b763aaaabf12b8c3222"
+    },
+    {
+      "path": "src/deflate/longest_match.rs",
+      "git_blob_sha": "fb37f911a5be90555e73c3ad0d433eeeb40d48ff"
+    },
+    {
+      "path": "src/deflate/pending.rs",
+      "git_blob_sha": "b8fc5771088f333149e911719af1cc4e4c227ea4"
+    },
+    {
+      "path": "src/deflate/slide_hash.rs",
+      "git_blob_sha": "33e2b2aca3708dd812230def2ee3728ecd04a26b"
+    },
+    {
+      "path": "src/deflate/sym_buf.rs",
+      "git_blob_sha": "981aebb53edb978307051120db644b8cfe5984c9"
+    },
+    {
+      "path": "src/deflate/test-data/inflate_buf_error.dat",
+      "git_blob_sha": "2b937a7f43ee323e096b319e7a0269c47bca53a4"
+    },
+    {
+      "path": "src/deflate/test-data/paper-100k.pdf",
+      "git_blob_sha": "b3325e4a2bb578419d6c7fa412aaa78d493ff274"
+    },
+    {
+      "path": "src/deflate/trees_tbl.rs",
+      "git_blob_sha": "1f5a9bc85efd21f3cc3fd05ff099f5fb53e5815b"
+    },
+    {
+      "path": "src/deflate/window.rs",
+      "git_blob_sha": "79e04ed4c4f9bee8fad2541bb458840298533703"
+    },
+    {
+      "path": "src/deflate.rs",
+      "git_blob_sha": "1177b0076bb5105f5cc725b7a5eec137a823f7b6"
+    },
+    {
+      "path": "src/inflate/bitreader.rs",
+      "git_blob_sha": "0a66c7ffa80dfe9e00e2116d71d7b2ac9726f114"
+    },
+    {
+      "path": "src/inflate/infback.rs",
+      "git_blob_sha": "2b366e0b962175d1a37f05740ad7e06c9bf274e9"
+    },
+    {
+      "path": "src/inflate/inffixed_tbl.rs",
+      "git_blob_sha": "4bb2a9eac83dc1acbea8883d6eb88f5b3746a1b9"
+    },
+    {
+      "path": "src/inflate/inftrees.rs",
+      "git_blob_sha": "4c0c30dd4f65adcba5de07e118ec529b8e50d564"
+    },
+    {
+      "path": "src/inflate/window.rs",
+      "git_blob_sha": "bb1a17adc026dfc4a402919b4ac0b9187a9e77d8"
+    },
+    {
+      "path": "src/inflate/writer.rs",
+      "git_blob_sha": "88ea3312cc5c76e63c7a62864c753ad5b6c4f3ac"
+    },
+    {
+      "path": "src/inflate.rs",
+      "git_blob_sha": "dd0b22b0222c557a1a3221b6238ef93c4da6b5fe"
+    },
+    {
+      "path": "src/lib.rs",
+      "git_blob_sha": "cbacc35a87912d73b95563f12cfb9125af1cfc1e"
+    },
+    {
+      "path": "src/stable.rs",
+      "git_blob_sha": "d976c310c0bae4f3d771b520ffc91099f0bd5b74"
+    },
+    {
+      "path": "src/weak_slice.rs",
+      "git_blob_sha": "06443f36db9b1bf0054c61ae8ec7e1609e7f8a35"
+    }
+  ],
+  "local_changes": {
+    "src/deflate/algorithm/mod.rs": "75850e3ced6619a526d37936f325f750989069f2",
+    "src/deflate/algorithm/slow.rs": "e71d6fff9d2e8ea69f8d43cba27cf665f5167603",
+    "src/deflate.rs": "8ffe93efdcdd24f943c44171cbbb06c7c6dce013"
+  }
+}

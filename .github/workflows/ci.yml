@@ -1,0 +1,274 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.head.repo.full_name || github.repository }}-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+jobs:
+  # The Rust engine on its own. No Python is set up, and PYO3_PYTHON points
+  # nowhere so that any crate reaching for PyO3 fails to build.
+  engine:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYO3_PYTHON: /nonexistent/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.96.0
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: libxml2 for the host core
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
+      - name: One version everywhere
+        run: bash scripts/check_versions.sh
+      - name: Engine boundary (no Python, no C deflate, no C in the browser path)
+        run: bash scripts/check_engine_boundary.sh
+      - name: Engine tests
+        run: cargo test --release --locked --no-fail-fast
+      - name: Marker and PDF layers (not default members, so not built above)
+        run: cargo test -p docxtpl-markers -p docxtpl-pdf --release --locked --no-fail-fast
+      - name: Audited MiniJinja fork unit tests
+        run: cargo test -p minijinja --lib --all-features --release --locked
+      - name: Audited DOCX fork unit tests
+        run: cargo test -p docxtplrs --lib --release --locked
+      - name: Clippy
+        run: cargo clippy --release --locked --all-targets
+      - name: External Rust workspace consumer
+        run: |
+          CARGO_TARGET_DIR="$GITHUB_WORKSPACE/target" cargo run --release --locked --manifest-path crates/docxtpl-core/tests/external-consumer/Cargo.toml
+          cargo tree --locked --manifest-path crates/docxtpl-core/tests/external-consumer/Cargo.toml --edges normal,build > /tmp/docxtpl-external-dependencies.txt
+          if grep -q 'pyo3 v' /tmp/docxtpl-external-dependencies.txt; then
+            echo "External Rust consumer unexpectedly depends on PyO3"
+            exit 1
+          fi
+          if grep -Eq 'libz(-ng)?-sys v' /tmp/docxtpl-external-dependencies.txt; then
+            echo "External Rust consumer overrides the audited Rust compressor"
+            exit 1
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Host side of the ABI and the import check
+        run: node --test js/test/ scripts/check_wasm_imports.test.mjs
+      - name: Browser module
+        run: |
+          cargo build -p docxtpl-wasm --target wasm32-unknown-unknown --profile wasm --locked
+          module=target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm
+          node scripts/check_wasm_imports.mjs "$module"
+          {
+            echo "### docxtpl_wasm.wasm"
+            echo "| | bytes |"
+            echo "| --- | ---: |"
+            echo "| raw | $(wc -c < "$module") |"
+            echo "| gzip -9 | $(gzip -9 -c "$module" | wc -c) |"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Every layer a browser pipeline links, on wasm32
+        run: |
+          cargo build -p docxtpl --features browser --target wasm32-unknown-unknown --profile wasm --locked
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docxtpl-wasm
+          path: target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm
+
+  # Fork provenance: every vendored file matches its upstream hash or a
+  # reviewed local change.
+  provenance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vendored forks match their manifests
+        run: python3 scripts/check_vendor.py
+      - name: Boundary and version guard mutation tests
+        run: python3 -m unittest discover -s tests -p test_repository_guards.py -v
+      - name: Every relative link in the documentation resolves
+        run: python3 -m unittest discover -s tests -p test_documentation_links.py -v
+
+  reference:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - name: Install pinned reference and dependencies
+        run: |
+          uv pip install --system 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Pillow==13.0.0'
+          python scripts/fetch_upstream.py
+          uv pip install --system --no-deps .upstream/docxtpl
+      - name: Check filtered-loop reference observations
+        run: PYTHONPATH=python python -m unittest discover -s tests -p test_filtered_iteration_reference.py -v
+      - name: Check subdocument bookmark reference IDs
+        run: PYTHONPATH=python:tests python -m unittest test_subdoc_bookmarks.SubdocBookmarkTests.test_reference_preserves_file_bookmark_ids -v
+      - name: Check subdocument style reference order
+        run: PYTHONPATH=python:tests python -m unittest test_subdoc_styles.SubdocumentStyleOrderTests.test_reference_style_order -v
+      - name: Check subdocument master identifier reference
+        run: PYTHONPATH=python:tests python -m unittest test_subdoc_master_identifiers.SubdocumentMasterIdentifiersTests.test_reference_stages_master_and_preserves_child_pictures -v
+
+  # The Python binding and the differential laboratory. Gaps fail on purpose:
+  # this job is green only when the binding matches the pinned reference.
+  python-binding:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          cache-on-failure: true
+      - name: Native dependencies and independent visual renderer
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config libreoffice-writer fonts-liberation fonts-dejavu-core
+      - name: Python test environment
+        run: |
+          uv venv .venv
+          uv pip install 'maturin==1.16.0' 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
+      - name: Build release extension
+        run: |
+          source .venv/bin/activate
+          maturin develop --release --locked
+          python -c "from docxtpl_native import capabilities; assert capabilities()['native_available'], capabilities()"
+      - name: Binding Rust unit tests
+        run: cargo test -p docxtpl-native --lib --release --locked
+      - name: Ruff and ty on the distributed package
+        run: |
+          uvx ruff@0.17.5 check python/docxtpl_native
+          uvx ty@0.0.104 check --python .venv python/docxtpl_native
+      # docxtpl is not installed yet: the product must work without it.
+      - name: Product suite without docxtpl
+        run: |
+          .venv/bin/python -c "import importlib.util, sys; sys.exit(importlib.util.find_spec('docxtpl') is not None)"
+          PYTHONPATH=tests:python .venv/bin/python -m unittest test_reference_free test_own_api -v
+          # Exit 1 means known test failures, which the unit-test step reports;
+          # any use of docxtpl (2 or 3) fails here.
+          status=0; .venv/bin/python scripts/run_product_tests.py || status=$?
+          test "$status" -le 1
+      - name: Build distributable wheel
+        run: |
+          source .venv/bin/activate
+          maturin build --release --locked --compatibility linux --out dist
+      - name: Wheel in a clean environment without docxtpl
+        run: |
+          mkdir -p artifacts
+          for wheel in dist/*.whl; do
+            .venv/bin/python scripts/check_reference_free_wheel.py "$wheel" --python ${{ matrix.python }} \
+              --out "artifacts/reference-free-$(basename "$wheel").json"
+          done
+      - name: Fetch fixed official suite and use that reference
+        run: |
+          .venv/bin/python scripts/fetch_upstream.py
+          uv pip install --no-deps .upstream/docxtpl
+          .venv/bin/python scripts/inventory.py
+      - name: Verify distributable wheel
+        run: |
+          source .venv/bin/activate
+          python scripts/check_wheel.py dist
+          dependency_site="$(python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+          mkdir -p artifacts/wheel-smoke
+          for wheel in dist/*.whl; do
+            smoke_report="artifacts/wheel-smoke/$(basename "$wheel").json"
+            python python/paritylab/check_wheel_install.py --wheel "$wheel" --dependency-site "$dependency_site" > "$smoke_report.tmp"
+            mv "$smoke_report.tmp" "$smoke_report"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-wheel-py${{ matrix.python }}
+          path: dist/*.whl
+      # The suite has known failures; the step passes when the run has exactly
+      # the failures listed in compatibility/known_failures.json.
+      - name: Unit tests
+        run: |
+          mkdir -p artifacts
+          PYTHONPATH=tests .venv/bin/python -m unittest discover -s tests -v > artifacts/unit-tests.log 2>&1 || true
+          tail -n 5 artifacts/unit-tests.log
+          .venv/bin/python scripts/check_known_failures.py artifacts/unit-tests.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unit-tests-py${{ matrix.python }}
+          path: artifacts/unit-tests.log
+      - name: RichText construction benchmark
+        run: .venv/bin/python scripts/benchmark_richtext.py --out artifacts/richtext-benchmark.json
+      - name: Save RichText benchmark samples
+        uses: actions/upload-artifact@v4
+        with:
+          name: richtext-benchmark-py${{ matrix.python }}
+          path: artifacts/richtext-benchmark.json
+      - name: Listing construction benchmark
+        run: .venv/bin/python scripts/benchmark_listing.py --out artifacts/listing-benchmark.json
+      - name: Save Listing benchmark samples
+        uses: actions/upload-artifact@v4
+        with:
+          name: listing-benchmark-py${{ matrix.python }}
+          path: artifacts/listing-benchmark.json
+      - name: DOCX input benchmark
+        run: .venv/bin/python scripts/benchmark_docx_input.py --out artifacts/docx-input-benchmark.json
+      - name: Save DOCX input benchmark samples
+        uses: actions/upload-artifact@v4
+        with:
+          name: docx-input-benchmark-py${{ matrix.python }}
+          path: artifacts/docx-input-benchmark.json
+      - name: Differential and visual parity (gaps fail)
+        run: .venv/bin/python -m paritylab.cli --suite all --visual required --repeat 7 --warmup 1 --out artifacts/parity
+      - name: Summarize parity evidence
+        if: always()
+        run: |
+          if test -f artifacts/parity/report.json; then .venv/bin/python scripts/summarize_report.py artifacts/parity/report.json; fi
+      - name: Granular specification evidence
+        if: always()
+        run: |
+          smoke_args=()
+          for smoke_report in artifacts/wheel-smoke/*.json; do
+            if test -f "$smoke_report"; then smoke_args+=(--standalone-report "$smoke_report"); fi
+          done
+          .venv/bin/python scripts/spec_coverage.py "${smoke_args[@]}"
+          cat artifacts/spec-coverage.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Full compatibility traceability (unmapped APIs fail)
+        if: always()
+        run: |
+          # This leg can only prove its own platform target; the matrix
+          # qualifies `deployment.python_platform_matrix` when every declared
+          # target has a report of the same revision, which means collecting
+          # the reports of all the legs.
+          deployment_args=()
+          for smoke_report in artifacts/wheel-smoke/*.json; do
+            if test -f "$smoke_report"; then deployment_args+=(--deployment-report "$smoke_report"); fi
+          done
+          .venv/bin/python scripts/compatibility_matrix.py --check "${deployment_args[@]}"
+      - name: Specification test coverage (missing contracts and partitions fail)
+        if: always()
+        run: .venv/bin/python scripts/spec_test_coverage.py --check
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-evidence-and-lock-py${{ matrix.python }}
+          path: |
+            artifacts/
+            Cargo.lock

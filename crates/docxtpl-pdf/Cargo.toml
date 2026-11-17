@@ -1,0 +1,20 @@
+[package]
+name = "docxtpl-pdf"
+version.workspace = true
+edition.workspace = true
+# The PDF converter uses language features newer than the engine MSRV.
+rust-version = "1.96"
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "DOCX to PDF for hosts without a filesystem: fonts supplied by the host, on demand, and the page positions of a document's bookmarks"
+
+[dependencies]
+# Word-compatible layout. The fork adds what a browser needs: the wasm32
+# build, fonts in memory, font requests and bookmark positions.
+docxide-pdf = { git = "https://github.com/banduk/docxide-pdf", rev = "c1564da2a2ed3aaa6f603ce3aa24c31d068a1826", default-features = false }
+serde_json = { version = "1", features = ["preserve_order"] }
+
+[dev-dependencies]
+# A minimal DOCX to convert.
+docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }

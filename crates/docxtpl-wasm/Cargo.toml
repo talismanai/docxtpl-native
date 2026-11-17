@@ -1,0 +1,22 @@
+[package]
+name = "docxtpl-wasm"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "DOCX template rendering without Python (browsers, wasm32 and embedders) over the native Rust core"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }
+fancy-regex = "0.14"
+jinja = { git = "https://github.com/rsyi/jinja", rev = "52d077512af9b943b005ef374412ec96ee3a7a3d" }
+minijinja = { version = "2.19", features = ["loader", "unicode", "json", "preserve_order"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+
+[dev-dependencies]
+serde_json = { version = "1", features = ["preserve_order"] }

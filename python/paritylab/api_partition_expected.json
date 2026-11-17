@@ -1,0 +1,2342 @@
+{
+ "api_partition_DocxTemplate___getattr_boundary": {
+  "value": {
+   "paragraphs": 1
+  }
+ },
+ "api_partition_DocxTemplate___getattr_exceptions": {
+  "value": {
+   "message": "attribute name must be string, not 'Failing'",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_DocxTemplate___getattr_identity_mutation": {
+  "value": {
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate___getattr_interactions": {
+  "value": {
+   "title": "T Ada"
+  }
+ },
+ "api_partition_DocxTemplate___getattr_invalid_input": {
+  "value": {
+   "message": "'NoneType' object has no attribute 'no_such_attribute'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_DocxTemplate___getattr_lifecycle_order": {
+  "value": {
+   "text": "Hi Ada"
+  }
+ },
+ "api_partition_DocxTemplate___init_boundary": {
+  "value": {
+   "pathlike": {
+    "media": {},
+    "paragraphs": [
+     "Hi Ada"
+    ]
+   },
+   "str": {
+    "media": {},
+    "paragraphs": [
+     "Hi Ada"
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate___init_exceptions": {
+  "value": {
+   "message": "probe stream failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate___init_identity_mutation": {
+  "value": {
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Hi Ada"
+    ]
+   },
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate___init_interactions": {
+  "value": {
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Hi A"
+    ]
+   },
+   "second": {
+    "media": {},
+    "paragraphs": [
+     "Hi B"
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate___init_invalid_input": {
+  "value": {
+   "message": "'object' object has no attribute 'seek'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_DocxTemplate___init_lifecycle_order": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi {{ name }}"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate___init_normal": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_boundary": {
+  "value": {
+   "ids": [
+    "rId9",
+    "rId9"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_exceptions": {
+  "value": {
+   "value": "rId9"
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_identity_mutation": {
+  "value": {
+   "ids": [
+    "rId9",
+    "rId9"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_interactions": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi "
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_invalid_input": {
+  "value": {
+   "value": "rId9"
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_lifecycle_order": {
+  "value": {
+   "id": {
+    "value": "rId9"
+   },
+   "state": {
+    "rendered": false,
+    "saved": false
+   }
+  }
+ },
+ "api_partition_DocxTemplate_build_url_id_normal": {
+  "value": {
+   "id": "rId9",
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Hi Ada"
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_boundary": {
+  "value": {
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_exceptions": {
+  "value": {
+   "message": "probe stream failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_identity_mutation": {
+  "value": {
+   "count": 2,
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_interactions": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada",
+    "Ada!"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_invalid_input": {
+  "value": {
+   "message": "DocxTemplate.get_docx() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_lifecycle_order": {
+  "value": {
+   "state": {
+    "rendered": false,
+    "saved": false
+   },
+   "text": "Hi {{ name }}"
+  }
+ },
+ "api_partition_DocxTemplate_get_docx_normal": {
+  "value": {
+   "text": "Hi {{ name }}"
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_boundary": {
+  "value": {
+   "value": 0
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_exceptions": {
+  "value": {
+   "message": "probe stream failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_identity_mutation": {
+  "value": {
+   "crc": 3421780262,
+   "position": 15
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_interactions": {
+  "value": {
+   "path": 3421780262,
+   "stream": 3421780262
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_invalid_input": {
+  "value": {
+   "message": "expected str, bytes or os.PathLike object, not float",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_lifecycle_order": {
+  "value": {
+   "value": 3421780262
+  }
+ },
+ "api_partition_DocxTemplate_get_file_crc_normal": {
+  "value": {
+   "value": 3421780262
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_boundary": {
+  "value": {
+   "value": []
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_identity_mutation": {
+  "value": {
+   "rendered": false,
+   "saved": false
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_interactions": {
+  "value": {
+   "value": [
+    "items"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_invalid_input": {
+  "value": {
+   "message": "'int' object has no attribute 'parse'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_lifecycle_order": {
+  "value": {
+   "value": [
+    "items",
+    "name"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_get_undeclared_template_variables_normal": {
+  "value": {
+   "value": [
+    "items",
+    "name"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_boundary": {
+  "value": {
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_exceptions": {
+  "value": {
+   "call": {
+    "value": null
+   }
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_identity_mutation": {
+  "value": {
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_interactions": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada",
+    "Ada!"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_invalid_input": {
+  "value": {
+   "call": {
+    "value": null
+   }
+  }
+ },
+ "api_partition_DocxTemplate_init_docx_lifecycle_order": {
+  "value": {
+   "state": {
+    "rendered": false,
+    "saved": false
+   },
+   "text": "Hi {{ name }}"
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_boundary": {
+  "value": {
+   "type": "Subdoc"
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_identity_mutation": {
+  "value": {
+   "same": true
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_interactions": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "First",
+    "Second"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_invalid_input": {
+  "value": {
+   "message": "'object' object has no attribute 'seek'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_lifecycle_order": {
+  "value": {
+   "call": {
+    "value": {
+     "type": "Subdoc"
+    }
+   },
+   "state": {
+    "rendered": false,
+    "saved": false
+   }
+  }
+ },
+ "api_partition_DocxTemplate_new_subdoc_normal": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Inside"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_render_boundary": {
+  "value": {
+   "escaped": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      "Hi <b>"
+     ]
+    }
+   },
+   "missing": {
+    "media": {},
+    "paragraphs": [
+     "Hi "
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_render_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_render_identity_mutation": {
+  "value": {
+   "context": {
+    "items": [
+     1,
+     2
+    ],
+    "name": "Ada"
+   },
+   "state": {
+    "rendered": true,
+    "saved": false
+   }
+  }
+ },
+ "api_partition_DocxTemplate_render_interactions": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "ab"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_render_invalid_input": {
+  "value": {
+   "list": {
+    "message": "cannot convert dictionary update sequence element #0 to a sequence",
+    "type": "builtins.TypeError"
+   },
+   "none": {
+    "media": {},
+    "paragraphs": [
+     "Hi Ada"
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_render_lifecycle_order": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi B"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_render_normal": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_boundary": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_exceptions": {
+  "value": {
+   "call": {
+    "message": "probe argument failure",
+    "type": "builtins.ValueError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_identity_mutation": {
+  "value": {
+   "embedded": 1,
+   "media": 0,
+   "pictures": 0,
+   "zipname": 0
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_invalid_input": {
+  "value": {
+   "call": {
+    "message": "expected str, bytes or os.PathLike object, not float",
+    "type": "builtins.TypeError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_lifecycle_order": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_embedded_normal": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_boundary": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_exceptions": {
+  "value": {
+   "call": {
+    "message": "probe argument failure",
+    "type": "builtins.ValueError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_identity_mutation": {
+  "value": {
+   "embedded": 0,
+   "media": 1,
+   "pictures": 0,
+   "zipname": 0
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_invalid_input": {
+  "value": {
+   "call": {
+    "message": "expected str, bytes or os.PathLike object, not float",
+    "type": "builtins.TypeError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_lifecycle_order": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_media_normal": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_boundary": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_exceptions": {
+  "value": {
+   "call": {
+    "message": "probe argument failure",
+    "type": "builtins.ValueError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_identity_mutation": {
+  "value": {
+   "embedded": 0,
+   "media": 0,
+   "pictures": 1,
+   "zipname": 0
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_invalid_input": {
+  "value": {
+   "call": {
+    "message": "expected str, bytes or os.PathLike object, not float",
+    "type": "builtins.TypeError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_lifecycle_order": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_pic_normal": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_boundary": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_exceptions": {
+  "value": {
+   "call": {
+    "message": "probe argument failure",
+    "type": "builtins.ValueError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_identity_mutation": {
+  "value": {
+   "embedded": 0,
+   "media": 0,
+   "pictures": 0,
+   "zipname": 1
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_invalid_input": {
+  "value": {
+   "call": {
+    "message": "expected str, bytes or os.PathLike object, not float",
+    "type": "builtins.TypeError"
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_lifecycle_order": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_replace_zipname_normal": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "output": {
+    "media": {
+     "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+    },
+    "paragraphs": [
+     "Hi Ada",
+     ""
+    ]
+   }
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_boundary": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_exceptions": {
+  "value": {
+   "message": "DocxTemplate.reset_replacements() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_identity_mutation": {
+  "value": {
+   "same_mapping": false
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_invalid_input": {
+  "value": {
+   "message": "DocxTemplate.reset_replacements() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_lifecycle_order": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada"
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_reset_replacements_normal": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_save_boundary": {
+  "value": {
+   "call": {
+    "value": null
+   },
+   "text": "Hi Ada"
+  }
+ },
+ "api_partition_DocxTemplate_save_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_DocxTemplate_save_identity_mutation": {
+  "value": {
+   "equal": true,
+   "state": {
+    "rendered": true,
+    "saved": true
+   }
+  }
+ },
+ "api_partition_DocxTemplate_save_interactions": {
+  "value": {
+   "media": {
+    "word/media/image1.png": "68892c2734a92236704476521287518e26fc45db"
+   },
+   "paragraphs": [
+    "Hi Ada",
+    ""
+   ]
+  }
+ },
+ "api_partition_DocxTemplate_save_invalid_input": {
+  "value": {
+   "message": "'object' object has no attribute 'write'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_DocxTemplate_save_normal": {
+  "value": {
+   "media": {},
+   "paragraphs": [
+    "Hi Ada"
+   ]
+  }
+ },
+ "api_partition_InlineImage___html_boundary": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___html_exceptions": {
+  "value": {
+   "message": "InlineImage.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_InlineImage___html_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_InlineImage___html_interactions": {
+  "value": {
+   "autoescape": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___html_invalid_input": {
+  "value": {
+   "message": "InlineImage.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_InlineImage___html_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    },
+    "str": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    }
+   },
+   "first": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___html_normal": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "output": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___init_boundary": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___init_class_identity_and_reference_inheritance": {
+  "value": {
+   "instance": true,
+   "module": "inline_image",
+   "name": "InlineImage",
+   "output": {
+    "media": {
+     "word/media/image1.png": "605c1495016f2cda663046a8b527b6bf34c48063"
+    },
+    "paragraphs": [
+     ""
+    ]
+   },
+   "same_template": true
+  }
+ },
+ "api_partition_InlineImage___init_exceptions": {
+  "value": {
+   "value": {
+    "html": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    },
+    "str": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    }
+   }
+  }
+ },
+ "api_partition_InlineImage___init_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_InlineImage___init_interactions": {
+  "value": {
+   "autoescape": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___init_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    },
+    "str": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    }
+   }
+  }
+ },
+ "api_partition_InlineImage___init_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    },
+    "str": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    }
+   },
+   "first": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___init_normal": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "output": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___str_boundary": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___str_exceptions": {
+  "value": {
+   "message": "InlineImage.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_InlineImage___str_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_InlineImage___str_interactions": {
+  "value": {
+   "autoescape": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___str_invalid_input": {
+  "value": {
+   "message": "InlineImage.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_InlineImage___str_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    },
+    "str": {
+     "message": "'NoneType' object has no attribute 'current_rendering_part'",
+     "type": "builtins.AttributeError"
+    }
+   },
+   "first": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_InlineImage___str_normal": {
+  "value": {
+   "html": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "output": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   },
+   "str": {
+    "message": "'NoneType' object has no attribute 'current_rendering_part'",
+    "type": "builtins.AttributeError"
+   }
+  }
+ },
+ "api_partition_Listing___html_boundary": {
+  "value": {
+   "html": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   },
+   "str": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   }
+  }
+ },
+ "api_partition_Listing___html_exceptions": {
+  "value": {
+   "message": "Listing.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Listing___html_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Listing___html_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      "a\nb\tc & <d>"
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Listing___html_invalid_input": {
+  "value": {
+   "message": "Listing.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Listing___html_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    },
+    "str": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   }
+  }
+ },
+ "api_partition_Listing___html_normal": {
+  "value": {
+   "html": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   },
+   "str": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   }
+  }
+ },
+ "api_partition_Listing___init_boundary": {
+  "value": {
+   "html": {
+    "value": ""
+   },
+   "str": {
+    "value": ""
+   }
+  }
+ },
+ "api_partition_Listing___init_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_Listing___init_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Listing___init_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      "a\nb\tc & <d>"
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Listing___init_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "value": "&lt;object object&gt;"
+    },
+    "str": {
+     "value": "&lt;object object&gt;"
+    }
+   }
+  }
+ },
+ "api_partition_Listing___init_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    },
+    "str": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   }
+  }
+ },
+ "api_partition_Listing___init_normal": {
+  "value": {
+   "html": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   },
+   "str": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   }
+  }
+ },
+ "api_partition_Listing___str_boundary": {
+  "value": {
+   "html": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   },
+   "str": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   }
+  }
+ },
+ "api_partition_Listing___str_exceptions": {
+  "value": {
+   "message": "Listing.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Listing___str_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Listing___str_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      "a\nb\tc & <d>"
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Listing___str_invalid_input": {
+  "value": {
+   "message": "Listing.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Listing___str_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    },
+    "str": {
+     "value": "a\nb\tc &amp; &lt;d&gt;"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   }
+  }
+ },
+ "api_partition_Listing___str_normal": {
+  "value": {
+   "html": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "a\nb\tc & <d>"
+    ]
+   },
+   "str": {
+    "value": "a\nb\tc &amp; &lt;d&gt;"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___html_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___html_exceptions": {
+  "value": {
+   "message": "RichTextParagraph.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichTextParagraph___html_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichTextParagraph___html_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___html_invalid_input": {
+  "value": {
+   "message": "RichTextParagraph.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichTextParagraph___html_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___html_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___init_boundary": {
+  "value": {
+   "html": {
+    "value": ""
+   },
+   "str": {
+    "value": ""
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___init_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_RichTextParagraph___init_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichTextParagraph___init_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___init_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">&lt;object object&gt;</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">&lt;object object&gt;</w:t></w:r></w:p>"
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___init_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___init_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___str_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___str_exceptions": {
+  "value": {
+   "message": "RichTextParagraph.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichTextParagraph___str_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichTextParagraph___str_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___str_invalid_input": {
+  "value": {
+   "message": "RichTextParagraph.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichTextParagraph___str_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   }
+  }
+ },
+ "api_partition_RichTextParagraph___str_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph_add_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p></w:p>"
+   }
+  }
+ },
+ "api_partition_RichTextParagraph_add_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_RichTextParagraph_add_identity_mutation": {
+  "value": {
+   "changed": true,
+   "returns_self": false
+  }
+ },
+ "api_partition_RichTextParagraph_add_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph_add_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p><w:r><w:t xml:space=\"preserve\">1</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p><w:r><w:t xml:space=\"preserve\">1</w:t></w:r></w:p>"
+    }
+   }
+  }
+ },
+ "api_partition_RichTextParagraph_add_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p><w:r><w:t xml:space=\"preserve\">later</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p><w:p><w:r><w:t xml:space=\"preserve\">later</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   }
+  }
+ },
+ "api_partition_RichTextParagraph_add_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Para"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t xml:space=\"preserve\">Para</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_RichText___html_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText___html_exceptions": {
+  "value": {
+   "message": "RichText.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichText___html_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichText___html_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichText___html_invalid_input": {
+  "value": {
+   "message": "RichText.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichText___html_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   }
+  }
+ },
+ "api_partition_RichText___html_normal": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText___init_boundary": {
+  "value": {
+   "html": {
+    "value": ""
+   },
+   "str": {
+    "value": ""
+   }
+  }
+ },
+ "api_partition_RichText___init_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_RichText___init_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichText___init_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichText___init_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "value": "<w:r><w:t xml:space=\"preserve\">&lt;object object&gt;</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:t xml:space=\"preserve\">&lt;object object&gt;</w:t></w:r>"
+    }
+   }
+  }
+ },
+ "api_partition_RichText___init_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   }
+  }
+ },
+ "api_partition_RichText___init_normal": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText___str_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText___str_exceptions": {
+  "value": {
+   "message": "RichText.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichText___str_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_RichText___str_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichText___str_invalid_input": {
+  "value": {
+   "message": "RichText.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_RichText___str_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   }
+  }
+ },
+ "api_partition_RichText___str_normal": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText_add_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\"></w:t></w:r>"
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\"></w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_RichText_add_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_RichText_add_identity_mutation": {
+  "value": {
+   "changed": true,
+   "returns_self": false
+  }
+ },
+ "api_partition_RichText_add_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_RichText_add_invalid_input": {
+  "value": {
+   "value": {
+    "html": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\">1</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\">1</w:t></w:r>"
+    }
+   }
+  }
+ },
+ "api_partition_RichText_add_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\">later</w:t></w:r>"
+    },
+    "str": {
+     "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r><w:r><w:t xml:space=\"preserve\">later</w:t></w:r>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   }
+  }
+ },
+ "api_partition_RichText_add_normal": {
+  "value": {
+   "html": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Rich"
+    ]
+   },
+   "str": {
+    "value": "<w:r><w:rPr><w:b/></w:rPr><w:t xml:space=\"preserve\">Rich</w:t></w:r>"
+   }
+  }
+ },
+ "api_partition_Subdoc___getattr_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___getattr_exceptions": {
+  "value": {
+   "message": "attribute name must be string, not 'Failing'",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___getattr_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Subdoc___getattr_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Subdoc___getattr_invalid_input": {
+  "value": {
+   "message": "attribute name must be string, not 'int'",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___getattr_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   }
+  }
+ },
+ "api_partition_Subdoc___getattr_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___html_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___html_exceptions": {
+  "value": {
+   "message": "Subdoc.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___html_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Subdoc___html_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Subdoc___html_invalid_input": {
+  "value": {
+   "message": "Subdoc.__html__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___html_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   }
+  }
+ },
+ "api_partition_Subdoc___html_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___init_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___init_exceptions": {
+  "value": {
+   "message": "probe argument failure",
+   "type": "builtins.ValueError"
+  }
+ },
+ "api_partition_Subdoc___init_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Subdoc___init_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Subdoc___init_invalid_input": {
+  "value": {
+   "message": "'object' object has no attribute 'seek'",
+   "type": "builtins.AttributeError"
+  }
+ },
+ "api_partition_Subdoc___init_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   }
+  }
+ },
+ "api_partition_Subdoc___init_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___str_boundary": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ },
+ "api_partition_Subdoc___str_exceptions": {
+  "value": {
+   "message": "Subdoc.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___str_identity_mutation": {
+  "value": {
+   "stable": true
+  }
+ },
+ "api_partition_Subdoc___str_interactions": {
+  "value": {
+   "autoescape": {
+    "value": {
+     "media": {},
+     "paragraphs": [
+      ""
+     ]
+    }
+   }
+  }
+ },
+ "api_partition_Subdoc___str_invalid_input": {
+  "value": {
+   "message": "Subdoc.__str__() takes 1 positional argument but 2 were given",
+   "type": "builtins.TypeError"
+  }
+ },
+ "api_partition_Subdoc___str_lifecycle_order": {
+  "value": {
+   "after": {
+    "html": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    },
+    "str": {
+     "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+    }
+   },
+   "first": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   }
+  }
+ },
+ "api_partition_Subdoc___str_normal": {
+  "value": {
+   "html": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   },
+   "output": {
+    "media": {},
+    "paragraphs": [
+     "Inside"
+    ]
+   },
+   "str": {
+    "value": "<w:p><w:r><w:t>Inside</w:t></w:r></w:p>"
+   }
+  }
+ }
+}

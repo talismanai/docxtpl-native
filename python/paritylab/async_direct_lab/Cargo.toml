@@ -1,0 +1,11 @@
+[package]
+name = "docxtpl-async-direct-prototype"
+version = "0.0.0"
+edition = "2024"
+[lib]
+name = "_async_direct"
+crate-type = ["cdylib"]
+[dependencies]
+pyo3 = { version = "=0.29.0", features = ["extension-module", "experimental-async"] }
+
+[workspace]

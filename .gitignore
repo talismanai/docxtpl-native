@@ -1,0 +1,13 @@
+target/
+.venv/
+__pycache__/
+*.pyc
+*.so
+*.pyd
+artifacts/
+evidence/
+.upstream/
+fixtures/private/
+dist/
+work/
+

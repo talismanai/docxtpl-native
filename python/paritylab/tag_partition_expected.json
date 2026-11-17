@@ -1,0 +1,392 @@
+{
+ "tag_partition_cellbg_empty": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [
+   ""
+  ],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_cellbg_invalid_placement": {
+  "message": "Encountered unknown tag 'cellbg'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_cellbg_malformed_tag": {
+  "message": "Expected an expression, got 'end of print statement'",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_cellbg_nested": {
+  "bold": [],
+  "cells": [
+   "A",
+   "B"
+  ],
+  "fills": [
+   "FF0000",
+   "00FF00"
+  ],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_cellbg_repeated_render": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [
+   "00FF00"
+  ],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_cellbg_styles_interactions": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [
+   "FF0000"
+  ],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_colspan_empty": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "0"
+  ]
+ },
+ "tag_partition_colspan_invalid_placement": {
+  "message": "Encountered unknown tag 'colspan'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_colspan_malformed_tag": {
+  "message": "Expected an expression, got 'end of print statement'",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_colspan_nested": {
+  "bold": [],
+  "cells": [
+   "A",
+   "Y",
+   "B",
+   "Y"
+  ],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "2",
+   "1"
+  ]
+ },
+ "tag_partition_colspan_repeated_render": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "1"
+  ]
+ },
+ "tag_partition_colspan_styles_interactions": {
+  "bold": [],
+  "cells": [
+   "X",
+   "Y"
+  ],
+  "fills": [
+   "0000FF"
+  ],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "2"
+  ]
+ },
+ "tag_partition_horizontal_merge_empty": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_horizontal_merge_invalid_placement": {
+  "message": "Encountered unknown tag 'hm'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_horizontal_merge_malformed_tag": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_horizontal_merge_nested": {
+  "bold": [],
+  "cells": [
+   "A",
+   "A"
+  ],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "2",
+   "2"
+  ]
+ },
+ "tag_partition_horizontal_merge_repeated_render": {
+  "bold": [],
+  "cells": [
+   "C"
+  ],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": [
+   "1"
+  ]
+ },
+ "tag_partition_horizontal_merge_styles_interactions": {
+  "message": "'loop' is undefined",
+  "type": "jinja2.exceptions.UndefinedError"
+ },
+ "tag_partition_paragraph_empty": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "after",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_paragraph_invalid_placement": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "after",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_paragraph_malformed_tag": {
+  "message": "Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_paragraph_nested": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "a",
+    "Normal"
+   ],
+   [
+    "b",
+    "Normal"
+   ],
+   [
+    "after",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_paragraph_repeated_render": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "after",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_paragraph_styles_interactions": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "heading",
+    "Heading 1"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_run_empty": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "after",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_run_invalid_placement": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "",
+    "Normal"
+   ],
+   [
+    "inside",
+    "Normal"
+   ],
+   [
+    "",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_run_malformed_tag": {
+  "message": "Encountered unknown tag 'r'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_run_nested": {
+  "bold": [
+   "a"
+  ],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "ab",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_run_repeated_render": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_run_styles_interactions": {
+  "bold": [
+   "",
+   "bold",
+   ""
+  ],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [
+   [
+    "boldplain",
+    "Normal"
+   ]
+  ],
+  "spans": []
+ },
+ "tag_partition_vertical_merge_empty": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_vertical_merge_invalid_placement": {
+  "message": "Encountered unknown tag 'vm'.",
+  "type": "jinja2.exceptions.TemplateSyntaxError"
+ },
+ "tag_partition_vertical_merge_malformed_tag": {
+  "bold": [],
+  "cells": [],
+  "fills": [],
+  "merges": [],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_vertical_merge_nested": {
+  "bold": [],
+  "cells": [
+   "g",
+   "A",
+   "B",
+   "C"
+  ],
+  "fills": [],
+  "merges": [
+   "restart",
+   "continue",
+   "continue"
+  ],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_vertical_merge_repeated_render": {
+  "bold": [],
+  "cells": [
+   "g",
+   "A"
+  ],
+  "fills": [],
+  "merges": [
+   "restart"
+  ],
+  "paragraphs": [],
+  "spans": []
+ },
+ "tag_partition_vertical_merge_styles_interactions": {
+  "message": "'loop' is undefined",
+  "type": "jinja2.exceptions.UndefinedError"
+ }
+}

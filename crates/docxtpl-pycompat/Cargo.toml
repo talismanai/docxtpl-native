@@ -1,0 +1,19 @@
+[package]
+name = "docxtpl-pycompat"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Python library behaviors (lxml trees, python-docx relationships, Pillow pictures, str/repr) for docxtpl-compatible pipelines without Python"
+
+[dependencies]
+# GIF, BMP, WebP and TIFF decoding (PNG and JPEG use png and zune-jpeg).
+image = { version = "0.25", default-features = false, features = ["gif", "bmp", "webp", "tiff"] }
+tiff = { version = "0.11", default-features = false }
+png = "0.18"
+quick-xml = "0.36"
+serde_json = { version = "1", features = ["preserve_order"] }
+zune-core = "0.5"
+zune-jpeg = "0.5"

@@ -1,0 +1,4739 @@
+{
+ "language_partition_jinja_async_callback_async_generators_and_filters": {
+  "text": "[1, 2, 3]1,2,3",
+  "trace": [
+   [
+    "yield",
+    1
+   ],
+   [
+    "yield",
+    2
+   ],
+   [
+    "yield",
+    3
+   ],
+   "closed",
+   [
+    "yield",
+    1
+   ],
+   [
+    "yield",
+    2
+   ],
+   [
+    "yield",
+    3
+   ],
+   "closed"
+  ]
+ },
+ "language_partition_jinja_async_callback_contextvars_and_task_lifecycle": {
+  "text": "Sset",
+  "trace": [
+   [
+    "set",
+    "set"
+   ],
+   [
+    "get",
+    "set"
+   ]
+  ]
+ },
+ "language_partition_jinja_async_callback_extension_and_sandbox_interactions": {
+  "text": "VC",
+  "trace": [
+   [
+    "call",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_async_callback_loop_cleanup_and_cancellation": {
+  "text": "12",
+  "trace": [
+   [
+    "yield",
+    1
+   ],
+   [
+    "yield",
+    2
+   ],
+   "closed"
+  ]
+ },
+ "language_partition_jinja_async_callback_nested_renders_and_part_boundaries": {
+  "result": {
+   "text": "N"
+  },
+  "trace": [
+   "4"
+  ]
+ },
+ "language_partition_jinja_callback_exception_nested_rendering": {
+  "error": {
+   "message": "inner render",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "inner",
+    true
+   ]
+  ]
+ },
+ "language_partition_jinja_callback_identity_async_and_nested_calls": {
+  "text": "0True",
+  "trace": []
+ },
+ "language_partition_jinja_callback_identity_mutable_containers_and_cycles": {
+  "text": "True1TrueTrue",
+  "trace": []
+ },
+ "language_partition_jinja_callback_identity_mutation_and_lifetime": {
+  "text": "[0]2",
+  "trace": []
+ },
+ "language_partition_jinja_compile_constant_argument_constant_identity_and_reuse": {
+  "text": "1True2False3False4False",
+  "trace": []
+ },
+ "language_partition_jinja_compile_constant_argument_control_flow_and_extensions": {
+  "text": "FFY",
+  "trace": [
+   [
+    "f",
+    [
+     "c"
+    ],
+    []
+   ],
+   [
+    "f",
+    [
+     "c"
+    ],
+    []
+   ],
+   [
+    "f",
+    [
+     "cond"
+    ],
+    []
+   ],
+   [
+    "f",
+    [
+     "do"
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_compile_constant_argument_nested_filters_and_tests": {
+  "text": "GTrueGF",
+  "trace": [
+   [
+    "f",
+    [
+     "a"
+    ],
+    []
+   ],
+   [
+    "g",
+    [
+     "F"
+    ],
+    []
+   ],
+   [
+    "t",
+    "x"
+   ],
+   [
+    "gg",
+    [
+     "b"
+    ],
+    []
+   ],
+   [
+    "gf",
+    [
+     "GG"
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_extensions_ast_async_and_sandbox_interactions": {
+  "async": {
+   "text": "A",
+   "trace": []
+  },
+  "sandbox": {
+   "text": "",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_extensions_ast_registration_and_extension_identity": {
+  "text": "QUIET['paritylab.language_partition_probes.Shout']",
+  "trace": []
+ },
+ "language_partition_jinja_extensions_ast_token_locations_and_syntax_errors": {
+  "broken": {
+   "error": {
+    "message": "broken tag here",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "unknown": {
+   "error": {
+    "message": "unexpected 'end of statement block'",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_finalize_capture_async_and_sandbox": {
+  "async": {
+   "text": ""
+  },
+  "sandbox": {
+   "text": "2"
+  },
+  "trace": [
+   [
+    "finalize",
+    "None"
+   ],
+   [
+    "finalize",
+    "2"
+   ]
+  ]
+ },
+ "language_partition_jinja_finalize_capture_compile_time_and_dynamic_escape": {
+  "text": "const<x>None&",
+  "trace": [
+   [
+    "finalize",
+    "const"
+   ],
+   [
+    "finalize",
+    "None"
+   ],
+   [
+    "finalize",
+    "<x>"
+   ],
+   [
+    "finalize",
+    "&amp;"
+   ]
+  ]
+ },
+ "language_partition_jinja_finalize_capture_context_environment_and_eval_context": {
+  "context": {
+   "text": "1@T"
+  },
+  "eval": {
+   "text": "1@auto"
+  }
+ },
+ "language_partition_jinja_finalize_capture_exceptions_and_identity": {
+  "error": {
+   "message": "finalize fails",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  }
+ },
+ "language_partition_jinja_finalize_capture_parts_and_nested_rendering": {
+  "text": "1",
+  "trace": [
+   [
+    "finalize",
+    "None"
+   ],
+   [
+    "finalize",
+    "1"
+   ],
+   [
+    "finalize",
+    "1"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_destructuring_targets": {
+  "text": "1a2;3c2;",
+  "trace": [
+   [
+    "g",
+    [
+     1,
+     "a"
+    ]
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    [
+     2,
+     "b"
+    ]
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    [
+     3,
+     "c"
+    ]
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_else_branch_with_observable_predicate_effects": {
+  "text": "E",
+  "trace": [
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "else",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_loop_metadata_and_lookahead": {
+  "text": "1False333",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_predicate_exceptions_and_nested_interactions": {
+  "iterator": {
+   "text": "13",
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ]
+   ]
+  },
+  "nested": {
+   "text": "13;13;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_recursive_filtered_loops": {
+  "text": "a1[b2]",
+  "trace": []
+ },
+ "language_partition_jinja_iteration_filter_break_consumption_source_containing_loop_text": {
+  "text": "{% for %}loop.index1{% for %}loop.index3",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_empty_else_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 2",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "13;5;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     5
+    ],
+    [
+     "body",
+     [
+      5
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_empty_else_independent_iterator_and_predicate_effect_trace": {
+  "text": "1357",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "g",
+    7
+   ],
+   [
+    "p",
+    7
+   ],
+   [
+    "body",
+    [
+     7
+    ],
+    []
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_empty_else_native_filtered_loop_behavior": {
+  "text": "135|345",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     4
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_generator_error_destructuring_targets": {
+  "text": "1a2;3c2;",
+  "trace": [
+   [
+    "g",
+    [
+     1,
+     "a"
+    ]
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    [
+     2,
+     "b"
+    ]
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    [
+     3,
+     "c"
+    ]
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_generator_error_else_branch_with_observable_predicate_effects": {
+  "text": "E",
+  "trace": [
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "else",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_generator_error_loop_metadata_and_lookahead": {
+  "text": "1False333False535True3",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_generator_error_predicate_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "13;13;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_generator_error_recursive_filtered_loops": {
+  "text": "a1[b2]",
+  "trace": []
+ },
+ "language_partition_jinja_iteration_filter_generator_error_source_containing_loop_text": {
+  "text": "{% for %}loop.index1{% for %}loop.index3",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_last_lookahead_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 2",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "13L;5L;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     5
+    ],
+    [
+     "body",
+     [
+      5
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_last_lookahead_independent_iterator_and_predicate_effect_trace": {
+  "text": "1357L",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "g",
+    7
+   ],
+   [
+    "p",
+    7
+   ],
+   [
+    "body",
+    [
+     7
+    ],
+    []
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_last_lookahead_native_filtered_loop_behavior": {
+  "text": "135L|345L",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     4
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_destructure_noniterable_other_types": {
+  "float": {
+   "error": {
+    "message": "cannot unpack non-iterable float object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "int": {
+   "error": {
+    "message": "cannot unpack non-iterable int object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "none": {
+   "error": {
+    "message": "cannot unpack non-iterable NoneType object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_destructure_other_opaque_protocols": {
+  "length": {
+   "error": {
+    "message": "cannot unpack non-iterable LengthOnly object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "opaque": {
+   "error": {
+    "message": "cannot unpack non-iterable Opaque object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "string": {
+   "error": {
+    "message": "too many values to unpack (expected 2)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_destructuring_targets": {
+  "text": "1a2;3c2;",
+  "trace": [
+   [
+    "g",
+    [
+     1,
+     "a"
+    ]
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    [
+     2,
+     "b"
+    ]
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    [
+     3,
+     "c"
+    ]
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_else_branch_with_observable_predicate_effects": {
+  "text": "E",
+  "trace": [
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "else",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_loop_metadata_and_lookahead": {
+  "text": "1False333False535True3",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_predicate_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "13;13;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "b",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "b",
+     [
+      3
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_recursive_filtered_loops": {
+  "text": "a1[b2]",
+  "trace": []
+ },
+ "language_partition_jinja_iteration_filter_lazy_order_source_containing_loop_text": {
+  "text": "{% for %}loop.index1{% for %}loop.index3",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_length_consumption_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 2",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "1/23/2;5/1;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     5
+    ],
+    [
+     "body",
+     [
+      5
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_length_consumption_independent_iterator_and_predicate_effect_trace": {
+  "text": "1/43/45/47/4",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    7
+   ],
+   [
+    "p",
+    7
+   ],
+   [
+    "g",
+    "end"
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     7
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_length_consumption_native_filtered_loop_behavior": {
+  "text": "1/33/35/3|3/34/35/3",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     4
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_nextitem_lookahead_exceptions_and_nested_interactions": {
+  "iterator": {
+   "error": {
+    "message": "g fails at 2",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "g",
+     "raise"
+    ]
+   ]
+  },
+  "nested": {
+   "text": "1>33>;5>;",
+   "trace": [
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "p",
+     3
+    ],
+    [
+     "body",
+     [
+      3
+     ],
+     []
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "p",
+     5
+    ],
+    [
+     "body",
+     [
+      5
+     ],
+     []
+    ]
+   ]
+  },
+  "predicate": {
+   "error": {
+    "message": "p fails on 3",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "g",
+     1
+    ],
+    [
+     "p",
+     1
+    ],
+    [
+     "body",
+     [
+      1
+     ],
+     []
+    ],
+    [
+     "g",
+     2
+    ],
+    [
+     "p",
+     2
+    ],
+    [
+     "g",
+     3
+    ],
+    [
+     "p",
+     3
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_iteration_filter_nextitem_lookahead_independent_iterator_and_predicate_effect_trace": {
+  "text": "1>33>55>77>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "g",
+    7
+   ],
+   [
+    "p",
+    7
+   ],
+   [
+    "body",
+    [
+     7
+    ],
+    []
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_filter_nextitem_lookahead_native_filtered_loop_behavior": {
+  "text": "1>33>55>|3>44>55>",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     4
+    ],
+    []
+   ],
+   [
+    "body",
+    [
+     5
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_lookahead_error_context_and_cleanup": {
+  "error": {
+   "message": "g fails at 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "g",
+    "raise"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_lookahead_mutation_and_identity": {
+  "text": "{}True3;{}True3;{}True3;{}3;",
+  "trace": []
+ },
+ "language_partition_jinja_iteration_lookahead_nested_loops_and_control_flow": {
+  "text": "11312212;223;",
+  "trace": [
+   [
+    "o",
+    1
+   ],
+   [
+    "i",
+    1
+   ],
+   [
+    "i",
+    2
+   ],
+   [
+    "i",
+    3
+   ],
+   [
+    "i",
+    "end"
+   ],
+   [
+    "o",
+    2
+   ],
+   [
+    "i",
+    2
+   ],
+   [
+    "i",
+    3
+   ],
+   [
+    "i",
+    4
+   ],
+   [
+    "i",
+    "end"
+   ],
+   [
+    "o",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_iteration_lookahead_reentrant_iterators": {
+  "text": "abFalse;bTrue;",
+  "trace": [
+   [
+    "nested",
+    "2"
+   ],
+   [
+    "nested",
+    "2"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_block_assignment_filter_destructuring_arity_errors": {
+  "exact": {
+   "text": "ab|AB",
+   "trace": []
+  },
+  "long": {
+   "error": {
+    "message": "too many values to unpack (expected 2)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  },
+  "scalar": {
+   "error": {
+    "message": "cannot unpack non-iterable int object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "short": {
+   "error": {
+    "message": "not enough values to unpack (expected 2, got 1)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_block_assignment_filter_filter_arguments_callbacks_and_capture_errors": {
+  "callback": {
+   "text": "F",
+   "trace": [
+    [
+     "f",
+     [
+      "W",
+      "arg"
+     ],
+     []
+    ]
+   ]
+  },
+  "raising": {
+   "error": {
+    "message": "fail raised",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "fail",
+     []
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_language_block_assignment_filter_nested_assignment_scopes_and_capture_safety": {
+  "text": "WouterWouter",
+  "trace": []
+ },
+ "language_partition_jinja_language_block_assignment_filter_undefined_and_arbitrary_python_assignment_values": {
+  "text": "[]first-second|{'K': (1, 2)}",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_after_completed_iteration_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "text": "1!2!",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_break_after_completed_iteration_empty_and_filtered_loop_else_semantics": {
+  "text": "1!2!3|E|2!3",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_after_completed_iteration_mixed_completed_and_interrupted_iterations": {
+  "text": "1!2!3|1!2!3",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_after_completed_iteration_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "1!2!3;1!2!3[4E]E",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "text": "12",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_break_else_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "text": "12",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_break_else_empty_and_filtered_loop_else_semantics": {
+  "text": "12|E|2E",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_else_mixed_completed_and_interrupted_iterations": {
+  "text": "12|12",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_else_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "12;12[45]E",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_empty_and_filtered_loop_else_semantics": {
+  "text": "12||2",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_mixed_completed_and_interrupted_iterations": {
+  "text": "12|12",
+  "trace": []
+ },
+ "language_partition_jinja_language_break_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "12;12[45]",
+  "trace": []
+ },
+ "language_partition_jinja_language_caller_autoescape_and_markup_output": {
+  "text": "[a\"b&s]",
+  "trace": []
+ },
+ "language_partition_jinja_language_caller_callback_exceptions_and_captured_scope": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "fail",
+    [
+     1
+    ]
+   ]
+  ]
+ },
+ "language_partition_jinja_language_caller_caller_arguments_and_keyword_binding": {
+  "declared": {
+   "text": "[1K]",
+   "trace": []
+  },
+  "undeclared_keyword": {
+   "error": {
+    "message": "macro None takes no keyword argument 'k'",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "varargs": {
+   "text": "(1, 2){'k': 3}",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_caller_caller_defaults_recursion_and_identity": {
+  "text": "2(2dFalse)",
+  "trace": []
+ },
+ "language_partition_jinja_language_capture_destructuring_arity_errors": {
+  "exact": {
+   "text": "ab|ab",
+   "trace": []
+  },
+  "long": {
+   "error": {
+    "message": "too many values to unpack (expected 2)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  },
+  "scalar": {
+   "error": {
+    "message": "cannot unpack non-iterable int object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "short": {
+   "error": {
+    "message": "not enough values to unpack (expected 2, got 1)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_capture_filter_arguments_callbacks_and_capture_errors": {
+  "callback": {
+   "text": "F",
+   "trace": [
+    [
+     "f",
+     [
+      "V",
+      "arg"
+     ],
+     []
+    ]
+   ]
+  },
+  "raising": {
+   "error": {
+    "message": "fail raised",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "fail",
+     []
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_language_capture_nested_assignment_scopes_and_capture_safety": {
+  "text": "VouterVouter",
+  "trace": []
+ },
+ "language_partition_jinja_language_capture_undefined_and_arbitrary_python_assignment_values": {
+  "text": "[]first-second|{'k': (1, 2)}",
+  "trace": []
+ },
+ "language_partition_jinja_language_conditional_expression_autoescape_filters_and_nested_conditionals": {
+  "text": "A\"a\"<",
+  "trace": []
+ },
+ "language_partition_jinja_language_conditional_expression_custom_truthiness_and_return_identity": {
+  "text": "TnoTrue",
+  "trace": [
+   [
+    "bool",
+    true
+   ],
+   [
+    "bool",
+    false
+   ],
+   [
+    "bool",
+    true
+   ]
+  ]
+ },
+ "language_partition_jinja_language_conditional_expression_expression_without_else_and_undefined_policies": {
+  "chainable": {
+   "text": "[][d]",
+   "trace": []
+  },
+  "default": {
+   "text": "[][d]",
+   "trace": []
+  },
+  "strict": {
+   "text": "[][d]",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_conditional_expression_short_circuit_branch_effects_and_exceptions": {
+  "text": "ABx",
+  "trace": [
+   [
+    "a",
+    [],
+    []
+   ],
+   [
+    "b",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_continue_after_completed_iteration_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_continue_after_completed_iteration_empty_and_filtered_loop_else_semantics": {
+  "text": "1!23|E|23E",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_after_completed_iteration_mixed_completed_and_interrupted_iterations": {
+  "text": "1!234|1!234",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_after_completed_iteration_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "1!23;1!23[45E]E",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_continue_else_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "error": {
+    "message": "Encountered unknown tag 'continue'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_continue_else_empty_and_filtered_loop_else_semantics": {
+  "text": "13|E|3",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_else_mixed_completed_and_interrupted_iterations": {
+  "text": "134|134",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_else_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "13;13[45]E",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_empty_and_filtered_loop_else_semantics": {
+  "text": "13||3",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_mixed_completed_and_interrupted_iterations": {
+  "text": "134|134",
+  "trace": []
+ },
+ "language_partition_jinja_language_continue_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "13;13[45]",
+  "trace": []
+ },
+ "language_partition_jinja_language_do_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'do'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "text": "[1]",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_do_exception_type_order_and_reentrant_callbacks": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "first",
+    [],
+    []
+   ],
+   [
+    "fail",
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_do_ignored_return_values_and_arbitrary_mutations": {
+  "text": "[1, 4]{'k': 1}",
+  "trace": [
+   [
+    "f",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_do_nested_scopes_and_autoescape": {
+  "text": "['1<', '2<', 9]",
+  "trace": []
+ },
+ "language_partition_jinja_language_filter_block_autoescape_and_markup_preservation": {
+  "text": "A\"B'S|'s",
+  "trace": []
+ },
+ "language_partition_jinja_language_filter_block_context_eval_context_environment_callbacks": {
+  "text": "x:N|y:plain|z:Environment",
+  "trace": []
+ },
+ "language_partition_jinja_language_filter_block_nested_capture_whitespace_control": {
+  "text": "A  BD!",
+  "trace": []
+ },
+ "language_partition_jinja_language_for_else_empty_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "15/5<2>24/5<3>33/5<5>42/5<6>5L1/5<>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_else_empty_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "g fails at 3",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "g",
+    "raise"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_else_empty_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(112131)[b(4151)]c(E)",
+  "trace": []
+ },
+ "language_partition_jinja_language_for_else_empty_single_pass_generator_laziness_and_side_effects": {
+  "text": "1234|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "body",
+    [
+     2
+    ],
+    []
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "body",
+    [
+     4
+    ],
+    []
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_empty_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "13/3<3>22/3<5>3L1/3<>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "p",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_empty_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "p fails on 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_empty_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(1131)[b(51)]c(E)",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_empty_single_pass_generator_laziness_and_side_effects": {
+  "text": "13|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "13/3<3>22/3<5>3L1/3<>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "p",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_metadata_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "013/3<3>122/3<5>23L1/3<>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "p",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_metadata_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "p fails on 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_metadata_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(011131)[b(051)]c()",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_metadata_single_pass_generator_laziness_and_side_effects": {
+  "text": "0113|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "p fails on 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(1131)[b(51)]c()",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ]
+  ]
+ },
+ "language_partition_jinja_language_for_filter_single_pass_generator_laziness_and_side_effects": {
+  "text": "13|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_from_import_default_without_context_semantics": {
+  "text": "no context",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_from_import_environment_global_mutations_and_macro_lifetime": {
+  "text": "globalglobal",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_from_import_private_missing_exports_and_errors": {
+  "attribute": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_name": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_template": {
+   "error": {
+    "message": "absent",
+    "type": "jinja2.exceptions.TemplateNotFound"
+   },
+   "trace": []
+  },
+  "private": {
+   "error": {
+    "message": "names starting with an underline can not be imported",
+    "type": "jinja2.exceptions.TemplateAssertionError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_from_import_with_without_context_cache_and_side_effects": {
+  "text": "no contextno contextctx",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ],
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_context_default_without_context_semantics": {
+  "text": "ctx",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_context_environment_global_mutations_and_macro_lifetime": {
+  "text": "ctxctx",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_context_private_missing_exports_and_errors": {
+  "attribute": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_name": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_template": {
+   "error": {
+    "message": "absent",
+    "type": "jinja2.exceptions.TemplateNotFound"
+   },
+   "trace": []
+  },
+  "private": {
+   "error": {
+    "message": "names starting with an underline can not be imported",
+    "type": "jinja2.exceptions.TemplateAssertionError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_import_context_with_without_context_cache_and_side_effects": {
+  "text": "ctxctxno context",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ],
+   [
+    "side",
+    [],
+    []
+   ],
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_default_without_context_semantics": {
+  "text": "no context",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_environment_global_mutations_and_macro_lifetime": {
+  "text": "globalglobal",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_import_private_missing_exports_and_errors": {
+  "attribute": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_name": {
+   "text": "False",
+   "trace": [
+    [
+     "side",
+     [],
+     []
+    ]
+   ]
+  },
+  "missing_template": {
+   "error": {
+    "message": "absent",
+    "type": "jinja2.exceptions.TemplateNotFound"
+   },
+   "trace": []
+  },
+  "private": {
+   "error": {
+    "message": "names starting with an underline can not be imported",
+    "type": "jinja2.exceptions.TemplateAssertionError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_import_with_without_context_cache_and_side_effects": {
+  "text": "no contextno contextctx",
+  "trace": [
+   [
+    "side",
+    [],
+    []
+   ],
+   [
+    "side",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_include_callback_with_custom_context_types_and_mutation": {
+  "text": "inc:V:L",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_callback_with_loader_cache_and_exception_timing": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "fail",
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_include_callback_with_nested_and_imported_macro_callbacks": {
+  "text": "macro:none:noneinc:V:L",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_callback_with_template_objects_and_string_subclasses": {
+  "text": "inc:V:none",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_callback_without_custom_context_types_and_mutation": {
+  "text": "inc:none:none",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_callback_without_loader_cache_and_exception_timing": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "fail",
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_include_callback_without_nested_and_imported_macro_callbacks": {
+  "text": "macro:none:noneinc:none:none",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_callback_without_template_objects_and_string_subclasses": {
+  "text": "inc:none:none",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_candidates_callback_context_and_environment_global_isolation": {
+  "text": "p:V:LVp:loop:Lloop",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_candidates_foreign_template_objects_and_string_subclasses": {
+  "subclass": {
+   "text": "p:V:noneV",
+   "trace": []
+  },
+  "template": {
+   "text": "foreign V",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_candidates_loader_cache_nested_scopes_and_relative_names": {
+  "text": "p:1:none1Np:2:none2Np:V:noneV",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_candidates_missing_or_empty_candidate_lists_and_exact_exceptions": {
+  "empty_list": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "list": {
+   "error": {
+    "message": "none of the templates given were found: absent, other",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "missing": {
+   "error": {
+    "message": "none of the templates given were found: absent, absent",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "variable": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_context_callback_context_and_environment_global_isolation": {
+  "text": "p:V:LVp:loop:Lloop",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_context_foreign_template_objects_and_string_subclasses": {
+  "subclass": {
+   "text": "p:V:noneV",
+   "trace": []
+  },
+  "template": {
+   "text": "foreign V",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_context_missing_or_empty_candidate_lists_and_exact_exceptions": {
+  "empty_list": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "list": {
+   "error": {
+    "message": "none of the templates given were found: absent, other",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "missing": {
+   "error": {
+    "message": "absent",
+    "type": "jinja2.exceptions.TemplateNotFound"
+   },
+   "trace": []
+  },
+  "variable": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_ignore_missing_callback_context_and_environment_global_isolation": {
+  "text": "p:V:LVp:loop:Lloop",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_ignore_missing_foreign_template_objects_and_string_subclasses": {
+  "subclass": {
+   "text": "p:V:noneV",
+   "trace": []
+  },
+  "template": {
+   "text": "foreign V",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_ignore_missing_loader_cache_nested_scopes_and_relative_names": {
+  "text": "p:1:none1Np:2:none2Np:V:noneV",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_ignore_missing_missing_or_empty_candidate_lists_and_exact_exceptions": {
+  "empty_list": {
+   "text": "",
+   "trace": []
+  },
+  "list": {
+   "text": "",
+   "trace": []
+  },
+  "missing": {
+   "text": "",
+   "trace": []
+  },
+  "variable": {
+   "text": "",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_without_context_callback_context_and_environment_global_isolation": {
+  "text": "p:none:noneUp:none:noneU",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_without_context_foreign_template_objects_and_string_subclasses": {
+  "subclass": {
+   "text": "p:none:noneU",
+   "trace": []
+  },
+  "template": {
+   "text": "foreign U",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_include_without_context_loader_cache_nested_scopes_and_relative_names": {
+  "text": "p:none:noneUNp:none:noneUNp:none:noneU",
+  "trace": []
+ },
+ "language_partition_jinja_language_include_without_context_missing_or_empty_candidate_lists_and_exact_exceptions": {
+  "empty_list": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "list": {
+   "error": {
+    "message": "none of the templates given were found: absent, other",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  },
+  "missing": {
+   "error": {
+    "message": "absent",
+    "type": "jinja2.exceptions.TemplateNotFound"
+   },
+   "trace": []
+  },
+  "variable": {
+   "error": {
+    "message": "Tried to select from an empty list of templates.",
+    "type": "jinja2.exceptions.TemplatesNotFound"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_inheritance_dynamic_and_multi_level_inheritance": {
+  "text": "AchildC",
+  "trace": []
+ },
+ "language_partition_jinja_language_inheritance_multiple_extends_and_duplicate_block_errors": {
+  "conditional": {
+   "text": "X",
+   "trace": []
+  },
+  "duplicate": {
+   "error": {
+    "message": "block 'a' defined twice",
+    "type": "jinja2.exceptions.TemplateAssertionError"
+   },
+   "trace": []
+  },
+  "twice": {
+   "error": {
+    "message": "extended multiple times",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_inheritance_scoped_required_blocks_and_self_references": {
+  "filled": {
+   "text": "FR",
+   "trace": []
+  },
+  "required": {
+   "error": {
+    "message": "Required block 'must' not found",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  },
+  "scoped": {
+   "text": "AchildIIC",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_inheritance_super_super_recursive_calls_and_loaders": {
+  "text": "AchildC",
+  "trace": []
+ },
+ "language_partition_jinja_language_loop_assignment_scope_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "13/3<3>22/3<5>3L1/3<>U",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "p",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_loop_assignment_scope_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "p fails on 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_loop_assignment_scope_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(1131U)[b(51U)]c(U)",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ]
+  ]
+ },
+ "language_partition_jinja_language_loop_assignment_scope_single_pass_generator_laziness_and_side_effects": {
+  "text": "13U|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_macro_defaults_nested_closures_and_imported_macro_lifetimes": {
+  "text": "22/4/False/'",
+  "trace": []
+ },
+ "language_partition_jinja_language_macro_defaults_recursive_context_and_undefined_values": {
+  "undefined": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "value": {
+   "text": "3/6/False/'3/6/True/'",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_macro_defaults_safe_output_and_autoescape_transitions": {
+  "text": "2/4/False/'|2/4/False/'",
+  "trace": []
+ },
+ "language_partition_jinja_language_macro_recursion_argument_binding_errors_and_identity": {
+  "duplicate": {
+   "error": {
+    "message": "macro 'm' takes no keyword argument 'n'",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "extra": {
+   "error": {
+    "message": "macro 'm' takes not more than 2 argument(s)",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "identity": {
+   "text": "m ('n', 'sep') False",
+   "trace": []
+  },
+  "keyword": {
+   "error": {
+    "message": "macro 'm' takes no keyword argument 'x'",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "missing": {
+   "text": "'",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_macro_recursion_nested_closures_and_imported_macro_lifetimes": {
+  "text": "22'1'0'",
+  "trace": []
+ },
+ "language_partition_jinja_language_macro_recursion_recursive_context_and_undefined_values": {
+  "undefined": {
+   "text": "'",
+   "trace": []
+  },
+  "value": {
+   "text": "3'2'1'0'",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_macro_recursion_safe_output_and_autoescape_transitions": {
+  "text": "2'1'0'|2'1&#39;0&amp;#39;",
+  "trace": []
+ },
+ "language_partition_jinja_language_namespace_assignment_attribute_mutation_identity_and_callback_behavior": {
+  "text": "F[1]",
+  "trace": [
+   [
+    "f",
+    [
+     [
+      1
+     ]
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_namespace_assignment_multiple_assignment_targets_and_nested_namespaces": {
+  "text": "343",
+  "trace": []
+ },
+ "language_partition_jinja_language_namespace_assignment_non_namespace_assignment_errors": {
+  "dict": {
+   "error": {
+    "message": "cannot assign attribute on non-namespace object",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  },
+  "string": {
+   "error": {
+    "message": "cannot assign attribute on non-namespace object",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  },
+  "undefined": {
+   "error": {
+    "message": "cannot assign attribute on non-namespace object",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_namespace_assignment_undefined_namespace_values": {
+  "text": "[][]False",
+  "trace": []
+ },
+ "language_partition_jinja_language_nested_break_else_disabled_mutated_extension_errors": {
+  "disabled": {
+   "error": {
+    "message": "Encountered unknown tag 'break'. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.",
+    "type": "jinja2.exceptions.TemplateSyntaxError"
+   },
+   "trace": []
+  },
+  "mutated": {
+   "text": "1:1e;2:12;",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_nested_break_else_empty_and_filtered_loop_else_semantics": {
+  "text": "1:1e;2:12;3:123;|E|2:12;3:123;",
+  "trace": []
+ },
+ "language_partition_jinja_language_nested_break_else_mixed_completed_and_interrupted_iterations": {
+  "text": "1:1e;2:12;3:123;4:1234;|1:1e;2:12;3:123;4:1234;",
+  "trace": []
+ },
+ "language_partition_jinja_language_nested_break_else_nested_with_macro_recursive_loop_frame_unwinding": {
+  "text": "1:1e;2:12;3:123;;1:1e;2:12;3:123;[4:4e;5:45;]E",
+  "trace": []
+ },
+ "language_partition_jinja_language_python_operators_all_numeric_and_container_types": {
+  "text": "3 -4 -2 1267650600228229401496703205376 0.25 3.3 1.1 [1, 2] (1, 2, 1, 2) abab el olleh True True True 4/3 [97, 98]",
+  "trace": []
+ },
+ "language_partition_jinja_language_python_operators_mutation_and_reentrancy": {
+  "text": "True True 4 [1, 1][1, 9]",
+  "trace": [
+   [
+    "contains",
+    1
+   ],
+   [
+    "contains",
+    3
+   ]
+  ]
+ },
+ "language_partition_jinja_language_python_operators_reflected_subclass_precedence": {
+  "text": "R 2 2 3",
+  "trace": [
+   [
+    "reflected",
+    2
+   ],
+   [
+    "radd",
+    1
+   ],
+   [
+    "add",
+    1
+   ],
+   [
+    "add",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_recursive_loop_loop_last_nextitem_revindex_length_over_filtered_generators": {
+  "text": "13/3<3>22/3<5>3L1/3<>",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "g",
+    5
+   ],
+   [
+    "p",
+    5
+   ],
+   [
+    "g",
+    6
+   ],
+   [
+    "p",
+    6
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_recursive_loop_predicate_iterator_exception_timing": {
+  "error": {
+   "message": "p fails on 2",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ]
+  ]
+ },
+ "language_partition_jinja_language_recursive_loop_recursive_filtered_loops_and_scoped_outer_loop_references": {
+  "text": "a(1131)[b(51)]c()",
+  "trace": [
+   [
+    "p",
+    1
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "p",
+    5
+   ]
+  ]
+ },
+ "language_partition_jinja_language_recursive_loop_single_pass_generator_laziness_and_side_effects": {
+  "text": "13|",
+  "trace": [
+   [
+    "g",
+    1
+   ],
+   [
+    "p",
+    1
+   ],
+   [
+    "body",
+    [
+     1
+    ],
+    []
+   ],
+   [
+    "g",
+    2
+   ],
+   [
+    "p",
+    2
+   ],
+   [
+    "g",
+    3
+   ],
+   [
+    "p",
+    3
+   ],
+   [
+    "body",
+    [
+     3
+    ],
+    []
+   ],
+   [
+    "g",
+    4
+   ],
+   [
+    "p",
+    4
+   ],
+   [
+    "g",
+    "end"
+   ]
+  ]
+ },
+ "language_partition_jinja_language_super_dynamic_and_multi_level_inheritance": {
+  "text": "A[MB|MB]C",
+  "trace": []
+ },
+ "language_partition_jinja_language_super_multiple_extends_and_duplicate_block_errors": {
+  "conditional": {
+   "text": "X",
+   "trace": []
+  },
+  "duplicate": {
+   "error": {
+    "message": "block 'a' defined twice",
+    "type": "jinja2.exceptions.TemplateAssertionError"
+   },
+   "trace": []
+  },
+  "twice": {
+   "error": {
+    "message": "extended multiple times",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_super_scoped_required_blocks_and_self_references": {
+  "filled": {
+   "text": "FR",
+   "trace": []
+  },
+  "required": {
+   "error": {
+    "message": "Required block 'must' not found",
+    "type": "jinja2.exceptions.TemplateRuntimeError"
+   },
+   "trace": []
+  },
+  "scoped": {
+   "text": "A[B|B]IIC",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_super_super_super_recursive_calls_and_loaders": {
+  "text": "A[MB|MB]C",
+  "trace": []
+ },
+ "language_partition_jinja_language_tuple_assignment_destructuring_arity_errors": {
+  "exact": {
+   "text": "ab|ab",
+   "trace": []
+  },
+  "long": {
+   "error": {
+    "message": "too many values to unpack (expected 2)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  },
+  "scalar": {
+   "error": {
+    "message": "cannot unpack non-iterable int object",
+    "type": "builtins.TypeError"
+   },
+   "trace": []
+  },
+  "short": {
+   "error": {
+    "message": "not enough values to unpack (expected 2, got 1)",
+    "type": "builtins.ValueError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_language_tuple_assignment_filter_arguments_callbacks_and_capture_errors": {
+  "callback": {
+   "text": "F",
+   "trace": [
+    [
+     "f",
+     [
+      "V",
+      "arg"
+     ],
+     []
+    ]
+   ]
+  },
+  "raising": {
+   "error": {
+    "message": "fail raised",
+    "type": "paritylab.language_partition_probes.ProbeError"
+   },
+   "trace": [
+    [
+     "fail",
+     []
+    ]
+   ]
+  }
+ },
+ "language_partition_jinja_language_tuple_assignment_nested_assignment_scopes_and_capture_safety": {
+  "text": "VouterVouter",
+  "trace": []
+ },
+ "language_partition_jinja_language_tuple_assignment_undefined_and_arbitrary_python_assignment_values": {
+  "text": "[]first-second|{'k': (1, 2)}",
+  "trace": []
+ },
+ "language_partition_jinja_language_with_scope_failure_and_mutation_order": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "add",
+    [
+     "a"
+    ],
+    []
+   ],
+   [
+    "fail",
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_language_with_scope_multiple_assignments_evaluate_in_outer_scope": {
+  "text": "inner/outerouter",
+  "trace": []
+ },
+ "language_partition_jinja_language_with_scope_nested_with_loop_macro_scopes": {
+  "text": "w1mw1w2mw2w",
+  "trace": []
+ },
+ "language_partition_jinja_language_with_scope_undefined_and_callback_values": {
+  "text": "[]F",
+  "trace": [
+   [
+    "f",
+    [
+     1
+    ],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_lookup_priority_environment_overrides": {
+  "custom": {
+   "text": "env-attr:a|env-item:b"
+  },
+  "sandbox": {
+   "text": "1|2"
+  }
+ },
+ "language_partition_jinja_lookup_priority_mapping_errors_and_identity": {
+  "error": {
+   "message": "attribute anything",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": []
+ },
+ "language_partition_jinja_lookup_priority_nested_lookup_and_mutation": {
+  "text": "firstsecond",
+  "trace": []
+ },
+ "language_partition_jinja_lookup_priority_subclasses_and_descriptors": {
+  "text": "class-attribute|item|descriptor|",
+  "trace": []
+ },
+ "language_partition_jinja_lookup_priority_undefined_and_sandbox": {
+  "text": "[][][]",
+  "trace": []
+ },
+ "language_partition_jinja_sandbox_call_argument_context_and_reentrancy_interactions": {
+  "text": "arg[1, 2]F6",
+  "trace": [
+   [
+    "f",
+    [
+     1,
+     2
+    ],
+    [
+     "k"
+    ]
+   ]
+  ]
+ },
+ "language_partition_jinja_sandbox_call_descriptor_and_truth_protocols": {
+  "text": "PFMFalse",
+  "trace": [
+   "prop",
+   "bool",
+   [
+    "method",
+    [
+     1
+    ],
+    [
+     "k"
+    ]
+   ]
+  ]
+ },
+ "language_partition_jinja_sandbox_call_exception_identity_and_tracebacks": {
+  "error": {
+   "message": "fail raised",
+   "type": "paritylab.language_partition_probes.ProbeError"
+  },
+  "trace": [
+   [
+    "ok",
+    [],
+    []
+   ],
+   [
+    "fail",
+    [
+     1
+    ]
+   ]
+  ]
+ },
+ "language_partition_jinja_sandbox_call_overrides_code_and_global_mutation": {
+  "code": {
+   "text": "",
+   "trace": []
+  },
+  "policy": {
+   "error": {
+    "message": "<bound method Described.method of <paritylab.language_partition_probes.Described object>> is not safely callable",
+    "type": "jinja2.exceptions.SecurityError"
+   },
+   "trace": [
+    "prop"
+   ]
+  },
+  "secret": {
+   "text": "",
+   "trace": []
+  }
+ },
+ "language_partition_jinja_undefined_strict_async_and_sandbox": {
+  "async": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "sandbox": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_undefined_strict_attribute_item_and_iteration": {
+  "attribute": {
+   "error": {
+    "message": "'dict object' has no attribute 'missing'",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "default": {
+   "text": "d",
+   "trace": []
+  },
+  "defined": {
+   "text": "False",
+   "trace": []
+  },
+  "item": {
+   "error": {
+    "message": "'dict object' has no attribute 'missing'",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "iteration": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "truth": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  }
+ },
+ "language_partition_jinja_undefined_strict_custom_undefined_subclasses": {
+  "error": {
+   "message": "'missing' is undefined",
+   "type": "jinja2.exceptions.UndefinedError"
+  },
+  "trace": []
+ },
+ "language_partition_jinja_undefined_strict_exception_identity_and_traceback": {
+  "error": {
+   "message": "'missing' is undefined",
+   "type": "jinja2.exceptions.UndefinedError"
+  },
+  "trace": [
+   [
+    "ok",
+    [],
+    []
+   ]
+  ]
+ },
+ "language_partition_jinja_undefined_strict_filters_tests_and_autoescape": {
+  "escape": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "length": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  },
+  "none": {
+   "text": "False",
+   "trace": []
+  },
+  "upper": {
+   "error": {
+    "message": "'missing' is undefined",
+    "type": "jinja2.exceptions.UndefinedError"
+   },
+   "trace": []
+  }
+ }
+}

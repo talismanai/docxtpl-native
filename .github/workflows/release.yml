@@ -1,0 +1,182 @@
+name: release
+# A release needs no manual step besides bumping the version and adding its
+# CHANGELOG section. Every push to main reads the workspace version; when the
+# tag v<version> does not exist yet and CHANGELOG.md has a `## [<version>]`
+# section, this builds the artifacts, creates the tag and publishes the release.
+# Without that section a push to main releases nothing.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: release
+  cancel-in-progress: false
+jobs:
+  plan:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      publish: ${{ steps.version.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read the version and look for its tag
+        id: version
+        run: |
+          version="$(bash scripts/check_versions.sh)"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          status=0
+          git ls-remote --exit-code --tags origin "refs/tags/v$version" > /dev/null || status=$?
+          if [ "$status" -eq 0 ]; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "v$version is already released." >> "$GITHUB_STEP_SUMMARY"
+          elif [ "$status" -ne 2 ]; then
+            echo "Could not query release tags (exit $status)." >&2
+            exit "$status"
+          elif ! grep -qF "## [$version]" CHANGELOG.md; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "CHANGELOG.md has no section for $version; nothing to release." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+            echo "Releasing v$version." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  # The browser module, built only after the engine gates pass on this commit.
+  wasm:
+    needs: plan
+    if: needs.plan.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PYO3_PYTHON: /nonexistent/python
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.96.0
+        with:
+          targets: wasm32-unknown-unknown
+          components: clippy
+      - uses: Swatinem/rust-cache@v2
+      - name: libxml2 for the host core
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
+      - name: Engine gates
+        run: |
+          bash scripts/check_engine_boundary.sh
+          cargo test --release --locked --no-fail-fast
+          cargo test -p docxtplrs --lib --release --locked
+          cargo test -p minijinja --lib --all-features --release --locked
+          cargo clippy --release --locked --all-targets
+      - name: Build the browser module without builder paths
+        run: |
+          cargo_home="${CARGO_HOME:-$HOME/.cargo}"
+          export RUSTFLAGS="--remap-path-prefix=$cargo_home/registry/src=/cargo/registry --remap-path-prefix=$cargo_home/git/checkouts=/cargo/git --remap-path-prefix=$PWD=."
+          cargo build -p docxtpl-wasm --target wasm32-unknown-unknown --profile wasm --locked
+          node scripts/check_wasm_imports.mjs target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm
+          mkdir -p dist
+          cp target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm "dist/docxtpl_wasm-${{ needs.plan.outputs.version }}.wasm"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-wasm
+          path: dist/*.wasm
+          if-no-files-found: error
+
+  # Linux wheels and the source distribution of the Python binding. Two wheels
+  # per Python: the one built here links the system libxml2 and is tagged
+  # `linux`, and a portable `manylinux_2_28` one, built in the manylinux image
+  # by scripts/build_portable_wheel.sh, which carries libxml2 and liblzma.
+  wheels:
+    needs: plan
+    if: needs.plan.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    strategy:
+      fail-fast: true
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: Swatinem/rust-cache@v2
+      - name: Native dependencies
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
+      - name: Build and check the wheel
+        run: |
+          uv pip install --system 'maturin==1.16.0'
+          python scripts/check_vendor.py
+          cargo_home="${CARGO_HOME:-$HOME/.cargo}"
+          export RUSTFLAGS="--remap-path-prefix=$cargo_home/registry/src=/cargo/registry --remap-path-prefix=$cargo_home/git/checkouts=/cargo/git --remap-path-prefix=$PWD=."
+          maturin build --release --locked --compatibility linux --out dist
+          python scripts/check_wheel.py dist
+      - name: Portable wheel
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work \
+            -e CARGO_TARGET_DIR=/tmp/portable-target \
+            quay.io/pypa/manylinux_2_28_x86_64 bash scripts/build_portable_wheel.sh ${{ matrix.python }}
+          sudo chown -R "$(id -u):$(id -g)" dist
+          python scripts/check_wheel.py dist
+      - name: The portable wheel renders where there is no libxml2
+        run: |
+          docker run --rm -v "$PWD/dist:/dist:ro" python:${{ matrix.python }}-slim bash -ceu '
+            ! ldconfig -p | grep -q libxml2
+            pip install -q /dist/*manylinux*.whl "python-docx==1.2.0" "Jinja2==3.1.6" "docxcompose==1.4.0"
+            python -c "import docxtpl_native as native; capabilities = native.capabilities(); assert capabilities[\"native_available\"] and not capabilities[\"reference_fallback\"], capabilities"'
+      - name: Source distribution
+        if: matrix.python == '3.12'
+        run: maturin sdist --out dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-python-${{ matrix.python }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    needs: [plan, wasm, wheels]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: dist
+          merge-multiple: true
+      - name: Checksums and notes
+        env:
+          VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          cd dist
+          sha256sum -- * > SHA256SUMS
+          cd ..
+          # The CHANGELOG section of this version opens the notes, when there is one.
+          awk -v header="## [$VERSION]" 'index($0, header) == 1 { found = 1; next } found && /^## \[/ { exit } found { print }' CHANGELOG.md > notes.md
+          module="dist/docxtpl_wasm-$VERSION.wasm"
+          {
+            echo
+            echo "### Browser module"
+            echo
+            echo "\`docxtpl_wasm-$VERSION.wasm\`: $(wc -c < "$module") bytes, $(gzip -9 -c "$module" | wc -c) with gzip."
+            echo "Checksums of every file are in \`SHA256SUMS\`."
+          } >> notes.md
+      - name: Create the tag and the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.plan.outputs.version }}
+        run: |
+          flags=()
+          case "$VERSION" in *-*) flags+=(--prerelease) ;; esac
+          gh release create "v$VERSION" dist/* \
+            --target "$GITHUB_SHA" \
+            --title "v$VERSION" \
+            --notes-file notes.md \
+            --generate-notes \
+            "${flags[@]}"

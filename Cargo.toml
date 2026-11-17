@@ -1,0 +1,51 @@
+# Workspace root. The engine is Rust only; `cargo build` and `cargo test`
+# here never touch Python. The Python binding (bindings/python) and the
+# audited forks are members you select explicitly with `-p`.
+[workspace]
+members = [
+    "crates/docxtpl",
+    "crates/docxtpl-core",
+    "crates/docxtpl-markers",
+    "crates/docxtpl-pdf",
+    "crates/docxtpl-pycompat",
+    "crates/docxtpl-wasm",
+    "bindings/python",
+    "vendor/minijinja",
+    "vendor/docxtplrs",
+]
+default-members = ["crates/docxtpl-core", "crates/docxtpl-pycompat", "crates/docxtpl-wasm"]
+exclude = ["vendor/zlib-rs"]
+resolver = "3"
+
+# One version for the engine crates, the Python binding and pyproject.toml
+# (scripts/check_versions.sh keeps them in agreement).
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+license = "LGPL-2.1-or-later"
+repository = "https://github.com/talismanai/docxtpl-native"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+
+# Browser engine (crates/docxtpl-wasm): smallest download. Build with
+# `cargo build -p docxtpl-wasm --target wasm32-unknown-unknown --profile wasm`.
+[profile.wasm]
+inherits = "release"
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+# Third-party crates ask crates.io for these two by name: `jinja` for
+# MiniJinja and `flate2` for zlib-rs, which it selects by feature. Only a
+# patch redirects them to the audited forks, and Cargo reads a patch table
+# only from the workspace root that is being built, so a consumer of this
+# repository repeats these two entries in its own root (see README,
+# "Use it from another Rust project").
+[patch.crates-io]
+minijinja = { path = "vendor/minijinja" }
+zlib-rs = { path = "vendor/zlib-rs" }

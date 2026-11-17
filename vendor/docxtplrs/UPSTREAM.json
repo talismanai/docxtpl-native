@@ -1,0 +1,148 @@
+{
+  "repository": "https://github.com/yiyinzhang/docxtplrs",
+  "commit": "93daab8b6441bfb2e356007ab13b8eb884148d1f",
+  "version": "0.3.2",
+  "license": "LGPL-2.1-or-later",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "upstream_path": "Cargo.toml",
+      "git_blob_sha": "29cce629ed5218c2a66cac0235265fa3103c5bf2"
+    },
+    {
+      "path": "README.md",
+      "upstream_path": "README.md",
+      "git_blob_sha": "e3d6bad79d08e14ecfd81125c8276dce88e1da9c"
+    },
+    {
+      "path": "src/composer.rs",
+      "upstream_path": "src/composer.rs",
+      "git_blob_sha": "11b3291dfa1f2b17479266fdfc932e2c0e5e98e3"
+    },
+    {
+      "path": "src/customprops.rs",
+      "upstream_path": "src/customprops.rs",
+      "git_blob_sha": "5c9b27691b8b847b2b36fa5f6181c5660b3361bf"
+    },
+    {
+      "path": "src/doc.rs",
+      "upstream_path": "src/doc.rs",
+      "git_blob_sha": "48f012acc70762990a2d4598a43bf403d89c4a25"
+    },
+    {
+      "path": "src/doccomments.rs",
+      "upstream_path": "src/doccomments.rs",
+      "git_blob_sha": "a170d9a98ba2784f1df75b8b9b02e0ba5d1285a0"
+    },
+    {
+      "path": "src/docmodel.rs",
+      "upstream_path": "src/docmodel.rs",
+      "git_blob_sha": "6f610de0fc0dc9d3d7423b7e5d9e75998309ecaf"
+    },
+    {
+      "path": "src/docmodel_add.rs",
+      "upstream_path": "src/docmodel_add.rs",
+      "git_blob_sha": "91ef528371d85742c68801fcfaa8c633e628d4e8"
+    },
+    {
+      "path": "src/docmodel_fmt.rs",
+      "upstream_path": "src/docmodel_fmt.rs",
+      "git_blob_sha": "94332499526965589ad3c8e0eca0da693bc4db0d"
+    },
+    {
+      "path": "src/gettext.rs",
+      "upstream_path": "src/gettext.rs",
+      "git_blob_sha": "5171a9bba4fb1e810413701f722b5e611e170bef"
+    },
+    {
+      "path": "src/image.rs",
+      "upstream_path": "src/image.rs",
+      "git_blob_sha": "47ac45b107bf73d95c5439f61785be87de5b1c62"
+    },
+    {
+      "path": "src/inline_image.rs",
+      "upstream_path": "src/inline_image.rs",
+      "git_blob_sha": "83de12c34507a23a9e2ac907a509f2110cefdccc"
+    },
+    {
+      "path": "src/jutils.rs",
+      "upstream_path": "src/jutils.rs",
+      "git_blob_sha": "a2d8986c8212473045c1d3ea103a730ebce64e68"
+    },
+    {
+      "path": "src/lib.rs",
+      "upstream_path": "src/lib.rs",
+      "git_blob_sha": "ef2e646cd2898d76c50158a0b8ce27f34955968d"
+    },
+    {
+      "path": "src/package.rs",
+      "upstream_path": "src/package.rs",
+      "git_blob_sha": "8988d2c027e1f3fd20970739bb4d5ca0d0d2d7ea"
+    },
+    {
+      "path": "src/patch.rs",
+      "upstream_path": "src/patch.rs",
+      "git_blob_sha": "3f7e062557164e888504ca8edb065493290e0d1a"
+    },
+    {
+      "path": "src/pybridge.rs",
+      "upstream_path": "src/pybridge.rs",
+      "git_blob_sha": "edce15329e793fbacc92c4659544f239d76f40bd"
+    },
+    {
+      "path": "src/pyclasses.rs",
+      "upstream_path": "src/pyclasses.rs",
+      "git_blob_sha": "77883821bdcf99138a93ccee4eeb16461264e004"
+    },
+    {
+      "path": "src/pyxml.rs",
+      "upstream_path": "src/pyxml.rs",
+      "git_blob_sha": "90fa13c7dcabfb20013441fd0fac9284377a0c35"
+    },
+    {
+      "path": "src/richtext.rs",
+      "upstream_path": "src/richtext.rs",
+      "git_blob_sha": "01d1f758d3c2800b3793bdb6b680bdc25805f266"
+    },
+    {
+      "path": "src/subdoc.rs",
+      "upstream_path": "src/subdoc.rs",
+      "git_blob_sha": "5e399bf5a8cfe867816e51ea953cde6726fdb79f"
+    },
+    {
+      "path": "src/subdocbuilder.rs",
+      "upstream_path": "src/subdocbuilder.rs",
+      "git_blob_sha": "c01338db4e038d4fe6d6c06a0ea707b8efed5d56"
+    },
+    {
+      "path": "src/template.rs",
+      "upstream_path": "src/template.rs",
+      "git_blob_sha": "7141aff760d8e3e9f131282a644042225fee7bfe"
+    },
+    {
+      "path": "src/xmldom.rs",
+      "upstream_path": "src/xmldom.rs",
+      "git_blob_sha": "bb899a573a8e22fcd1fc8e5bc270617ac0fcbb0e"
+    }
+  ],
+  "local_changes": {
+    "src/inline_image.rs": "0e1e62c08db9aea0ec5cb400837fcf3b80382719",
+    "src/subdoc.rs": "0fcf86a59aad355072b3f0606ec162e987b36890",
+    "src/template.rs": "8a5e80ae41b7f204d32a82e84f493ec0dc1b0acf",
+    "src/pybridge.rs": "62ddd1d7b00bb8d36f4a72fad9b5eb1640c5175c",
+    "src/richtext.rs": "a171dcb56ddcebce2f5411244e9cd674f3ecb166",
+    "src/package.rs": "cebd3cac93992d99538cac77796a499a9127fc15",
+    "Cargo.toml": "dd2f22ebfef07566835520c3cf95998fde08e1d2",
+    "src/lib.rs": "d195d418b387409dd6a6289583d057fe9808f65b",
+    "src/xmldom.rs": "e59f33cf4bc22c137df2578600aee8c54b3311d3",
+    "src/patch.rs": "74a8ce038f0638690b594953bc89cc5a77f199bf",
+    "src/doc.rs": "016491ae90a7b9cb3e59cc098d3f75c5a6c598be"
+  },
+  "local_files": {
+    "LICENSE": "5f2dd7fca2ddaf423137d748d4818e2dba3f57fe",
+    "src/python_zip.rs": "1547f93128b4dda13972303f8095adb53ee774a2",
+    "examples/zip_contract.rs": "d379f87eda47d608f689b9faa3535ed3df62341e",
+    "src/recover.rs": "ce904d5735ef3805b8adacad06db5d9c5208e60d",
+    "src/numbering.rs": "47412cddc13bdbb6c119ec94d0b507662dc71c2e"
+  }
+}

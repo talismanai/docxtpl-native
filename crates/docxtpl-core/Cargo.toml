@@ -1,0 +1,22 @@
+[package]
+name = "docxtpl-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Internal Rust DOCX templating core without Python"
+
+[dependencies]
+base64 = "0.22"
+docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }
+jinja = { git = "https://github.com/rsyi/jinja", rev = "52d077512af9b943b005ef374412ec96ee3a7a3d" }
+libxml = { git = "https://github.com/KWARC/rust-libxml", rev = "30e931c217998ee932a0b29c25849199a3dd1f83" }
+libloading = "=0.8.9"
+minijinja = { version = "2.19", features = ["loader", "unicode", "json", "preserve_order"] }
+memchr = "2"
+unicode_categories = "0.1.1"
+serde = "1"
+serde_json = { version = "1", features = ["preserve_order"] }
+scoped-tls = "=1.0.1"

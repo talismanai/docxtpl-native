@@ -1,0 +1,38 @@
+[package]
+name = "docxtpl"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "One dependency for a DOCX template pipeline: the engine and MiniJinja, plus the optional Python-compatibility, browser, marker and PDF layers"
+
+[dependencies]
+# The engine, and the Jinja implementation its values belong to. A consumer
+# that handles template values needs the same MiniJinja as the engine, which
+# is why it is re-exported instead of being declared again downstream.
+docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }
+minijinja = { version = "2.19", features = ["loader", "unicode", "json", "preserve_order"] }
+
+docxtpl-core = { path = "../docxtpl-core", optional = true }
+docxtpl-markers = { path = "../docxtpl-markers", optional = true }
+docxtpl-pdf = { path = "../docxtpl-pdf", optional = true }
+docxtpl-pycompat = { path = "../docxtpl-pycompat", optional = true }
+docxtpl-wasm = { path = "../docxtpl-wasm", optional = true }
+
+[features]
+default = []
+# Python library behaviors: lxml trees, python-docx relationships, pictures.
+pycompat = ["dep:docxtpl-pycompat"]
+# Rendering for browsers and other embedders, with the WebAssembly ABI.
+wasm = ["dep:docxtpl-wasm"]
+# Linking a rendered document back to its template.
+markers = ["dep:docxtpl-markers", "pycompat"]
+# DOCX to PDF with host-supplied fonts. Needs a newer compiler than the
+# engine's own minimum (see docxtpl-pdf).
+pdf = ["dep:docxtpl-pdf"]
+# The host core, which calls libxml2: not for wasm32.
+host-core = ["dep:docxtpl-core"]
+# Everything a browser pipeline uses.
+browser = ["pycompat", "wasm", "markers", "pdf"]

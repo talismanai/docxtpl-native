@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {
+      "id": "report-anonymized",
+      "template": "private/report.docx",
+      "context": "private/context.json",
+      "autoescape": true
+    }
+  ]
+}
+

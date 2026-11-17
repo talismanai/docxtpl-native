@@ -1,0 +1,278 @@
+{
+  "repository": "https://github.com/mitsuhiko/minijinja",
+  "commit": "0ca749f7ba507514fa6b052c74130ae6ae472e03",
+  "version": "2.24.0",
+  "license": "Apache-2.0",
+  "files": [
+    {
+      "path": "LICENSE",
+      "upstream_path": "LICENSE",
+      "git_blob_sha": "16fe87b06e802f094b3fbb0894b137bca2b16ef1"
+    },
+    {
+      "path": "README.md",
+      "upstream_path": "README.md",
+      "git_blob_sha": "60969c59f1f664e9e7fddda96e060d2b93b0ef77"
+    },
+    {
+      "path": "Cargo.toml",
+      "upstream_path": "minijinja/Cargo.toml",
+      "git_blob_sha": "e89721b26fba89a987f614e7c6264d54bab1ad78"
+    },
+    {
+      "path": "src/compiler/ast.rs",
+      "upstream_path": "minijinja/src/compiler/ast.rs",
+      "git_blob_sha": "b9af6bd4e1b04754c3f26fa479707f4e1134af79"
+    },
+    {
+      "path": "src/compiler/codegen.rs",
+      "upstream_path": "minijinja/src/compiler/codegen.rs",
+      "git_blob_sha": "7e53482e597461c75c3c2807e5b05143db388b55"
+    },
+    {
+      "path": "src/compiler/instructions.rs",
+      "upstream_path": "minijinja/src/compiler/instructions.rs",
+      "git_blob_sha": "ae23758c15789a2f9d591b6f7b6e0e4e2b0fb8f1"
+    },
+    {
+      "path": "src/compiler/lexer.rs",
+      "upstream_path": "minijinja/src/compiler/lexer.rs",
+      "git_blob_sha": "9accab0766ff802c3bdb6c69666073d7da8655b7"
+    },
+    {
+      "path": "src/compiler/meta.rs",
+      "upstream_path": "minijinja/src/compiler/meta.rs",
+      "git_blob_sha": "c162b37a0845599a9f6b81c019c7f87de979604e"
+    },
+    {
+      "path": "src/compiler/mod.rs",
+      "upstream_path": "minijinja/src/compiler/mod.rs",
+      "git_blob_sha": "33ca11559c8e0eb6061b08d345d5b1b71f1170d4"
+    },
+    {
+      "path": "src/compiler/parser.rs",
+      "upstream_path": "minijinja/src/compiler/parser.rs",
+      "git_blob_sha": "19738163866ad12d9b98f0e054ccfa3ebc705a84"
+    },
+    {
+      "path": "src/compiler/tokens.rs",
+      "upstream_path": "minijinja/src/compiler/tokens.rs",
+      "git_blob_sha": "94de7c857e62b351bc3505f2b98093937a9931bc"
+    },
+    {
+      "path": "src/debug.rs",
+      "upstream_path": "minijinja/src/debug.rs",
+      "git_blob_sha": "cfea34d08af39319507d97117c660c01d37acf46"
+    },
+    {
+      "path": "src/defaults.rs",
+      "upstream_path": "minijinja/src/defaults.rs",
+      "git_blob_sha": "1504f149b2b111205a48aea71c7d5898e3b7a391"
+    },
+    {
+      "path": "src/environment.rs",
+      "upstream_path": "minijinja/src/environment.rs",
+      "git_blob_sha": "15c4ec1002d27409c414ac339eeb986b3be8124a"
+    },
+    {
+      "path": "src/error.rs",
+      "upstream_path": "minijinja/src/error.rs",
+      "git_blob_sha": "6ac05da453ff85d433ad7a6eba0b6c2d091b488a"
+    },
+    {
+      "path": "src/expression.rs",
+      "upstream_path": "minijinja/src/expression.rs",
+      "git_blob_sha": "5d300400ea5484ccc43f8a29870ae6d12880cd63"
+    },
+    {
+      "path": "src/filters.rs",
+      "upstream_path": "minijinja/src/filters.rs",
+      "git_blob_sha": "4b98cc81e06aa6ad7ca3043367913231331df6d5"
+    },
+    {
+      "path": "src/format_utils.rs",
+      "upstream_path": "minijinja/src/format_utils.rs",
+      "git_blob_sha": "5540878e2bac81bffc343262ab86775bcd4c82eb"
+    },
+    {
+      "path": "src/functions.rs",
+      "upstream_path": "minijinja/src/functions.rs",
+      "git_blob_sha": "5b0d18e64bd9f38da8d1d504ef11ddd7d8de8e8b"
+    },
+    {
+      "path": "src/lib.rs",
+      "upstream_path": "minijinja/src/lib.rs",
+      "git_blob_sha": "c150d83f0873920e1903382f04069fb9d7ec9a97"
+    },
+    {
+      "path": "src/loader.rs",
+      "upstream_path": "minijinja/src/loader.rs",
+      "git_blob_sha": "8a073b08ecbdf95f0a54983c46ec1c711ae472c7"
+    },
+    {
+      "path": "src/macros.rs",
+      "upstream_path": "minijinja/src/macros.rs",
+      "git_blob_sha": "4d63ff9a5d2edf63dd8e793019d18a5820ed2347"
+    },
+    {
+      "path": "src/output.rs",
+      "upstream_path": "minijinja/src/output.rs",
+      "git_blob_sha": "4698049bee2b4c52170e9c9549a1d032d1159828"
+    },
+    {
+      "path": "src/syntax.rs",
+      "upstream_path": "minijinja/src/syntax.rs",
+      "git_blob_sha": "57e6823bbab35557a88aeb6e53a0532b5d19c50d"
+    },
+    {
+      "path": "src/template.rs",
+      "upstream_path": "minijinja/src/template.rs",
+      "git_blob_sha": "a6afcc82a296094e9ce043742d94b1e94410514d"
+    },
+    {
+      "path": "src/tests.rs",
+      "upstream_path": "minijinja/src/tests.rs",
+      "git_blob_sha": "112a10725d62de45964ceed2f0e0c5a0c92077b6"
+    },
+    {
+      "path": "src/utils.rs",
+      "upstream_path": "minijinja/src/utils.rs",
+      "git_blob_sha": "9851e6a51a56fcf65587c1f860cad5ca2f9c4631"
+    },
+    {
+      "path": "src/value/argtypes.rs",
+      "upstream_path": "minijinja/src/value/argtypes.rs",
+      "git_blob_sha": "f1523f2210bd028e12e0572bb083ac95f89bd4e6"
+    },
+    {
+      "path": "src/value/deserialize.rs",
+      "upstream_path": "minijinja/src/value/deserialize.rs",
+      "git_blob_sha": "74ea574a6d0c9f0022061a38decc52eef8441630"
+    },
+    {
+      "path": "src/value/merge_object.rs",
+      "upstream_path": "minijinja/src/value/merge_object.rs",
+      "git_blob_sha": "8375cdc5af6f1285a0e79319041d68a74dba00d9"
+    },
+    {
+      "path": "src/value/mod.rs",
+      "upstream_path": "minijinja/src/value/mod.rs",
+      "git_blob_sha": "27abe6318ed9f775cb18af25e4d71301d852a809"
+    },
+    {
+      "path": "src/value/namespace_object.rs",
+      "upstream_path": "minijinja/src/value/namespace_object.rs",
+      "git_blob_sha": "62d8a636cabb787383a3c4954d5b602ff2b369a8"
+    },
+    {
+      "path": "src/value/object.rs",
+      "upstream_path": "minijinja/src/value/object.rs",
+      "git_blob_sha": "cf8de390beeb982dcf76a4e2b5a9290ee6df1c41"
+    },
+    {
+      "path": "src/value/ops.rs",
+      "upstream_path": "minijinja/src/value/ops.rs",
+      "git_blob_sha": "ee226d773770dae6b197e9dde274c7879d2e9cdd"
+    },
+    {
+      "path": "src/value/serialize.rs",
+      "upstream_path": "minijinja/src/value/serialize.rs",
+      "git_blob_sha": "af2e7aa821842bc80109ddf3038242b6400eb7a1"
+    },
+    {
+      "path": "src/value/type_erase.rs",
+      "upstream_path": "minijinja/src/value/type_erase.rs",
+      "git_blob_sha": "6850f700bae3353445c033ddde53fd874c390c85"
+    },
+    {
+      "path": "src/vendor/mod.rs",
+      "upstream_path": "minijinja/src/vendor/mod.rs",
+      "git_blob_sha": "11a8a6ede6d30707086d02f6f7bdd339f739bd91"
+    },
+    {
+      "path": "src/vendor/self_cell/LICENSE",
+      "upstream_path": "minijinja/src/vendor/self_cell/LICENSE",
+      "git_blob_sha": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64"
+    },
+    {
+      "path": "src/vendor/self_cell/mod.rs",
+      "upstream_path": "minijinja/src/vendor/self_cell/mod.rs",
+      "git_blob_sha": "9916031583135be97b6c48995fd6092518a997e5"
+    },
+    {
+      "path": "src/vendor/self_cell/unsafe_self_cell.rs",
+      "upstream_path": "minijinja/src/vendor/self_cell/unsafe_self_cell.rs",
+      "git_blob_sha": "ae0b7f64b301ce85425b2d9ed5140c768317fa1c"
+    },
+    {
+      "path": "src/vm/closure_object.rs",
+      "upstream_path": "minijinja/src/vm/closure_object.rs",
+      "git_blob_sha": "96d6c540097c2098f1114cb793ff2126a15db352"
+    },
+    {
+      "path": "src/vm/context.rs",
+      "upstream_path": "minijinja/src/vm/context.rs",
+      "git_blob_sha": "f39060f8e172bd1c1c267be5e9c1e2546964317f"
+    },
+    {
+      "path": "src/vm/fuel.rs",
+      "upstream_path": "minijinja/src/vm/fuel.rs",
+      "git_blob_sha": "79f76785fd6e10a96a3297f610b78f2079048061"
+    },
+    {
+      "path": "src/vm/loop_object.rs",
+      "upstream_path": "minijinja/src/vm/loop_object.rs",
+      "git_blob_sha": "492f3abfcd4e8fff4c111bedcb994b2097b40211"
+    },
+    {
+      "path": "src/vm/macro_object.rs",
+      "upstream_path": "minijinja/src/vm/macro_object.rs",
+      "git_blob_sha": "8f2ede0978dabf43f9cd42ba741c8d9932b861bb"
+    },
+    {
+      "path": "src/vm/mod.rs",
+      "upstream_path": "minijinja/src/vm/mod.rs",
+      "git_blob_sha": "7d024954b90d3b4e6c41b3cbab7fc74e4dd0e686"
+    },
+    {
+      "path": "src/vm/module_object.rs",
+      "upstream_path": "minijinja/src/vm/module_object.rs",
+      "git_blob_sha": "c7a616addc275731f3c852e474f5d6362f3d3bef"
+    },
+    {
+      "path": "src/vm/state.rs",
+      "upstream_path": "minijinja/src/vm/state.rs",
+      "git_blob_sha": "5d5b0d658a7f76805133f3aea7da460f989d68be"
+    }
+  ],
+  "local_changes": {
+    "src/compiler/ast.rs": "a5032a5c4c7d151b517ecbdc6ca518e024fdcd61",
+    "src/compiler/codegen.rs": "caefa209d3570d8cf68a245d2585d7f487bc3b82",
+    "src/compiler/instructions.rs": "e8a8cf413d6d947c29e128331b275f9b57d1583d",
+    "src/compiler/meta.rs": "26f861e6b534fdbe531d3acb8852e2aa35f2d60d",
+    "src/compiler/parser.rs": "e56637a2cd766223c2baae71025acc4c9245f788",
+    "src/environment.rs": "547300c5bb30b6bb2e5d111ef9e9518d0ab0505f",
+    "src/expression.rs": "dbd5de7a412d90aef0adb1931dd2fb7022317374",
+    "src/lib.rs": "c4c274d4e51db42d1e58e000539046bbb03e09f6",
+    "src/loader.rs": "1e3b9f3897a38063ff190c23dec98d102ffb37a2",
+    "src/output.rs": "56d2746bafead65eb473585b2ef2f5b6342a5852",
+    "src/template.rs": "708b09aacbb3f9677aec2e053685dcf09f837830",
+    "src/utils.rs": "7c49be77184c4a27f313891c0c2cd0887da5d789",
+    "src/value/argtypes.rs": "630b7b91ec5375f0613490ec632623cd784a9dd1",
+    "src/value/mod.rs": "24e51516a78ddf39b2babd1ad8d06d69efadc7b6",
+    "src/value/object.rs": "1c55489a59d10d2d3e2d910a25bf5c071745713e",
+    "src/vm/closure_object.rs": "154d5731036310ab3fbe3ac6de3385a9639badf6",
+    "src/vm/context.rs": "f0ae2d47441ae5f2233cffba7769ee5ef0b2091e",
+    "src/vm/loop_object.rs": "d2bb8ffbd8bdd6574362b2a967fcf2633ebfd677",
+    "src/vm/macro_object.rs": "7486593724e222a60444d9db19a3b8b2914e6fef",
+    "src/value/ops.rs": "070605406dc3b73506f1be77cbacd5b00a068276",
+    "src/vm/mod.rs": "0d773c632f7e0da27660dc0643650f6a32dfd8c4",
+    "src/vm/state.rs": "2ff7bead0eccb88c0da8f3c95cd5a7cb1eca69e8",
+    "src/compiler/mod.rs": "611c75f9d6e57e8a9a0141b88817820c7b77968f",
+    "src/vm/module_object.rs": "1d8933ae3a8e7d71013c3fa06feb094b2415d879"
+  },
+  "local_files": {
+    "src/compiler/root_symbols.rs": "1e506b932c894a1da6451547fb100b7d95a2dee6",
+    "examples/root_symbol_probe.rs": "e9b0a553c74477476ab2307517a22126aad7c3ec"
+  }
+}

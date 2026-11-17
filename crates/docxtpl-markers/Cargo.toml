@@ -1,0 +1,15 @@
+[package]
+name = "docxtpl-markers"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+description = "Link a rendered DOCX back to its template: move in-line marker bookmarks to paragraph anchors that do not disturb the layout, and report where they were"
+
+[dependencies]
+docxtpl-pycompat = { path = "../docxtpl-pycompat" }
+docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }
+fancy-regex = "0.14"
+quick-xml = "0.36"

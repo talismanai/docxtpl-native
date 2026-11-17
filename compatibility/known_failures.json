@@ -1,0 +1,489 @@
+{
+ "schema_version": 1,
+ "notice": "Known failures of the full Python suite, each mapped to a cause and its catalog contracts. 'failures' is pending work; 'divergences' are accepted differences from the reference (each cause records its decision), which must keep failing the same way so the documented difference stays pinned. scripts/check_known_failures.py compares a unittest -v log with both lists. Remove a failure when its test passes; never add one to hide a regression. The map is calibrated on CPython 3.12.",
+ "python": "3.12",
+ "command": "PYTHONPATH=tests:python .venv/bin/python -m unittest discover -s tests -v",
+ "causes": {
+  "async_throw_protocol": {
+   "contracts": [
+    "jinja.async.callback"
+   ],
+   "description": "send/throw/close delegation does not match the reference: async-generator hooks, legacy throw warnings per delegation layer, reentry checks and unraisable reporting.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "block_reference_adapter": {
+   "contracts": [
+    "jinja.language.super",
+    "jinja.sandbox.call"
+   ],
+   "description": "Calls of self.<block> with keyword names the compiler adds inside loops (_loop_vars) raise SyntaxError in Jinja's generated Python code; the native template has no generated code (scope review: CPython code generation).",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "cpython_specialization_error": {
+   "contracts": [
+    "jinja.builtin.filter.forceescape"
+   ],
+   "description": "The SystemError text for an invalid escape result depends on CPython call-site specialization and profiling state; the native call reports the unspecialized message.",
+   "cpython_internals": true,
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "escape_code_identity": {
+   "contracts": [
+    "jinja.builtin.filter.forceescape"
+   ],
+   "description": "An exact code clone of markupsafe.escape is treated as the standard algorithm instead of a user callback.",
+   "cpython_internals": true,
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "exported_mapping_frame": {
+   "contracts": [
+    "jinja.language.import_context"
+   ],
+   "description": "A mapping used as Context.vars is read from the native body instead of get_exported, so the user's __getitem__ sees its own caller's frame instead of get_exported (measured 2026-11-17: native (run_body, [context, native]) against the reference (get_exported, [k, self])).",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "from_code_hook": {
+   "contracts": [
+    "jinja.extensions.ast"
+   ],
+   "description": "A replaced Template.from_code is not called; the native compiler builds templates without it, so its builtins and side effects are not observed.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "generated_code_identity": {
+   "contracts": [
+    "jinja.async.callback"
+   ],
+   "description": "Awaitables from recursive loops and super() do not expose the reference's generated coroutine code name or code object.",
+   "cpython_internals": true,
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "import_cache_semantics": {
+   "contracts": [
+    "jinja.language.import"
+   ],
+   "description": "Environment.cache is not called: Jinja stores Python-compiled Template objects in it, which the native compiler does not produce. Reload rules (cache None or replaced, auto_reload with the loader's uptodate) are followed natively; the cache object's get/set protocol is a scope-review item (P7 native cache).",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "join_generator_identity": {
+   "contracts": [
+    "jinja.builtin.filter.indent",
+    "jinja.builtin.filter.join"
+   ],
+   "description": "A custom join observes a different generator (reference count, code object or caller frame) than the one indent passes in the reference.",
+   "cpython_internals": true,
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "join_getter_protocol": {
+   "contracts": [
+    "jinja.builtin.filter.join"
+   ],
+   "description": "The attribute getter passed by join is a native object, not a function, and the async adapter runs its Python __anext__ body.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "loop_snapshot_not_live": {
+   "contracts": [
+    "jinja.callback.identity",
+    "jinja.iteration.lookahead"
+   ],
+   "description": "Contradictory requirements: an async loop repr must not run AsyncLoopContext.__repr__ in Python, and its unawaited length coroutine's warning must point into that __repr__.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "module_reference_count": {
+   "contracts": [
+    "jinja.language.from_import"
+   ],
+   "description": "A failing import holds one reference FEWER to its target during the callback: the reference keeps it alive on the Python frame of its generated code, which the native VM does not have (measured 2026-11-17: native 6, reference 7).",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "tojson_python_algorithm": {
+   "contracts": [
+    "jinja.builtin.filter.tojson"
+   ],
+   "description": "tojson still executes Jinja's Python do_tojson and htmlsafe_json_dumps (native audit). Porting them conflicts with test_serializer_error_preserves_jinja_traceback_frames, which requires those Python frames in the traceback, and with reference-count observations of the frames' kwargs: scope review in P6.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "async_iterator_code_clone": {
+   "contracts": [
+    "jinja.async.callback",
+    "jinja.iteration.lookahead"
+   ],
+   "description": "An exact code clone of AsyncLoopContext._to_iterator installed before the extension loads is indistinguishable from the original and runs natively.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "async_iterator_reference_count": {
+   "contracts": [
+    "jinja.async.callback",
+    "jinja.iteration.lookahead"
+   ],
+   "description": "A replaced async loop factory observes a different reference count during its call.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  },
+  "generated_module_lifetime": {
+   "contracts": [
+    "jinja.async.callback",
+    "jinja.iteration.lookahead"
+   ],
+   "description": "A replaced auto_aiter imported by Jinja's generated module lives until the module's reference cycle is collected; the native render releases it when the render ends.",
+   "accepted": {
+    "decision": "docs/STATUS.md#accepted-debts"
+   }
+  }
+ },
+ "failures": [],
+ "divergences": [
+  {
+   "id": "test_asyncgen_firstiter_exception_precedes_await (test_native_async_throw.AsyncThrowTests.test_asyncgen_firstiter_exception_precedes_await)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_asyncgen_hooks_observe_template_generator_lifetime (test_native_async_throw.AsyncThrowTests.test_asyncgen_hooks_observe_template_generator_lifetime)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_cache_access_order (test_native_ast_import.AstImportTests.test_cache_access_order) (cache_size=0)",
+   "kind": "fail",
+   "group": "modules",
+   "cause": "import_cache_semantics"
+  },
+  {
+   "id": "test_cache_access_order (test_native_ast_import.AstImportTests.test_cache_access_order) (cache_size=400)",
+   "kind": "fail",
+   "group": "modules",
+   "cause": "import_cache_semantics"
+  },
+  {
+   "id": "test_callable_from_code_exposes_its_actual_template_builtins (test_native_required_len.RequiredLengthTests.test_callable_from_code_exposes_its_actual_template_builtins) (asynchronous=False)",
+   "kind": "error",
+   "group": "blocks",
+   "cause": "from_code_hook"
+  },
+  {
+   "id": "test_callable_from_code_exposes_its_actual_template_builtins (test_native_required_len.RequiredLengthTests.test_callable_from_code_exposes_its_actual_template_builtins) (asynchronous=True)",
+   "kind": "error",
+   "group": "blocks",
+   "cause": "from_code_hook"
+  },
+  {
+   "id": "test_custom_factory_standard_adapter_anext_body_is_native (test_native_join_filter.NativeJoinFilterTests.test_custom_factory_standard_adapter_anext_body_is_native)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_getter_protocol"
+  },
+  {
+   "id": "test_custom_join_observes_generator_refcount (test_native_indent_filter.NativeIndentFilterTests.test_custom_join_observes_generator_refcount) (asynchronous=False)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_generator_identity"
+  },
+  {
+   "id": "test_custom_join_observes_generator_refcount (test_native_indent_filter.NativeIndentFilterTests.test_custom_join_observes_generator_refcount) (asynchronous=True)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_generator_identity"
+  },
+  {
+   "id": "test_custom_join_observes_original_generator_code_identity (test_native_indent_filter.NativeIndentFilterTests.test_custom_join_observes_original_generator_code_identity)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_generator_identity"
+  },
+  {
+   "id": "test_custom_serializer_and_jinja_bodies (test_native_tojson_filter.NativeTojsonTests.test_custom_serializer_and_jinja_bodies) (asynchronous=False)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "tojson_python_algorithm"
+  },
+  {
+   "id": "test_custom_serializer_and_jinja_bodies (test_native_tojson_filter.NativeTojsonTests.test_custom_serializer_and_jinja_bodies) (asynchronous=True)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "tojson_python_algorithm"
+  },
+  {
+   "id": "test_custom_template_cache_receives_lookup_and_store (test_native_ast_import.AstImportTests.test_custom_template_cache_receives_lookup_and_store)",
+   "kind": "fail",
+   "group": "modules",
+   "cause": "import_cache_semantics"
+  },
+  {
+   "id": "test_delegated_warning_reentry_observes_running_coroutine (test_native_async_throw.AsyncThrowTests.test_delegated_warning_reentry_observes_running_coroutine) (operation='close')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_delegated_warning_reentry_observes_running_coroutine (test_native_async_throw.AsyncThrowTests.test_delegated_warning_reentry_observes_running_coroutine) (operation='send')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_delegated_warning_reentry_observes_running_coroutine (test_native_async_throw.AsyncThrowTests.test_delegated_warning_reentry_observes_running_coroutine) (operation='throw')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_exact_code_clone_installed_before_load_remains_callback (test_native_forceescape_filter.NativeForceEscapeTests.test_exact_code_clone_installed_before_load_remains_callback) (timing='after-package')",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "escape_code_identity"
+  },
+  {
+   "id": "test_exact_code_clone_installed_before_load_remains_callback (test_native_forceescape_filter.NativeForceEscapeTests.test_exact_code_clone_installed_before_load_remains_callback) (timing='before-package')",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "escape_code_identity"
+  },
+  {
+   "id": "test_first_warning_reentry_matches_reference (test_native_async_warning_reentry.AsyncWarningReentryTests.test_first_warning_reentry_matches_reference) (operation='throw')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_getter_preserves_function_protocol (test_native_join_filter.NativeJoinAttributeGetterTests.test_getter_preserves_function_protocol)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_getter_protocol"
+  },
+  {
+   "id": "test_invalid_escape_after_profiling_is_disabled (test_native_forceescape_filter.NativeForceEscapeTests.test_invalid_escape_after_profiling_is_disabled)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_invalid_escape_error_with_matching_instrumentation (test_native_forceescape_filter.NativeForceEscapeTests.test_invalid_escape_error_with_matching_instrumentation) (profile='unprofiled', temperature='warmed')",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_invalid_escape_specializes_during_repeated_render (test_native_forceescape_filter.NativeForceEscapeTests.test_invalid_escape_specializes_during_repeated_render)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_invalid_escape_updates_reference_adaptive_call_site (test_native_forceescape_filter.NativeForceEscapeTests.test_invalid_escape_updates_reference_adaptive_call_site)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_invalid_generator_exit_unraisable_identifies_async_generator (test_native_async_throw.AsyncThrowTests.test_invalid_generator_exit_unraisable_identifies_async_generator)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_join_observes_filter_caller_frame (test_native_indent_join_frame.IndentJoinFrameTests.test_join_observes_filter_caller_frame) (asynchronous=False)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_generator_identity"
+  },
+  {
+   "id": "test_join_observes_filter_caller_frame (test_native_indent_join_frame.IndentJoinFrameTests.test_join_observes_filter_caller_frame) (asynchronous=True)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "join_generator_identity"
+  },
+  {
+   "id": "test_legacy_throw_warning_for_suspended_custom_iterator (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warning_for_suspended_custom_iterator) (warning_is_error=False)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warning_tracks_template_delegation_layers (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warning_tracks_template_delegation_layers) (case='block')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warning_tracks_template_delegation_layers (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warning_tracks_template_delegation_layers) (case='call')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warning_tracks_template_delegation_layers (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warning_tracks_template_delegation_layers) (case='filtered_test')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warning_tracks_template_delegation_layers (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warning_tracks_template_delegation_layers) (case='include')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warnings_in_macro_super_and_nested_includes (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warnings_in_macro_super_and_nested_includes) (case='macro')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warnings_in_macro_super_and_nested_includes (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warnings_in_macro_super_and_nested_includes) (case='nested')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_legacy_throw_warnings_in_macro_super_and_nested_includes (test_native_async_throw.AsyncThrowTests.test_legacy_throw_warnings_in_macro_super_and_nested_includes) (case='super')",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_mapping_callback_observes_reference_frame (test_native_context_exports.ContextExportBodyTests.test_mapping_callback_observes_reference_frame)",
+   "kind": "fail",
+   "group": "context",
+   "cause": "exported_mapping_frame"
+  },
+  {
+   "id": "test_missing_import_preserves_target_reference_count_in_callback (test_native_ast_import.AstImportTests.test_missing_import_preserves_target_reference_count_in_callback)",
+   "kind": "fail",
+   "group": "modules",
+   "cause": "module_reference_count"
+  },
+  {
+   "id": "test_missing_throw_cleanup_failure_keeps_original_error (test_native_async_throw.AsyncThrowTests.test_missing_throw_cleanup_failure_keeps_original_error)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_recursive_awaitable_exposes_generated_coroutine_code_name (test_native_async_await_globals.AwaitGlobalsTests.test_recursive_awaitable_exposes_generated_coroutine_code_name)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "generated_code_identity"
+  },
+  {
+   "id": "test_replaced_str_with_invalid_result_preserves_exception (test_native_forceescape_filter.NativeForceEscapeTests.test_replaced_str_with_invalid_result_preserves_exception)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_second_warning_callback_failure_closes_delegated_coroutine (test_native_async_throw.AsyncThrowTests.test_second_warning_callback_failure_closes_delegated_coroutine)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "async_throw_protocol"
+  },
+  {
+   "id": "test_selected_custom_from_code_callback_is_invoked (test_native_compile_origin_reentry.CompilationOriginReentryTests.test_selected_custom_from_code_callback_is_invoked) (asynchronous=False)",
+   "kind": "fail",
+   "group": "context",
+   "cause": "from_code_hook"
+  },
+  {
+   "id": "test_selected_custom_from_code_callback_is_invoked (test_native_compile_origin_reentry.CompilationOriginReentryTests.test_selected_custom_from_code_callback_is_invoked) (asynchronous=True)",
+   "kind": "fail",
+   "group": "context",
+   "cause": "from_code_hook"
+  },
+  {
+   "id": "test_self_block_expansions_inside_loop_follow_reference (test_native_super_cleanup.SuperCleanupTests.test_self_block_expansions_inside_loop_follow_reference) (asynchronous=False, expression='_loop_vars=1')",
+   "kind": "fail",
+   "group": "blocks",
+   "cause": "block_reference_adapter"
+  },
+  {
+   "id": "test_self_block_expansions_inside_loop_follow_reference (test_native_super_cleanup.SuperCleanupTests.test_self_block_expansions_inside_loop_follow_reference) (asynchronous=True, expression='_loop_vars=1')",
+   "kind": "fail",
+   "group": "blocks",
+   "cause": "block_reference_adapter"
+  },
+  {
+   "id": "test_super_awaitable_exposes_reference_coroutine_code (test_native_async_await_globals.AwaitGlobalsTests.test_super_awaitable_exposes_reference_coroutine_code)",
+   "kind": "fail",
+   "group": "async_lifecycle",
+   "cause": "generated_code_identity"
+  },
+  {
+   "id": "test_warmed_escape_invalid_input_preserves_exception (test_native_forceescape_filter.NativeForceEscapeTests.test_warmed_escape_invalid_input_preserves_exception)",
+   "kind": "fail",
+   "group": "filters",
+   "cause": "cpython_specialization_error"
+  },
+  {
+   "id": "test_async_loop_repr_warning_origin_matches_reference (test_native_loop_adapter.LoopAdapterTests.test_async_loop_repr_warning_origin_matches_reference)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "loop_snapshot_not_live"
+  },
+  {
+   "id": "test_exact_code_clone_before_bridge_import_remains_callback (test_native_async_loop_to_iterator.AsyncLoopToIteratorTests.test_exact_code_clone_before_bridge_import_remains_callback)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "async_iterator_code_clone"
+  },
+  {
+   "id": "test_factory_rebinding_preserves_lifetime_after_render (test_native_async_filtered_factory.AsyncFilteredFactoryTests.test_factory_rebinding_preserves_lifetime_after_render) (filtered=False)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "generated_module_lifetime"
+  },
+  {
+   "id": "test_factory_rebinding_preserves_lifetime_after_render (test_native_async_filtered_factory.AsyncFilteredFactoryTests.test_factory_rebinding_preserves_lifetime_after_render) (filtered=True)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "generated_module_lifetime"
+  },
+  {
+   "id": "test_live_factory_reference_count_after_rebinding (test_native_async_loop_auto_aiter.AsyncLoopAutoAiterTests.test_live_factory_reference_count_after_rebinding)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "async_iterator_reference_count"
+  },
+  {
+   "id": "test_override_with_standard_metadata_before_bridge_import (test_native_async_loop_to_iterator.AsyncLoopToIteratorTests.test_override_with_standard_metadata_before_bridge_import)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "async_iterator_code_clone"
+  },
+  {
+   "id": "test_static_override_reference_count_during_call (test_native_async_loop_to_iterator.AsyncLoopToIteratorTests.test_static_override_reference_count_during_call)",
+   "kind": "fail",
+   "group": "loops",
+   "cause": "async_iterator_reference_count"
+  }
+ ]
+}
