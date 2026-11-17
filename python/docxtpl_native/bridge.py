@@ -9,6 +9,7 @@ import builtins as _BUILTINS
 from collections.abc import Callable, Generator, Iterator
 from types import FunctionType as _FunctionType
 from types import MethodType as _METHOD_TYPE
+from typing import NoReturn
 
 import jinja2.async_utils as _ASYNC_UTILS_MODULE
 import jinja2.environment as _ENVIRONMENT_MODULE
@@ -358,6 +359,18 @@ def _load_runtime_with_selected_method(
 ) -> object:
     """Keep the selected method in this frame if the import raises."""
     return loader(names)
+
+
+def _exported_comprehension_frame(error: BaseException, frame: list[object]) -> NoReturn:
+    """Raise `error` from a frame that keeps the comprehension's iterator and key.
+
+    Only `frame` stays in this frame's locals, so the traceback retains it
+    without forming a cycle through the error.
+    """
+    try:
+        raise error
+    finally:
+        del error
 
 
 def _runtime_attribute_with_selected_method(

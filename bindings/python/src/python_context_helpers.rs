@@ -2,7 +2,7 @@
 use crate::pyglobals::{FrameGlobals, frame_global};
 use pyo3::class::gc::{PyTraverseError, PyVisit};
 use pyo3::prelude::*;
-use pyo3::types::{PyDict, PyIterator};
+use pyo3::types::{PyDict, PyIterator, PyList};
 
 fn receiver<'py>(
     py: Python<'py>,
@@ -35,13 +35,49 @@ pub(crate) fn python_context_exported_body<'py>(
     context: &Bound<'py, PyAny>,
 ) -> PyResult<Bound<'py, PyDict>> {
     let iterator = context.getattr("exported_vars")?.try_iter()?;
-    let result = PyDict::new(py);
+    if py.version_info().minor <= 11 {
+        // CPython 3.11 runs the comprehension in a frame of its own that owns
+        // the iterator (`.0`) and the current key (`k`), and a traceback keeps
+        // that frame alive. 3.12 inlines the comprehension, so neither outlives
+        // the error there.
+        let frame = PyList::new(py, [iterator.into_any(), py.None().into_bound(py)])?;
+        let iterator = frame.get_item(0)?.cast_into::<PyIterator>()?;
+        return exported_items(context, iterator, Some(&frame)).map_err(|error| {
+            // Re-raised through a Python frame that holds `frame`, so the
+            // traceback keeps the iterator and the key alive, and only it.
+            match crate::python_function::binding(py)
+                .and_then(|binding| binding.getattr("_exported_comprehension_frame"))
+                .and_then(|retain| retain.call1((error.into_value(py), &frame)))
+            {
+                Err(raised) => raised,
+                Ok(_) => pyo3::exceptions::PyRuntimeError::new_err("the comprehension frame did not raise"),
+            }
+        });
+    }
+    exported_items(context, iterator, None)
+}
+
+/// The standard comprehension body. With `frame`, the key lives in its second
+/// slot, as `k` lives in the comprehension frame of CPython 3.11.
+fn exported_items<'py>(
+    context: &Bound<'py, PyAny>,
+    iterator: Bound<'py, PyIterator>,
+    frame: Option<&Bound<'py, PyList>>,
+) -> PyResult<Bound<'py, PyDict>> {
+    let result = PyDict::new(context.py());
     for key in iterator {
         let key = key?;
         // The comprehension evaluates the output key before the subscript.
         // Both operands stay alive while the mapping's lookup protocol runs.
         let output_key = key.clone();
         let subscript = key.clone();
+        let _key = match frame {
+            Some(frame) => {
+                frame.set_item(1, key)?;
+                None
+            }
+            None => Some(key),
+        };
         let mapping = context.getattr("vars")?;
         let value = mapping.get_item(&subscript)?;
         drop(subscript);
