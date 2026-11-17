@@ -51,7 +51,7 @@ The host side of the WebAssembly ABI, which has no dependencies to install,
 and the check that keeps the modules free of unexpected imports:
 
 ```bash
-node --test js/test/ scripts/check_wasm_imports.test.mjs
+node --test 'js/test/*.test.mjs' scripts/check_wasm_imports.test.mjs
 node scripts/check_wasm_imports.mjs target/wasm32-unknown-unknown/wasm/docxtpl_wasm.wasm
 ```
 

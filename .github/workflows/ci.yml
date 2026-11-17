@@ -58,7 +58,7 @@ jobs:
         with:
           node-version: 22
       - name: Host side of the ABI and the import check
-        run: node --test js/test/ scripts/check_wasm_imports.test.mjs
+        run: node --test 'js/test/*.test.mjs' scripts/check_wasm_imports.test.mjs
       - name: Browser module
         run: |
           cargo build -p docxtpl-wasm --target wasm32-unknown-unknown --profile wasm --locked

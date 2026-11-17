@@ -13,6 +13,6 @@
   },
   "files": ["index.mjs", "index.d.ts", "src"],
   "scripts": {
-    "test": "node --test test/"
+    "test": "node --test \"test/*.test.mjs\""
   }
 }
