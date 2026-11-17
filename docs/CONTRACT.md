@@ -188,7 +188,7 @@ declared target with no report stays unverified without an issue, because a
 workstation has no containers. CI collects all four on every change: the
 `deployment-target` job of [`ci.yml`](../.github/workflows/ci.yml) runs the
 script on a runner of each target's architecture, and the `contract` job runs
-both gates over those reports and the corpus of the 3.12 leg.
+both gates over those reports and the merged 3.12 corpus.
 
 A requirement or catalog contract marked `"evidence": "manual"` names no test:
 its evidence is a person's check that no automated run produces, such as

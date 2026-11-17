@@ -122,16 +122,16 @@ jobs:
       - name: Check subdocument master identifier reference
         run: PYTHONPATH=python:tests python -m unittest test_subdoc_master_identifiers.SubdocumentMasterIdentifiersTests.test_reference_stages_master_and_preserves_child_pictures -v
 
-  # The Python binding and the differential laboratory. Gaps fail on purpose:
-  # this job is green only when the binding matches the pinned reference.
+  # The Python binding: its build, the whole unit suite against the
+  # known-failure map, the wheel and the benchmarks. The differential corpus
+  # runs in the parity jobs, at the same time.
   python-binding:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         python: ['3.11', '3.12']
-    # The differential corpus alone takes about 50 minutes on a hosted runner.
-    timeout-minutes: 90
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -141,8 +141,11 @@ jobs:
         with:
           version: '0.13.6'
       - uses: dtolnay/rust-toolchain@1.96.0
+      # One build per Python, shared with the parity shards of that Python;
+      # only this job writes it.
       - uses: Swatinem/rust-cache@v2
         with:
+          shared-key: binding-py${{ matrix.python }}
           cache-on-failure: true
       - name: Native dependencies and independent visual renderer
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config libreoffice-writer fonts-liberation fonts-dejavu-core
@@ -236,28 +239,96 @@ jobs:
         with:
           name: docx-input-benchmark-py${{ matrix.python }}
           path: artifacts/docx-input-benchmark.json
-      - name: Differential and visual parity (gaps fail)
-        run: .venv/bin/python -m paritylab.cli --suite all --visual required --repeat 7 --warmup 1 --out artifacts/parity
-      - name: Summarize parity evidence
-        if: always()
-        run: |
-          if test -f artifacts/parity/report.json; then .venv/bin/python scripts/summarize_report.py artifacts/parity/report.json; fi
-      - name: Granular specification evidence
-        if: always()
-        run: |
-          smoke_args=()
-          for smoke_report in artifacts/wheel-smoke/*.json; do
-            if test -f "$smoke_report"; then smoke_args+=(--standalone-report "$smoke_report"); fi
-          done
-          .venv/bin/python scripts/spec_coverage.py "${smoke_args[@]}"
-          cat artifacts/spec-coverage.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: parity-evidence-and-lock-py${{ matrix.python }}
+          name: binding-evidence-and-lock-py${{ matrix.python }}
           path: |
             artifacts/
             Cargo.lock
+
+  # The differential corpus, split into interleaved shards that run on
+  # runners of their own, so their timings stay those of an unloaded host.
+  # A shard with gaps still passes: the merge in the parity job judges the
+  # whole corpus. Only an infrastructure error (exit 2) fails here.
+  parity-shard:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+        shard: [1, 2, 3, 4, 5, 6]
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - uses: dtolnay/rust-toolchain@1.96.0
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: binding-py${{ matrix.python }}
+          save-if: false
+      - name: Native dependencies and independent visual renderer
+        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config libreoffice-writer fonts-liberation fonts-dejavu-core
+      - name: Python environment with the pinned reference
+        run: |
+          uv venv .venv
+          uv pip install 'maturin==1.16.0' 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
+          source .venv/bin/activate
+          maturin develop --release --locked
+          python scripts/fetch_upstream.py
+          uv pip install --no-deps .upstream/docxtpl
+      - name: Differential and visual parity, shard ${{ matrix.shard }} of 6
+        run: |
+          status=0
+          .venv/bin/python -m paritylab.cli --suite all --visual required --repeat 7 --warmup 1 \
+            --shard ${{ matrix.shard }}/6 --out artifacts/parity || status=$?
+          test "$status" -le 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parity-py${{ matrix.python }}-shard-${{ matrix.shard }}
+          path: artifacts/parity/
+
+  # The shards of one Python joined into one report: complete only when they
+  # cover the corpus exactly once. Gaps fail on purpose: this job is green
+  # only when the binding matches the pinned reference.
+  parity:
+    needs: parity-shard
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.13.6'
+      - name: Python environment
+        run: uv pip install --system 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: parity-py${{ matrix.python }}-shard-*
+          path: shards
+      - name: Differential and visual parity (gaps fail)
+        run: PYTHONPATH=python python scripts/merge_parity_shards.py --out artifacts/parity shards/*/report.json
+      - name: Summarize parity evidence
+        if: always()
+        run: |
+          if test -f artifacts/parity/report.json; then python scripts/summarize_report.py artifacts/parity/report.json; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-py${{ matrix.python }}
+          path: artifacts/parity/
 
   # One installation report per declared deployment target, built and
   # installed on that target's own architecture at this revision.
@@ -277,6 +348,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@1.96.0
       - uses: Swatinem/rust-cache@v2
         with:
+          key: py${{ matrix.python }}
           cache-on-failure: true
       - name: Native dependencies
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
@@ -288,12 +360,13 @@ jobs:
           path: reports/
 
   # The two gates of the contract, over the evidence of this revision: the
-  # differential corpus of the 3.12 leg and the reports of the four targets.
-  # A requirement whose evidence is manual is listed as pending, not run.
+  # merged corpus of 3.12 and the reports of the four targets. A requirement
+  # whose evidence is manual is listed as pending, not run. Nothing is built:
+  # the gates read the pinned reference and the collected reports.
   contract:
-    needs: [python-binding, deployment-target]
+    needs: [parity, deployment-target]
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -302,24 +375,15 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.96.0
-      - uses: Swatinem/rust-cache@v2
-        with:
-          cache-on-failure: true
-      - name: Native dependencies
-        run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
       - name: Python environment with the pinned reference
         run: |
-          uv venv .venv
-          uv pip install 'maturin==1.16.0' 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
-          source .venv/bin/activate
-          maturin develop --release --locked
+          uv pip install --system 'python-docx==1.2.0' 'Jinja2==3.1.6' 'lxml==6.1.1' 'docxcompose==1.4.0' 'setuptools==80.9.0' 'Babel==2.18.0' 'Pillow==13.0.0' 'PyMuPDF==2.1'
           python scripts/fetch_upstream.py
-          uv pip install --no-deps .upstream/docxtpl
+          uv pip install --system --no-deps .upstream/docxtpl
       - uses: actions/download-artifact@v4
         with:
-          name: parity-evidence-and-lock-py3.12
-          path: collected/py3.12
+          name: parity-py3.12
+          path: collected/parity
       - uses: actions/download-artifact@v4
         with:
           pattern: deployment-*
@@ -329,10 +393,17 @@ jobs:
         run: |
           deployment_args=()
           for report in collected/deployment/*.json; do deployment_args+=(--deployment-report "$report"); done
-          .venv/bin/python scripts/compatibility_matrix.py --check \
-            --report collected/py3.12/artifacts/parity/report.json "${deployment_args[@]}"
+          PYTHONPATH=python python scripts/compatibility_matrix.py --check \
+            --report collected/parity/report.json "${deployment_args[@]}"
       - name: Specification test coverage (missing contracts and partitions fail)
-        run: .venv/bin/python scripts/spec_test_coverage.py --check
+        run: PYTHONPATH=python python scripts/spec_test_coverage.py --check
+      - name: Granular specification evidence
+        if: always()
+        run: |
+          standalone_args=()
+          for report in collected/deployment/*.json; do standalone_args+=(--standalone-report "$report"); done
+          PYTHONPATH=python python scripts/spec_coverage.py --report collected/parity/report.json "${standalone_args[@]}"
+          cat artifacts/spec-coverage.md >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

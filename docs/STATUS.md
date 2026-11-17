@@ -61,7 +61,7 @@ python scripts/compatibility_matrix.py --check \
 CI qualifies every change this way: the `deployment-target` job of
 [`ci.yml`](../.github/workflows/ci.yml) runs the script on a runner of each
 target's architecture, and the `contract` job runs the two gates over those
-reports and the differential corpus of the 3.12 leg. On CPython 3.11
+reports and the merged 3.12 corpus. On CPython 3.11
 the accepted-debt map does not apply as such (it is calibrated on 3.12): the
 check is that no test fails there that does not fail on 3.12, which is what
 `scripts/check_known_failures.py` enforces for a log of another version.
