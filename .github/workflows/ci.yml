@@ -19,7 +19,7 @@ jobs:
       PYO3_PYTHON: /nonexistent/python
     steps:
       - uses: actions/checkout@v7
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
         with:
           targets: wasm32-unknown-unknown
           components: clippy
@@ -140,7 +140,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
       # One build per Python, shared with the parity shards of that Python;
       # only this job writes it.
       - uses: Swatinem/rust-cache@v2
@@ -267,7 +267,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
       - uses: Swatinem/rust-cache@v2
         with:
           shared-key: binding-py${{ matrix.python }}
@@ -345,7 +345,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
       - uses: Swatinem/rust-cache@v2
         with:
           key: py${{ matrix.python }}

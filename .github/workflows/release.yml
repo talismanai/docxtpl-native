@@ -54,7 +54,7 @@ jobs:
       PYO3_PYTHON: /nonexistent/python
     steps:
       - uses: actions/checkout@v7
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
         with:
           targets: wasm32-unknown-unknown
           components: clippy
@@ -103,7 +103,7 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           version: '0.13.6'
-      - uses: dtolnay/rust-toolchain@1.120.0
+      - uses: dtolnay/rust-toolchain@1.96.0
       - uses: Swatinem/rust-cache@v2
       - name: Native dependencies
         run: sudo apt-get update && sudo apt-get install -y libxml2-dev libclang-dev pkg-config
