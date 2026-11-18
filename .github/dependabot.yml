@@ -10,3 +10,8 @@ updates:
     groups:
       actions:
         patterns: ['*']
+    ignore:
+      # The Rust version follows rust-toolchain.toml and changes by review.
+      # This action publishes refs for Rust versions ahead of their release, so
+      # its newest ref names a toolchain rustup cannot download yet.
+      - dependency-name: dtolnay/rust-toolchain
