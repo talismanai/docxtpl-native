@@ -41,17 +41,19 @@ not inherit patches from a dependency's workspace):
 [dependencies]
 # One dependency for every layer you use; `docxtpl` re-exports them, and the
 # MiniJinja your template values belong to, so nothing can drift apart.
-docxtpl = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>", features = ["wasm"] }
+docxtpl = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>", features = ["wasm"] }
 
 [patch.crates-io]
-minijinja = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>" }
-zlib-rs = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>" }
+minijinja = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>" }
+zlib-rs = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>" }
 ```
 
 The features are `pycompat`, `wasm`, `markers`, `pdf`, `host-core`, and
 `browser` for the four a browser pipeline uses. A single crate also works
-(`docxtpl-wasm = { git = ..., rev = ... }`); the facade exists so that one
-revision is written once instead of once per crate.
+(`docxtpl-wasm = { git = ..., tag = ... }`); the facade exists so that one
+release tag is written once instead of once per crate. Pin a release tag
+(`v<version>`, see [Releases](CONTRIBUTING.md#releases)), not a branch: the
+three entries must name the same tag.
 
 ```rust
 let template = std::fs::read("template.docx")?;

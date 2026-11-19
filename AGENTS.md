@@ -10,7 +10,7 @@ commands; [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) explains the layers.
   user of DOCX templating.
 - Whatever is specific to one application (its document conventions, filters,
   styles, data, identifiers, parity scripts against its services) lives in
-  that application's repository, which depends on this one by git revision.
+  that application's repository, which depends on this one by release tag.
 - Never add names of organizations, products or customers, internal URLs,
   private identifiers, personal data or absolute local paths, in code, docs or
   generated artifacts: use paths relative to the repository root.

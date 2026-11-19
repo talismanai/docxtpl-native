@@ -256,20 +256,21 @@ well as gains.
 
 ## Consuming the engine from another workspace
 
-Depend on the crates by git revision and repeat the two patches. Cargo does
-not inherit patches declared by a dependency's workspace:
+Depend on the crates by release tag (`v<version>`) and repeat the two
+patches with the same tag. Cargo does not inherit patches declared by a
+dependency's workspace:
 
 ```toml
 [dependencies]
-docxtpl = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>", features = ["pycompat", "wasm"] }
+docxtpl = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>", features = ["pycompat", "wasm"] }
 
 [patch.crates-io]
-minijinja = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>" }
-zlib-rs = { git = "https://github.com/talismanai/docxtpl-native", rev = "<commit>" }
+minijinja = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>" }
+zlib-rs = { git = "https://github.com/talismanai/docxtpl-native", tag = "v<version>" }
 ```
 
 `docxtpl` is a facade over the engine crates, one feature each, so that a
-consumer writes the revision once in `[dependencies]` instead of once per
+consumer writes the tag once in `[dependencies]` instead of once per
 crate. The two patches are still its own: Cargo reads a patch table only from
 the workspace root being built, and the names come from third-party crates
 (`jinja` asks crates.io for MiniJinja, `flate2` for zlib-rs), so a facade
