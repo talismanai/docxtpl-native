@@ -33,7 +33,37 @@
 //! `wasm_js` feature that only exists when the `wasm_js` backend is the one
 //! compiled, so the two cannot be separated from the outside.
 
-pub use docxide_pdf::FontRequest;
+pub use docxide_pdf::{Compression, FontRequest};
+
+/// Settings of one conversion. The defaults are the converter's own (on a
+/// host with an environment, what its `DOCXIDE_*` variables select).
+#[derive(Debug, Clone, Default)]
+#[non_exhaustive]
+pub struct PdfOptions {
+    /// How hard the PDF's streams are compressed. [`Compression::Fast`]
+    /// writes the same PDF several times faster as a larger file: for a PDF
+    /// shown where it is made, such as a live preview.
+    pub compression: Option<Compression>,
+}
+
+impl PdfOptions {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    pub fn compression(mut self, compression: Compression) -> Self {
+        self.compression = Some(compression);
+        self
+    }
+
+    fn converter(&self) -> docxide_pdf::ConvertOptions {
+        let options = docxide_pdf::ConvertOptions::from_env();
+        match self.compression {
+            Some(compression) => options.compression(compression),
+            None => options,
+        }
+    }
+}
 
 /// Which end of a bookmarked paragraph a marker stands for.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -71,14 +101,29 @@ const INSIDE_LAST_LINE: f64 = 1.0;
 
 /// Lay out `docx` and render it to PDF bytes.
 pub fn docx_to_pdf(docx: &[u8]) -> Result<Vec<u8>, String> {
-    docxide_pdf::convert_docx_bytes_to_pdf_bytes(docx).map_err(|error| format!("render PDF: {error}"))
+    docx_to_pdf_with(docx, &PdfOptions::default())
+}
+
+/// [`docx_to_pdf`] with `options`.
+pub fn docx_to_pdf_with(docx: &[u8], options: &PdfOptions) -> Result<Vec<u8>, String> {
+    docxide_pdf::convert_docx_bytes_to_pdf_bytes_with(docx, &options.converter())
+        .map_err(|error| format!("render PDF: {error}"))
 }
 
 /// Convert `docx` and report where its markers were laid out. `side` names a
 /// bookmark's marker side, or returns `None` for a bookmark that is not a
 /// marker.
 pub fn docx_to_pdf_marked(docx: &[u8], side: impl Fn(&str) -> Option<MarkerSide>) -> Result<MarkedPdf, String> {
-    let pdf = docx_to_pdf(docx)?;
+    docx_to_pdf_marked_with(docx, &PdfOptions::default(), side)
+}
+
+/// [`docx_to_pdf_marked`] with `options`.
+pub fn docx_to_pdf_marked_with(
+    docx: &[u8],
+    options: &PdfOptions,
+    side: impl Fn(&str) -> Option<MarkerSide>,
+) -> Result<MarkedPdf, String> {
+    let pdf = docx_to_pdf_with(docx, options)?;
     let mut markers = Vec::new();
     for bookmark in docxide_pdf::take_bookmark_positions() {
         let position = match side(&bookmark.name) {

@@ -3,7 +3,7 @@
 
 use std::sync::Mutex;
 
-use docxtpl_pdf::{MarkedPdf, MarkerPosition, MarkerSide};
+use docxtpl_pdf::{Compression, MarkedPdf, MarkerPosition, MarkerSide, PdfOptions};
 use docxtplrs::package::minimal_docx;
 
 /// A synthetic font from docxide-pdf's tests (family "NB Hyphen Fixture ascii").
@@ -115,4 +115,18 @@ fn asks_the_host_for_a_font_it_does_not_have() {
     assert!(requests.contains("Absent Fixture Family"), "{requests}");
     // Draining them leaves the next conversion with a clean list.
     assert_eq!(docxtpl_pdf::font_requests_json(), "[]");
+}
+
+#[test]
+fn fast_compression_writes_a_larger_pdf_with_the_same_markers() {
+    let _fonts = FONTS.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    only_fixture_fonts();
+    let body: String = (0..40).map(|_| marked("MARKS0", FIXTURE_FAMILY, LONG, "MARKE0")).collect();
+    let document = minimal_docx(&format!("{body}{SECTION}"));
+    let smallest = docxtpl_pdf::docx_to_pdf_marked(&document, side).expect("convert");
+    let fast = docxtpl_pdf::docx_to_pdf_marked_with(&document, &PdfOptions::new().compression(Compression::Fast), side)
+        .expect("convert");
+    assert!(fast.pdf.starts_with(b"%PDF"));
+    assert!(fast.pdf.len() > smallest.pdf.len(), "{} <= {}", fast.pdf.len(), smallest.pdf.len());
+    assert_eq!(fast.markers, smallest.markers);
 }
