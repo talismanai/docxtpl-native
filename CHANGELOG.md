@@ -17,6 +17,12 @@ write it for someone deciding whether to upgrade.
   writes the same PDF several times faster as a larger file, for a PDF shown
   where it is made, such as a live preview converted again on every edit.
 
+### Changed
+
+- **PDF converter** (`docxtpl-pdf`): docxide-pdf `v0.21.4-talisman.2`, which
+  lays out and draws text about twice as fast with byte-identical output, and
+  adds the compression option above.
+
 ## [0.1.0] - 2026-11-19
 
 The first release. Experimental: read [Status and limits](README.md#status-and-limits)

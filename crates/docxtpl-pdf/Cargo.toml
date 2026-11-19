@@ -12,7 +12,7 @@ description = "DOCX to PDF for hosts without a filesystem: fonts supplied by the
 [dependencies]
 # Word-compatible layout. The fork adds what a browser needs: the wasm32
 # build, fonts in memory, font requests and bookmark positions.
-docxide-pdf = { git = "https://github.com/talismanai/docxide-pdf", tag = "v0.21.4-talisman.1", default-features = false }
+docxide-pdf = { git = "https://github.com/talismanai/docxide-pdf", tag = "v0.21.4-talisman.2", default-features = false }
 serde_json = { version = "1", features = ["preserve_order"] }
 
 [dev-dependencies]
