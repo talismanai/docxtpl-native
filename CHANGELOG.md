@@ -10,6 +10,13 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+### Added
+
+- **PDF options** (`docxtpl-pdf`): `docx_to_pdf_with` and
+  `docx_to_pdf_marked_with` take `PdfOptions`. `compression(Compression::Fast)`
+  writes the same PDF several times faster as a larger file, for a PDF shown
+  where it is made, such as a live preview converted again on every edit.
+
 ## [0.1.0] - 2026-11-19
 
 The first release. Experimental: read [Status and limits](README.md#status-and-limits)
