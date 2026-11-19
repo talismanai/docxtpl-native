@@ -10,6 +10,24 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+### Added
+
+- **Range links** (`docxtpl-pdf`): `PdfOptions::range_links` takes
+  `RangeLink`s (start and end bookmark names, a URI and an optional heading
+  URI) and the converter writes invisible link annotations over the text and
+  inline pictures laid out between the two bookmarks — whether they sit
+  between paragraphs or between the runs of a line — with at most three
+  rectangles per range and page (first line, the lines between, last line),
+  plus a link over the range's leading bold lines when a heading URI is given.
+  A caller that links a place in the PDF back to its template no longer has
+  to find the text in the PDF itself. Without range links the PDF is
+  unchanged.
+- **Relative markers as bookmarks** (`docxtpl-markers`):
+  `place_relative_markers` inserts a marker the render lost as a point
+  bookmark of its own, a number of characters before the marker it counts back
+  from (splitting the run there), for a converter that places bookmarks inside
+  a line itself, where moving markers to paragraph anchors is not needed.
+
 ## [0.2.1] - 2026-11-19
 
 ### Security

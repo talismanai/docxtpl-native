@@ -1,9 +1,10 @@
 //! Conversion with fonts the test carries, the page positions of a
-//! document's markers, and the font lookups a host is asked to answer.
+//! document's markers, links over bookmarked ranges, and the font lookups a
+//! host is asked to answer.
 
 use std::sync::Mutex;
 
-use docxtpl_pdf::{Compression, MarkedPdf, MarkerPosition, MarkerSide, PdfOptions};
+use docxtpl_pdf::{Compression, MarkedPdf, MarkerPosition, MarkerSide, PdfOptions, RangeLink};
 use docxtplrs::package::minimal_docx;
 
 /// A synthetic font from docxide-pdf's tests (family "NB Hyphen Fixture ascii").
@@ -129,4 +130,46 @@ fn fast_compression_writes_a_larger_pdf_with_the_same_markers() {
     assert!(fast.pdf.starts_with(b"%PDF"));
     assert!(fast.pdf.len() > smallest.pdf.len(), "{} <= {}", fast.pdf.len(), smallest.pdf.len());
     assert_eq!(fast.markers, smallest.markers);
+}
+
+/// The PDF's text with every stream inflated: the converter packs its
+/// annotations into compressed object streams.
+fn inflated(pdf: &[u8]) -> String {
+    let mut text = String::from_utf8_lossy(pdf).into_owned();
+    let mut at = 0;
+    while let Some(start) = pdf[at..].windows(7).position(|w| w == b"stream\n").map(|i| at + i + 7) {
+        let Some(end) = pdf[start..].windows(10).position(|w| w == b"\nendstream").map(|i| start + i) else { break };
+        let mut data = Vec::new();
+        if std::io::Read::read_to_end(&mut flate2::read::ZlibDecoder::new(&pdf[start..end]), &mut data).is_ok() {
+            text.push_str(&String::from_utf8_lossy(&data));
+        }
+        at = end + "\nendstream".len();
+    }
+    text
+}
+
+#[test]
+fn links_the_lines_between_two_bookmarks() {
+    let _fonts = FONTS.lock().unwrap_or_else(|poisoned| poisoned.into_inner());
+    only_fixture_fonts();
+    // The range opens in the second paragraph and closes in the sixth.
+    let lines: String = (0..3).map(|_| run(FIXTURE_FAMILY, "Middle")).collect();
+    let document = minimal_docx(&format!(
+        "{}{}{lines}{}{SECTION}",
+        run(FIXTURE_FAMILY, "Title"),
+        marked("MARKS0", FIXTURE_FAMILY, "First", "OTHER0"),
+        marked("OTHER1", FIXTURE_FAMILY, "Last", "MARKE0"),
+    ));
+    let links = |links: Vec<RangeLink>| {
+        docxtpl_pdf::docx_to_pdf_with(&document, &PdfOptions::new().range_links(links)).expect("convert")
+    };
+    let linked = inflated(&links(vec![RangeLink::new("MARKS0", "MARKE0", "x:section").heading_uri("x:title")]));
+    // Its first line, the lines in between and its last line; it has no
+    // bold heading.
+    assert_eq!(linked.matches("/URI (x:section)").count(), 3, "{linked}");
+    assert!(!linked.contains("x:title"));
+    // Without links, or with bookmarks the document lacks, nothing changes.
+    let plain = docxtpl_pdf::docx_to_pdf(&document).expect("convert");
+    assert!(!inflated(&plain).contains("/URI"));
+    assert_eq!(links(vec![RangeLink::new("MISSING", "MARKE0", "x:none")]), plain);
 }

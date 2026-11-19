@@ -1,7 +1,8 @@
 //! In-line markers moved to paragraph anchors, markers at a paragraph's
-//! edges left alone, and markers placed by counting back from another.
+//! edges left alone, and markers placed by counting back from another (as
+//! anchored offsets, or as bookmarks of their own).
 
-use docxtpl_markers::{Naming, RelativeMarker, anchor_inline_markers, strip_markers};
+use docxtpl_markers::{Naming, RelativeMarker, anchor_inline_markers, place_relative_markers, strip_markers};
 use docxtplrs::package::{Package, minimal_docx};
 
 fn naming() -> Naming {
@@ -97,4 +98,68 @@ fn strips_every_marker_and_leaves_other_bookmarks() {
     assert!(!xml.contains("MARKS0"), "{xml}");
     assert!(xml.contains("_Toc1"), "{xml}");
     assert!(xml.contains(">value<"), "{xml}");
+}
+
+/// `w:t` text and bookmark names (as `[name]`) of `word/document.xml`, with
+/// `|` between runs.
+fn flow(docx: &[u8]) -> String {
+    let xml = Package::from_bytes(docx).expect("package").get_string("word/document.xml").expect("document");
+    let mut out = String::new();
+    let mut rest = xml.as_str();
+    while let Some(at) = rest.find('<') {
+        let end = rest[at..].find('>').map_or(rest.len(), |i| at + i + 1);
+        let tag = &rest[at..end];
+        if (tag == "<w:t>" || tag.starts_with("<w:t ")) && !tag.ends_with("/>") {
+            let close = rest[end..].find("</w:t>").map_or(rest.len(), |i| end + i);
+            out.push_str(&rest[end..close]);
+            rest = &rest[close..];
+            continue;
+        }
+        if tag.starts_with("<w:bookmarkStart") {
+            if let Some(name) = tag.split("w:name=\"").nth(1).and_then(|s| s.split('"').next()) {
+                out.push_str(&format!("[{name}]"));
+            }
+        } else if tag == "</w:r>" {
+            out.push('|');
+        }
+        rest = &rest[end..];
+    }
+    out
+}
+
+#[test]
+fn inserts_a_lost_marker_where_its_characters_start() {
+    // Three characters before the end marker: inside the run, between its
+    // two texts, which the run is split at.
+    let placed = place_relative_markers(&document(LOST_START), &naming(), &[lost_start(3)]).expect("placed");
+    assert_eq!(flow(&placed), "one |[MARKS0]two|[MARKE0]");
+    // Inside a text: "one two" split before "two", its space kept before.
+    let body = r#"<w:p><w:r><w:rPr><w:b/></w:rPr><w:t>one two</w:t></w:r><w:bookmarkStart w:id="2" w:name="MARKE0"/><w:bookmarkEnd w:id="2"/></w:p>"#;
+    let placed = place_relative_markers(&document(body), &naming(), &[lost_start(3)]).expect("placed");
+    assert_eq!(flow(&placed), "one |[MARKS0]two|[MARKE0]");
+    let xml = Package::from_bytes(&placed).expect("package").get_string("word/document.xml").expect("document");
+    // Both halves keep the run's properties.
+    assert_eq!(xml.matches("<w:b/>").count(), 2, "{xml}");
+    assert!(xml.contains(r#"w:id="3000000""#), "{xml}");
+}
+
+#[test]
+fn inserts_a_lost_marker_before_a_run_it_opens() {
+    // All six characters: the marker opens the paragraph's first run, which
+    // stays whole; asking for more stops there too.
+    for chars in [6, 500] {
+        let placed = place_relative_markers(&document(LOST_START), &naming(), &[lost_start(chars)]).expect("placed");
+        assert_eq!(flow(&placed), "[MARKS0]one two|[MARKE0]");
+    }
+    // None: right before the marker counted from.
+    let placed = place_relative_markers(&document(LOST_START), &naming(), &[lost_start(0)]).expect("placed");
+    assert_eq!(flow(&placed), "one two|[MARKS0][MARKE0]");
+}
+
+#[test]
+fn leaves_the_document_alone_when_nothing_is_placed() {
+    let input = document(LOST_START);
+    let elsewhere = RelativeMarker { name: "MARKS9".into(), relative_to: "MARKE9".into(), chars_before: 3 };
+    assert_eq!(place_relative_markers(&input, &naming(), &[elsewhere]).expect("placed"), input);
+    assert_eq!(place_relative_markers(&input, &naming(), &[]).expect("placed"), input);
 }

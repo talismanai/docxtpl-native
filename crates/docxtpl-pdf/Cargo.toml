@@ -18,3 +18,5 @@ serde_json = { version = "1", features = ["preserve_order"] }
 [dev-dependencies]
 # A minimal DOCX to convert.
 docxtplrs = { path = "../../vendor/docxtplrs", default-features = false }
+# Reads the PDF's compressed object streams back (the engine's own zlib).
+flate2 = { version = "=1.1.10", default-features = false, features = ["zlib-rs"] }

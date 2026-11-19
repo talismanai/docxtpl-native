@@ -388,6 +388,7 @@ version = "0.2.1"
 dependencies = [
  "docxide-pdf",
  "docxtplrs",
+ "flate2",
  "serde_json",
 ]
 

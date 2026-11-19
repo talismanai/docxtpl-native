@@ -16,6 +16,19 @@ every number comes from a command in [How to check](#how-to-check).
 | Platforms | Linux arm64 and x86_64, CPython 3.11 and 3.12: the four targets declared in `deployment_targets`, each with a machine-checked installation report. |
 | Distribution | A `linux` wheel that links the system libxml2, and a portable `manylinux_2_28` wheel with libxml2 bundled. |
 
+## Native PDF range links (unreleased)
+
+`PdfOptions::range_links` forwards generic bookmark ranges to the converter.
+`place_relative_markers` restores a lost bookmark at a character offset before
+a surviving one. Focused coverage is in `crates/docxtpl-pdf/tests/convert.rs`
+and `crates/docxtpl-markers/tests/anchors.rs`; run
+`cargo test -p docxtpl-markers -p docxtpl-pdf --release --locked`.
+The converter dependency must be updated to a release containing range links
+before this engine change is released. A local path override is validation
+only. Body/cell text and inline pictures are supported; headers, footers, notes,
+list labels, floating pictures and rotated text-box geometry remain outside
+coverage. This feature does not claim PDF layout parity with Word.
+
 ## How to check
 
 ```bash
