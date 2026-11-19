@@ -10,6 +10,17 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-19
+
+### Security
+
+- **quick-xml 0.42**, for RUSTSEC-2026-0194 (quadratic duplicate-attribute
+  check) and RUSTSEC-2026-0195 (unbounded namespace declarations). Text and
+  attribute values with entity and character references parse as before.
+  Namespace-aware XML readers now reject more
+  than 128 simultaneous namespace bindings, including inherited declarations;
+  this security limit is retained rather than disabled.
+
 ## [0.2.0] - 2026-11-19
 
 ### Added

@@ -1450,7 +1450,7 @@ fn descendant_prop_children(style: &Element, tag: &str) -> Vec<Element> {
 /// numbering catalog. Inspect before merging styles; newly imported or changed
 /// styles, direct numIds and uncertain XML remain on the existing path.
 fn only_existing_unchanged_styles(tpl: &TplCore, sub: &Package, xml: &str) -> bool {
-    use quick_xml::{events::Event, Reader};
+    use quick_xml::events::Event;
     let Some(master_xml) = tpl.package.as_ref().and_then(|pkg| pkg.get_string("word/styles.xml")) else { return false };
     let Some(sub_xml) = sub.get_string("word/styles.xml") else { return false };
     let Ok(master) = Document::parse(&master_xml) else { return false };
@@ -1463,7 +1463,7 @@ fn only_existing_unchanged_styles(tpl: &TplCore, sub: &Package, xml: &str) -> bo
         .filter_map(|style| style.get_attr("w:styleId").map(|id| (id, *style))).collect();
     let child_by_id: HashMap<&str, &Element> = child_styles.iter()
         .filter_map(|style| style.get_attr("w:styleId").map(|id| (id, *style))).collect();
-    let mut reader = Reader::from_str(xml);
+    let mut reader = crate::xml_events::reader(xml);
     let mut depth = 0usize;
     let mut queue = Vec::new();
     loop {
@@ -1471,15 +1471,15 @@ fn only_existing_unchanged_styles(tpl: &TplCore, sub: &Package, xml: &str) -> bo
         match event {
             Event::Start(ref element) | Event::Empty(ref element) => {
                 let local = element.local_name();
-                if local.as_ref() == b"numId" { return false; }
-                let style = matches!(local.as_ref(), b"pStyle" | b"rStyle" | b"tblStyle");
-                if style && !matches!(element.name().as_ref(), b"w:pStyle" | b"w:rStyle" | b"w:tblStyle") { return false; }
+                if local.into_inner() == "numId" { return false; }
+                let style = matches!(local.into_inner(), "pStyle" | "rStyle" | "tblStyle");
+                if style && !matches!(element.name().into_inner(), "w:pStyle" | "w:rStyle" | "w:tblStyle") { return false; }
                 let mut style_id = None;
                 for attribute in element.attributes() {
                     let Ok(attribute) = attribute else { return false };
-                    if attribute.key.as_ref() == b"xmlns:w" && attribute.value.as_ref() != b"http://schemas.openxmlformats.org/wordprocessingml/2006/main" { return false; }
-                    if style && attribute.key.as_ref() == b"w:val" {
-                        let Ok(value) = attribute.unescape_value() else { return false };
+                    if attribute.key.into_inner() == "xmlns:w" && attribute.value != "http://schemas.openxmlformats.org/wordprocessingml/2006/main" { return false; }
+                    if style && attribute.key.into_inner() == "w:val" {
+                        let Ok(value) = quick_xml::escape::unescape(&attribute.value) else { return false };
                         style_id = Some(value.into_owned());
                     }
                 }
@@ -1515,19 +1515,19 @@ fn only_existing_unchanged_styles(tpl: &TplCore, sub: &Package, xml: &str) -> bo
 /// Be conservative about alternate prefixes, unclosed elements and parser
 /// errors, which may conceal references missed by the lexical `w:` spelling.
 fn may_reference_numbering(xml: &str) -> bool {
-    use quick_xml::{events::Event, Reader};
-    let mut reader = Reader::from_str(xml);
+    use quick_xml::events::Event;
+    let mut reader = crate::xml_events::reader(xml);
     let mut depth = 0usize;
     loop {
         match reader.read_event() {
             Ok(Event::Start(element)) => {
-                if matches!(element.local_name().as_ref(), b"numId" | b"pStyle" | b"rStyle" | b"tblStyle") {
+                if matches!(element.local_name().into_inner(), "numId" | "pStyle" | "rStyle" | "tblStyle") {
                     return true;
                 }
                 depth += 1;
             }
             Ok(Event::Empty(element)) => {
-                if matches!(element.local_name().as_ref(), b"numId" | b"pStyle" | b"rStyle" | b"tblStyle") {
+                if matches!(element.local_name().into_inner(), "numId" | "pStyle" | "rStyle" | "tblStyle") {
                     return true;
                 }
             }
@@ -1547,8 +1547,8 @@ fn may_reference_numbering(xml: &str) -> bool {
 /// importer until their reference ordering and relationships are supported.
 fn merge_single_direct_numbering(tpl: &mut TplCore, sub: &Package, body: &str)
     -> Result<Option<String>, String> {
-    use quick_xml::{events::Event, Reader};
-    let mut reader = Reader::from_str(body);
+    use quick_xml::events::Event;
+    let mut reader = crate::xml_events::reader(body);
     let mut depth = 0usize;
     let mut direct_id = None;
     let mut references = 0usize;
@@ -1557,15 +1557,15 @@ fn merge_single_direct_numbering(tpl: &mut TplCore, sub: &Package, body: &str)
         match event {
             Event::Start(ref element) | Event::Empty(ref element) => {
                 let local = element.local_name();
-                if matches!(local.as_ref(), b"pStyle" | b"rStyle" | b"tblStyle") { return Ok(None); }
-                let is_num = local.as_ref() == b"numId";
-                if is_num && element.name().as_ref() != b"w:numId" { return Ok(None); }
+                if matches!(local.into_inner(), "pStyle" | "rStyle" | "tblStyle") { return Ok(None); }
+                let is_num = local.into_inner() == "numId";
+                if is_num && element.name().into_inner() != "w:numId" { return Ok(None); }
                 let mut number = None;
                 for attribute in element.attributes() {
                     let Ok(attribute) = attribute else { return Ok(None) };
-                    if attribute.key.as_ref() == b"xmlns:w" && attribute.value.as_ref() != b"http://schemas.openxmlformats.org/wordprocessingml/2006/main" { return Ok(None); }
-                    if is_num && attribute.key.as_ref() == b"w:val" {
-                        let Ok(value) = attribute.unescape_value() else { return Ok(None) };
+                    if attribute.key.into_inner() == "xmlns:w" && attribute.value != "http://schemas.openxmlformats.org/wordprocessingml/2006/main" { return Ok(None); }
+                    if is_num && attribute.key.into_inner() == "w:val" {
+                        let Ok(value) = quick_xml::escape::unescape(&attribute.value) else { return Ok(None) };
                         number = value.parse::<i64>().ok().filter(|value| *value >= 0);
                     }
                 }
@@ -2535,5 +2535,18 @@ mod tests {
             .get_string("word/commentsExtended.xml")
             .unwrap();
         assert!(merged.contains("BBBB0002") && merged.contains("AAAA0001"));
+    }
+}
+
+/// A `&` in text is not a parser error here, as with quick-xml 0.36.
+#[cfg(test)]
+mod reference_tests {
+    use super::*;
+
+    #[test]
+    fn text_references_do_not_make_numbering_uncertain() {
+        assert!(!may_reference_numbering("<w:p><w:r><w:t>a &amp; b&#38;</w:t></w:r></w:p>"));
+        assert!(!may_reference_numbering("<w:p><w:r><w:t>R&D &foo;</w:t></w:r></w:p>"));
+        assert!(may_reference_numbering("<w:p><w:r><w:t>R&D</w:t></w:r><w:pStyle w:val=\"&amp;\"/></w:p>"));
     }
 }

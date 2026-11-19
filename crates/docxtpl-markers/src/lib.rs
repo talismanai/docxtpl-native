@@ -271,6 +271,9 @@ pub fn is_strictly_parseable(xml: &str) -> bool {
     use quick_xml::name::ResolveResult;
     if !docxtplrs::recover::is_well_formed(xml) { return false; }
     let mut reader = quick_xml::NsReader::from_str(xml);
+    // Text was checked above; a lone `&` in it is not a reader error here,
+    // as with quick-xml 0.36.
+    reader.config_mut().allow_dangling_amp = true;
     loop {
         match reader.read_resolved_event() {
             Ok((resolved, Event::Start(element) | Event::Empty(element))) => {
@@ -278,7 +281,7 @@ pub fn is_strictly_parseable(xml: &str) -> bool {
                 for attribute in element.attributes() {
                     let Ok(attribute) = attribute else { return false };
                     if attribute.key.as_namespace_binding().is_some() { continue; }
-                    let (resolved, _) = reader.resolve_attribute(attribute.key);
+                    let (resolved, _) = reader.resolver().resolve_attribute(attribute.key);
                     if matches!(resolved, ResolveResult::Unknown(_)) { return false; }
                 }
             }
@@ -286,5 +289,35 @@ pub fn is_strictly_parseable(xml: &str) -> bool {
             Ok(_) => {}
             Err(_) => return false,
         }
+    }
+}
+
+/// XML text compatibility and namespace resource limits.
+#[cfg(test)]
+mod parser_tests {
+    use super::*;
+
+    #[test]
+    fn namespace_bindings_are_bounded_across_nested_elements() {
+        let declarations = |start: usize, end: usize| -> String {
+            (start..end).map(|i| format!(r#" xmlns:n{i}="urn:{i}""#)).collect()
+        };
+        assert!(is_strictly_parseable(&format!("<root{}/>", declarations(0, 128))));
+        assert!(!is_strictly_parseable(&format!("<root{}/>", declarations(0, 129))));
+        assert!(is_strictly_parseable(&format!(
+            "<root{}><child{}/><sibling{}/></root>",
+            declarations(0, 64), declarations(64, 128), declarations(128, 192),
+        )));
+        assert!(!is_strictly_parseable(&format!(
+            "<root{}><child{}/></root>", declarations(0, 64), declarations(64, 129),
+        )));
+    }
+
+    #[test]
+    fn text_references_are_strictly_parseable_when_resolvable() {
+        assert!(is_strictly_parseable(r#"<w:p xmlns:w="urn:w"><w:t w:x="&amp;">a &amp; b&#38;&lt;</w:t></w:p>"#));
+        assert!(!is_strictly_parseable(r#"<w:p xmlns:w="urn:w"><w:t>R&D</w:t></w:p>"#));
+        assert!(!is_strictly_parseable(r#"<w:p xmlns:w="urn:w"><w:t>&foo;</w:t></w:p>"#));
+        assert!(!is_strictly_parseable(r#"<w:p xmlns:w="urn:w"><x:t>&amp;</x:t></w:p>"#));
     }
 }

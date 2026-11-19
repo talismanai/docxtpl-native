@@ -69,7 +69,7 @@ fn reference(chars: &[char]) -> (usize, Option<Reference>) {
 /// Whether `xml` parses without well-formedness errors.
 pub fn is_well_formed(xml: &str) -> bool {
     use quick_xml::events::Event;
-    let mut reader = quick_xml::Reader::from_str(xml);
+    let mut reader = crate::xml_events::TextRuns::new(crate::xml_events::reader(xml));
     reader.config_mut().check_end_names = true;
     let mut depth = 0usize;
     let mut seen_root = false;
@@ -79,9 +79,9 @@ pub fn is_well_formed(xml: &str) -> bool {
             Ok(Event::Empty(_)) => { if depth == 0 && seen_root { return false; } seen_root = true; }
             Ok(Event::End(_)) => { if depth == 0 { return false; } depth -= 1; }
             Ok(Event::Text(text)) => {
-                if text.unescape().is_err() { return false; }
-                if depth == 0 && !text.iter().all(|b| b.is_ascii_whitespace()) { return false; }
-                if std::str::from_utf8(&text).map_or(true, |t| !t.chars().all(is_xml_char)) { return false; }
+                if quick_xml::escape::unescape(&text).is_err() { return false; }
+                if depth == 0 && !text.bytes().all(|b| b.is_ascii_whitespace()) { return false; }
+                if !text.chars().all(is_xml_char) { return false; }
             }
             Ok(Event::Eof) => return depth == 0 && seen_root,
             Ok(_) => {}
@@ -342,5 +342,24 @@ mod tests {
         assert_eq!(recover("<a><t>x</t></a><extra/>"), "<a><t>x</t></a>");
         assert_eq!(recover("<a><t>unclosed"), "<a><t>unclosed</t></a>");
         assert_eq!(recover("<a><t>a\u{1}b &#1; c</t></a>"), "<a><t>ab  c</t></a>");
+    }
+}
+
+/// Well-formedness of text with references, as quick-xml 0.36 judged it.
+#[cfg(test)]
+mod reference_tests {
+    use super::*;
+
+    #[test]
+    fn text_references_are_checked_per_run() {
+        assert!(is_well_formed("<a>x &amp; &lt;&gt;&quot;&apos;&#38;&#x26;</a>"));
+        assert!(is_well_formed("<a>&amp;<b/>&lt;</a>"));
+        assert!(!is_well_formed("<a>R&D</a>"));
+        assert!(!is_well_formed("<a>&foo;</a>"));
+        assert!(!is_well_formed("<a>&amp; &#0;</a>"));
+        assert!(!is_well_formed("<a>&amp</a>"));
+        assert!(!is_well_formed("<a/>&amp;"));
+        assert!(!is_well_formed("&#32;<a/>"));
+        assert!(is_well_formed(" \n<a/>\n"));
     }
 }

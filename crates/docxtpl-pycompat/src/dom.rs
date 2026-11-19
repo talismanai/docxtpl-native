@@ -7,8 +7,10 @@
 //! instructions. Namespaces are resolved at parse time; prefixes and `xmlns`
 //! attributes are kept for serialization.
 
+use std::borrow::Cow;
+
 use quick_xml::Reader;
-use quick_xml::events::{BytesStart, Event};
+use quick_xml::events::{BytesStart, BytesText, Event};
 
 pub type NodeId = usize;
 
@@ -85,13 +87,60 @@ fn escape_attr(text: &str, out: &mut String) {
     }
 }
 
+/// Events with every run of character data between two markup events as one
+/// `Event::Text` holding the run's source text, escapes included.
+///
+/// Since quick-xml 0.38 a reference in character data is its own
+/// `Event::GeneralRef` between `Event::Text` pieces, and a `&` that starts no
+/// reference is a reader error unless `allow_dangling_amp` is set. The parser
+/// below was written for quick-xml 0.36, which reported a whole run as one
+/// text event and left unescaping, and rejecting a lone `&`, to
+/// `BytesText::unescape`. Joining the pieces back and unescaping the run with
+/// `quick_xml::escape::unescape` keeps its results and its error messages.
+/// `vendor/docxtplrs/src/xml_events.rs` does the same for that crate.
+struct TextRuns<'i> {
+    reader: Reader<&'i [u8]>,
+    held: Option<quick_xml::Result<Event<'i>>>,
+}
+
+impl<'i> TextRuns<'i> {
+    fn new(xml: &'i str) -> Self {
+        let mut reader = Reader::from_str(xml);
+        reader.config_mut().allow_dangling_amp = true;
+        TextRuns { reader, held: None }
+    }
+
+    fn read_event(&mut self) -> quick_xml::Result<Event<'i>> {
+        if let Some(held) = self.held.take() { return held; }
+        let mut run: Option<Cow<'i, str>> = None;
+        loop {
+            let piece = match self.reader.read_event() {
+                Ok(Event::Text(text)) => text.into_inner(),
+                Ok(Event::GeneralRef(reference)) => Cow::Owned(format!("&{};", &*reference)),
+                other => {
+                    // The run ends at markup, at the end of input or at an
+                    // error, which is reported after the text before it.
+                    let Some(run) = run else { return other };
+                    self.held = Some(other);
+                    return Ok(Event::Text(BytesText::from_escaped(run)));
+                }
+            };
+            if piece.is_empty() { continue; }
+            run = Some(match run {
+                None => piece,
+                Some(mut run) => { run.to_mut().push_str(&piece); run }
+            });
+        }
+    }
+}
+
 impl Dom {
     /// Parse a complete XML document.
     pub fn parse(xml: &str) -> Result<Dom, String> {
         let mut dom = Dom { nodes: vec![Node { kind: Kind::Document, parent: None, children: Vec::new() }], root: 0 };
-        let mut reader = Reader::from_str(xml);
-        reader.config_mut().trim_text(false);
-        reader.config_mut().check_end_names = true;
+        let mut reader = TextRuns::new(xml);
+        reader.reader.config_mut().trim_text(false);
+        reader.reader.config_mut().check_end_names = true;
         let mut stack: Vec<NodeId> = vec![dom.root];
         let mut scopes: Vec<Vec<(Option<String>, String)>> = vec![vec![(Some("xml".into()), XML_NS.into())]];
         loop {
@@ -109,25 +158,26 @@ impl Dom {
                     if stack.is_empty() { return Err("unbalanced XML".into()); }
                 }
                 Event::Text(text) => {
-                    let value = text.unescape().map_err(|error| format!("invalid XML text: {error}"))?.into_owned();
+                    let value = quick_xml::escape::unescape(&text).map_err(|error| format!("invalid XML text: {error}"))?.into_owned();
                     let parent = *stack.last().expect("parent");
                     if parent == dom.root && value.trim().is_empty() { continue; }
                     dom.push(Kind::Text(value), parent);
                 }
                 Event::CData(data) => {
-                    let value = String::from_utf8_lossy(&data.into_inner()).into_owned();
+                    let value = data.into_inner().into_owned();
                     dom.push(Kind::CData(value), *stack.last().expect("parent"));
                 }
                 Event::Comment(text) => {
-                    let value = String::from_utf8_lossy(&text.into_inner()).into_owned();
+                    let value = text.into_inner().into_owned();
                     dom.push(Kind::Comment(value), *stack.last().expect("parent"));
                 }
                 Event::PI(pi) => {
-                    let value = String::from_utf8_lossy(&pi.into_inner()).into_owned();
+                    let value = pi.into_inner().into_owned();
                     dom.push(Kind::Pi(value), *stack.last().expect("parent"));
                 }
                 Event::Decl(_) => {}
                 Event::DocType(_) => return Err("XML document type declarations are not supported".into()),
+                Event::GeneralRef(_) => unreachable!("TextRuns joins references into text"),
                 Event::Eof => break,
             }
         }
@@ -142,8 +192,9 @@ impl Dom {
         let mut scope = Vec::new();
         for attribute in start.attributes() {
             let attribute = attribute.map_err(|error| format!("invalid XML attribute: {error}"))?;
-            let key = String::from_utf8_lossy(attribute.key.as_ref()).into_owned();
-            let value = attribute.unescape_value().map_err(|error| format!("invalid XML attribute value: {error}"))?.into_owned();
+            let key = attribute.key.into_inner().to_owned();
+            let value = quick_xml::escape::unescape(&attribute.value)
+                .map_err(|error| format!("invalid XML attribute value: {error}"))?.into_owned();
             if key == "xmlns" { scope.push((None, value.clone())); }
             else if let Some(prefix) = key.strip_prefix("xmlns:") { scope.push((Some(prefix.to_owned()), value.clone())); }
             raw.push((key, value));
@@ -152,7 +203,7 @@ impl Dom {
             scope.iter().rev().chain(scopes.iter().rev().flat_map(|s| s.iter().rev()))
                 .find(|(p, _)| p == prefix).map(|(_, uri)| uri.clone()).filter(|uri| !uri.is_empty())
         };
-        let qname = String::from_utf8_lossy(start.name().as_ref()).into_owned();
+        let qname = start.name().into_inner().to_owned();
         let (prefix, local) = split_qname(&qname);
         let ns = lookup(&prefix);
         if prefix.is_some() && ns.is_none() { return Err(format!("unbound XML prefix in {qname}")); }
@@ -487,5 +538,57 @@ mod tests {
         let p = dom.all_elements().into_iter().find(|&e| dom.is(e, W, "p")).unwrap();
         assert_eq!(dom.w_id(p), "3");
         assert_eq!(dom.serialize_node(dom.document_element().unwrap()), xml);
+    }
+}
+
+/// References in text and attribute values give the results and the error
+/// messages quick-xml 0.36 gave.
+#[cfg(test)]
+mod reference_tests {
+    use super::*;
+
+    fn texts(xml: &str) -> Vec<String> {
+        let dom = Dom::parse(xml).unwrap();
+        let root = dom.document_element().unwrap();
+        dom.nodes[root].children.iter().map(|&id| match dom.kind(id) {
+            Kind::Text(text) => format!("text {text}"),
+            Kind::CData(text) => format!("cdata {text}"),
+            Kind::Comment(text) => format!("comment {text}"),
+            Kind::Element { name, .. } => format!("element {}", name.local),
+            other => format!("{other:?}"),
+        }).collect()
+    }
+
+    #[test]
+    fn a_run_with_references_is_one_resolved_text_node() {
+        assert_eq!(texts("<r>&amp;</r>"), ["text &"]);
+        assert_eq!(texts("<r>a &amp; b&lt;&gt;&quot;&apos;&#38;&#x26;&#x1D11E;c</r>"), ["text a & b<>\"'&&\u{1D11E}c"]);
+        assert_eq!(texts("<r>&lt;<b/>&amp;x<!--k-->&gt;</r>"), ["text <", "element b", "text &x", "comment k", "text >"]);
+        assert_eq!(texts("<r>&amp;<![CDATA[&amp;]]>&lt;</r>"), ["text &", "cdata &amp;", "text <"]);
+        let dom = Dom::parse("<r>a&amp;b</r>").unwrap();
+        assert_eq!(dom.serialize_node(dom.document_element().unwrap()), "<r>a&amp;b</r>");
+    }
+
+    #[test]
+    fn an_unresolvable_text_reference_is_an_error() {
+        assert_eq!(Dom::parse("<r>R&D</r>").unwrap_err(), "invalid XML text: Error while escaping character at range 1..3: Cannot find ';' after '&'");
+        assert_eq!(Dom::parse("<r>&amp; &foo;</r>").unwrap_err(), "invalid XML text: at 7..10: unrecognized entity `foo`");
+        assert_eq!(Dom::parse("<r>x&#0;</r>").unwrap_err(), "invalid XML text: invalid character reference: 0x0 character is not permitted in XML");
+        assert_eq!(Dom::parse("<r>&amp</r>").unwrap_err(), "invalid XML text: Error while escaping character at range 0..4: Cannot find ';' after '&'");
+    }
+
+    #[test]
+    fn attribute_references_resolve_and_whitespace_is_kept() {
+        let dom = Dom::parse("<r a=\"&amp;&#38;&#x26;&lt;\" b='x\ty\nz&#10;&#9;'/>").unwrap();
+        let root = dom.document_element().unwrap();
+        assert_eq!(dom.attr(root, None, "a"), Some("&&&<"));
+        assert_eq!(dom.attr(root, None, "b"), Some("x\ty\nz\n\t"));
+        assert_eq!(Dom::parse("<r a=\"&foo;\"/>").unwrap_err(), "invalid XML attribute value: at 1..4: unrecognized entity `foo`");
+    }
+
+    #[test]
+    fn blank_text_outside_the_root_is_dropped() {
+        let dom = Dom::parse("<?xml version=\"1.0\"?>\n<r>&#32;</r>\n").unwrap();
+        assert_eq!(dom.serialize_node(dom.document_element().unwrap()), "<r> </r>");
     }
 }

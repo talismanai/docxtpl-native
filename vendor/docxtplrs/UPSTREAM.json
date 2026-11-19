@@ -127,14 +127,14 @@
   ],
   "local_changes": {
     "src/inline_image.rs": "0e1e62c08db9aea0ec5cb400837fcf3b80382719",
-    "src/subdoc.rs": "0fcf86a59aad355072b3f0606ec162e987b36890",
+    "src/subdoc.rs": "bbd88266268efe834328e6824a997f41c09a9309",
     "src/template.rs": "8a5e80ae41b7f204d32a82e84f493ec0dc1b0acf",
     "src/pybridge.rs": "62ddd1d7b00bb8d36f4a72fad9b5eb1640c5175c",
     "src/richtext.rs": "a171dcb56ddcebce2f5411244e9cd674f3ecb166",
     "src/package.rs": "cebd3cac93992d99538cac77796a499a9127fc15",
-    "Cargo.toml": "dd2f22ebfef07566835520c3cf95998fde08e1d2",
-    "src/lib.rs": "d195d418b387409dd6a6289583d057fe9808f65b",
-    "src/xmldom.rs": "e59f33cf4bc22c137df2578600aee8c54b3311d3",
+    "Cargo.toml": "02cd3265106b5d86b8f5b46104cf7a03a24d51c0",
+    "src/lib.rs": "287d5337735a0fcab640d6527641ca5c3a1f1985",
+    "src/xmldom.rs": "315456f0170502e9d2dd285ada1d2224c33d3d8f",
     "src/patch.rs": "74a8ce038f0638690b594953bc89cc5a77f199bf",
     "src/doc.rs": "016491ae90a7b9cb3e59cc098d3f75c5a6c598be"
   },
@@ -142,7 +142,8 @@
     "LICENSE": "5f2dd7fca2ddaf423137d748d4818e2dba3f57fe",
     "src/python_zip.rs": "1547f93128b4dda13972303f8095adb53ee774a2",
     "examples/zip_contract.rs": "d379f87eda47d608f689b9faa3535ed3df62341e",
-    "src/recover.rs": "ce904d5735ef3805b8adacad06db5d9c5208e60d",
+    "src/recover.rs": "e7650ed5720d348d83ef109c2e8a12a0d679339d",
+    "src/xml_events.rs": "dfaba164c85b68f60b6f3c1f793abd12ce028bb3",
     "src/numbering.rs": "47412cddc13bdbb6c119ec94d0b507662dc71c2e"
   }
 }

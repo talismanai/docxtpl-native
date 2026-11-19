@@ -1,6 +1,6 @@
 """docxtpl behaviours docxtpl-native deliberately does not reproduce.
 
-Reproducing them would damage the document. Each test renders the same
+These protect document structure or bound parser resources. Each test renders the same
 template with docxtpl and docxtpl-native and pins both results, so the
 difference stays deliberate and visible. Copied-list nsids are covered in
 test_native_deferred_marker and the engine-level cases in vendor/docxtplrs
@@ -36,6 +36,36 @@ def text(xml: str) -> list[str]:
 
 
 class DeliberateDifferencesTests(unittest.TestCase):
+    def test_namespace_binding_limit_is_a_deliberate_security_boundary(self) -> None:
+        document = Document()
+        document.add_paragraph('hello')
+        stream = io.BytesIO()
+        document.save(stream)
+        with zipfile.ZipFile(io.BytesIO(stream.getvalue())) as package:
+            parts = {name: package.read(name) for name in package.namelist()}
+        xml = parts['word/document.xml'].decode()
+        existing_bindings = len(document.element.nsmap)
+
+        for total in (128, 129):
+            with self.subTest(bindings=total):
+                declarations = ''.join(
+                    f' xmlns:n{i}="urn:{i}"' for i in range(total - existing_bindings)
+                )
+                parts['word/document.xml'] = xml.replace(
+                    '<w:document ', '<w:document' + declarations + ' ', 1,
+                ).encode()
+                source = io.BytesIO()
+                with zipfile.ZipFile(source, 'w') as package:
+                    for name, data in parts.items():
+                        package.writestr(name, data)
+
+                self.assertEqual(text(render(docxtpl, source.getvalue(), {})), ['hello'])
+                if total == 128:
+                    self.assertEqual(text(render(docxtpl_native, source.getvalue(), {})), ['hello'])
+                else:
+                    with self.assertRaisesRegex(RuntimeError, 'more than 128 namespace bindings'):
+                        render(docxtpl_native, source.getvalue(), {})
+
     def test_dash_merge_does_not_delete_a_following_table(self) -> None:
         """docxtpl's `-%}` pattern stops at `<w:tbl>`/`<w:tc>`... and deletes
         the markup in between: the text before the tag and the table start."""
