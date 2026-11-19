@@ -324,7 +324,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "docxtpl-core",
  "docxtpl-markers",
@@ -337,7 +337,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-core"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64",
  "docxtplrs",
@@ -354,7 +354,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-markers"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "docxtpl-pycompat",
  "docxtplrs",
@@ -364,7 +364,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-native"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "base64",
  "corosensei",
@@ -384,7 +384,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-pdf"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "docxide-pdf",
  "docxtplrs",
@@ -393,7 +393,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-pycompat"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "image",
  "png",
@@ -406,7 +406,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-wasm"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "docxtplrs",
  "fancy-regex",

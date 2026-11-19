@@ -10,6 +10,8 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-19
+
 ### Added
 
 - **PDF options** (`docxtpl-pdf`): `docx_to_pdf_with` and
