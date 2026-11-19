@@ -48,7 +48,7 @@ pyo3 = { version = "0.29", optional = true }
 minijinja = { version = "2", features = ["loader", "unicode", "json", "urlencode", "loop_controls"] }
 zip = { version = "2", default-features = false, features = ["deflate-flate2", "flate2"] }
 fancy-regex = "0.14"
-quick-xml = "0.36"
+quick-xml = "0.42"
 crc32fast = "1"
 sha1 = "0.10"
 encoding_rs = "0.8"

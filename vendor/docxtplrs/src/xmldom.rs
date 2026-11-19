@@ -3,7 +3,8 @@
 //! is sufficient for OOXML manipulation.
 
 use quick_xml::events::{BytesDecl, Event};
-use quick_xml::Reader;
+
+use crate::xml_events::{reader as text_reader, TextRuns};
 
 /// Apply constructor-time drawing IDs by expanded XML name, retaining other
 /// events and restricting the main document to descendants of its body.
@@ -15,10 +16,13 @@ pub(crate) fn renumber_expanded_drawings(
     use quick_xml::reader::NsReader;
     use quick_xml::Writer;
 
-    const WORD_NS: &[u8] = b"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-    const DRAW_NS: &[u8] = b"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
-    const PICTURE_NS: &[u8] = b"http://schemas.openxmlformats.org/drawingml/2006/picture";
+    const WORD_NS: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    const DRAW_NS: &str = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+    const PICTURE_NS: &str = "http://schemas.openxmlformats.org/drawingml/2006/picture";
     let mut reader = NsReader::from_str(xml);
+    // A lone `&` stays text, as in quick-xml 0.36; the writer copies text
+    // pieces and references back verbatim.
+    reader.config_mut().allow_dangling_amp = true;
     let mut writer = Writer::new(Vec::with_capacity(xml.len()));
     let mut depth = 0usize;
     let mut body_depth = None;
@@ -26,27 +30,25 @@ pub(crate) fn renumber_expanded_drawings(
         let (namespace, event) = reader.read_resolved_event().map_err(|error| error.to_string())?;
         match event {
             Event::Start(ref element) | Event::Empty(ref element) => {
-                let word = matches!(&namespace, ResolveResult::Bound(ns) if ns.as_ref() == WORD_NS);
-                let draw = matches!(&namespace, ResolveResult::Bound(ns) if ns.as_ref() == DRAW_NS);
-                let picture = matches!(&namespace, ResolveResult::Bound(ns) if ns.as_ref() == PICTURE_NS);
-                if body_only && depth == 1 && word && element.local_name().as_ref() == b"body" {
+                let word = matches!(&namespace, ResolveResult::Bound(ns) if ns.into_inner() == WORD_NS);
+                let draw = matches!(&namespace, ResolveResult::Bound(ns) if ns.into_inner() == DRAW_NS);
+                let picture = matches!(&namespace, ResolveResult::Bound(ns) if ns.into_inner() == PICTURE_NS);
+                if body_only && depth == 1 && word && element.local_name().into_inner() == "body" {
                     body_depth = Some(depth + 1);
                 }
                 let in_scope = if body_only { body_depth.is_some_and(|body| depth >= body) } else { depth > 0 };
-                let next = if in_scope && draw && element.local_name().as_ref() == b"docPr" {
+                let next = if in_scope && draw && element.local_name().into_inner() == "docPr" {
                     next_docpr.as_deref_mut().map(|counter| { *counter += 1; *counter })
-                } else if in_scope && picture && element.local_name().as_ref() == b"cNvPr" {
+                } else if in_scope && picture && element.local_name().into_inner() == "cNvPr" {
                     next_picture.as_deref_mut().map(|counter| { let current = *counter; *counter += 1; current })
                 } else { None };
                 if let Some(id) = next {
-                    let name = element.name();
-                    let name = std::str::from_utf8(name.as_ref()).map_err(|error| error.to_string())?;
-                    let mut rewritten = BytesStart::new(name);
+                    let mut rewritten = BytesStart::new(element.name().into_inner());
                     let value = id.to_string();
                     let mut had_id = false;
                     for attr in element.attributes() {
                         let attr = attr.map_err(|error| error.to_string())?;
-                        if attr.key.as_ref() == b"id" {
+                        if attr.key.into_inner() == "id" {
                             rewritten.push_attribute(("id", value.as_str()));
                             had_id = true;
                         } else { rewritten.push_attribute(attr); }
@@ -76,13 +78,14 @@ pub(crate) fn document_body_source(xml: &str) -> Result<(String, std::ops::Range
     use quick_xml::name::ResolveResult;
     use quick_xml::reader::NsReader;
 
-    const WORD_NS: &[u8] = b"http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    const WORD_NS: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     let mut reader = NsReader::from_str(xml);
+    reader.config_mut().allow_dangling_amp = true;
     let mut depth = 0usize;
-    let mut namespaces: Vec<(Vec<u8>, Vec<u8>)> = Vec::new();
+    let mut namespaces: Vec<(String, String)> = Vec::new();
     let mut body_start = None;
     let mut insertion = None;
-    let mut body_names: Vec<Vec<u8>> = Vec::new();
+    let mut body_names: Vec<String> = Vec::new();
     loop {
         let before = reader.buffer_position() as usize;
         let (namespace, event) = reader.read_resolved_event().map_err(|error| error.to_string())?;
@@ -90,22 +93,22 @@ pub(crate) fn document_body_source(xml: &str) -> Result<(String, std::ops::Range
             Event::Start(ref element) | Event::Empty(ref element) if depth == 0 => {
                 for attribute in element.attributes() {
                     let attribute = attribute.map_err(|error| error.to_string())?;
-                    let key = attribute.key.as_ref();
-                    if key == b"xmlns" || key.starts_with(b"xmlns:") {
-                        namespaces.push((key.to_vec(), attribute.value.into_owned()));
+                    let key = attribute.key.into_inner();
+                    if key == "xmlns" || key.starts_with("xmlns:") {
+                        namespaces.push((key.to_owned(), attribute.value.into_owned()));
                     }
                 }
                 if matches!(event, Event::Start(_)) { depth += 1; }
             }
             Event::Start(ref element) | Event::Empty(ref element)
-                if depth == 1 && element.local_name().as_ref() == b"body"
-                    && matches!(namespace, ResolveResult::Bound(ns) if ns.as_ref() == WORD_NS) => {
+                if depth == 1 && element.local_name().into_inner() == "body"
+                    && matches!(namespace, ResolveResult::Bound(ns) if ns.into_inner() == WORD_NS) => {
                 for attribute in element.attributes() {
                     let attribute = attribute.map_err(|error| error.to_string())?;
-                    body_names.push(attribute.key.as_ref().to_vec());
+                    body_names.push(attribute.key.into_inner().to_owned());
                 }
                 body_start = Some(before);
-                insertion = Some(before + 1 + element.name().as_ref().len());
+                insertion = Some(before + 1 + element.name().into_inner().len());
                 if matches!(event, Event::Empty(_)) {
                     let end = reader.buffer_position() as usize;
                     return finish_body_source(xml, before..end, insertion.unwrap(), &namespaces, &body_names);
@@ -133,16 +136,16 @@ fn finish_body_source(
     xml: &str,
     range: std::ops::Range<usize>,
     insertion: usize,
-    namespaces: &[(Vec<u8>, Vec<u8>)],
-    body_names: &[Vec<u8>],
+    namespaces: &[(String, String)],
+    body_names: &[String],
 ) -> Result<(String, std::ops::Range<usize>), String> {
     let mut body = xml[range.start..insertion].to_owned();
     for (key, value) in namespaces {
         if body_names.contains(key) { continue; }
         body.push(' ');
-        body.push_str(std::str::from_utf8(key).map_err(|error| error.to_string())?);
+        body.push_str(key);
         body.push_str("=\"");
-        body.push_str(&std::str::from_utf8(value).map_err(|error| error.to_string())?.replace('"', "&quot;"));
+        body.push_str(&value.replace('"', "&quot;"));
         body.push('"');
     }
     body.push_str(&xml[insertion..range.end]);
@@ -165,11 +168,11 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
         let mut result = Vec::new();
         for attribute in element.attributes() {
             let attribute = attribute.ok()?;
-            let key = std::str::from_utf8(attribute.key.as_ref()).ok()?;
+            let key = attribute.key.into_inner();
             let prefix = if key == "xmlns" { None }
                 else if let Some(prefix) = key.strip_prefix("xmlns:") { Some(prefix.to_owned()) }
                 else { continue };
-            result.push((prefix, attribute.unescape_value().ok()?.into_owned()));
+            result.push((prefix, quick_xml::escape::unescape(&attribute.value).ok()?.into_owned()));
         }
         Some(result)
     }
@@ -188,7 +191,7 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
             .map_or_else(|| prefix.clone(), |(_, to)| to.clone())
     }
 
-    let mut source = Reader::from_str(document);
+    let mut source = text_reader(document);
     let root = loop {
         match source.read_event().ok()? {
             Event::Start(element) | Event::Empty(element) => break declarations(&element)?,
@@ -199,7 +202,7 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
     let mut frames: Vec<Frame> = Vec::new();
     let mut output = String::with_capacity(body.len());
     let mut copied = 0usize;
-    let mut input = Reader::from_str(body);
+    let mut input = text_reader(body);
     loop {
         let before = input.buffer_position() as usize;
         let event = input.read_event().ok()?;
@@ -230,13 +233,13 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
                     }
                 }
                 frames.push(frame);
-                let name = std::str::from_utf8(element.name().as_ref()).ok()?.to_owned();
+                let name = element.name().into_inner().to_owned();
                 let (prefix, local) = split(&name);
                 let renamed = join(&rename(&frames, &prefix), local);
                 let mut tag = format!("<{renamed}");
                 for attribute in element.attributes() {
                     let attribute = attribute.ok()?;
-                    let key = std::str::from_utf8(attribute.key.as_ref()).ok()?;
+                    let key = attribute.key.into_inner();
                     let key = if key == "xmlns" || key.starts_with("xmlns:") {
                         let prefix = key.strip_prefix("xmlns:").map(str::to_owned);
                         if !frames.last()?.kept.iter().any(|(kept, _)| kept == &prefix) { continue; }
@@ -251,7 +254,7 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
                             _ => key.to_owned(),
                         }
                     };
-                    let value = std::str::from_utf8(&attribute.value).ok()?;
+                    let value = &*attribute.value;
                     let quote = if value.contains('"') { '\'' } else { '"' };
                     tag.push_str(&format!(" {key}={quote}{value}{quote}"));
                 }
@@ -266,7 +269,7 @@ pub(crate) fn adopt_body_namespaces(document: &str, body: &str) -> Option<String
                 }
             }
             Event::End(ref element) => {
-                let name = std::str::from_utf8(element.name().as_ref()).ok()?.to_owned();
+                let name = element.name().into_inner().to_owned();
                 let (prefix, local) = split(&name);
                 let renamed = join(&rename(&frames, &prefix), local);
                 frames.pop()?;
@@ -356,12 +359,11 @@ impl PartialEq<&str> for &Name {
 struct Interner(std::collections::HashSet<std::rc::Rc<str>>);
 
 impl Interner {
-    fn intern(&mut self, raw: &[u8]) -> Name {
-        let s = String::from_utf8_lossy(raw);
-        if let Some(rc) = self.0.get(s.as_ref()) {
+    fn intern(&mut self, s: &str) -> Name {
+        if let Some(rc) = self.0.get(s) {
             return Name(rc.clone());
         }
-        let rc: std::rc::Rc<str> = s.as_ref().into();
+        let rc: std::rc::Rc<str> = s.into();
         self.0.insert(rc.clone());
         Name(rc)
     }
@@ -541,7 +543,7 @@ impl Element {
 
 impl Document {
     pub fn parse(xml: &str) -> Result<Document, String> {
-        let mut reader = Reader::from_str(xml);
+        let mut reader = TextRuns::new(text_reader(xml));
         let mut prolog = String::new();
         let mut stack: Vec<Element> = Vec::new();
         let mut root: Option<Element> = None;
@@ -550,13 +552,12 @@ impl Document {
         loop {
             match reader.read_event().map_err(|e| e.to_string())? {
                 Event::Start(e) => {
-                    let name = interner.intern(e.name().as_ref());
+                    let name = interner.intern(e.name().into_inner());
                     let mut attrs = Vec::new();
                     for a in e.attributes() {
                         let a = a.map_err(|e| e.to_string())?;
-                        let key = interner.intern(a.key.as_ref());
-                        let val = a
-                            .decode_and_unescape_value(reader.decoder())
+                        let key = interner.intern(a.key.into_inner());
+                        let val = quick_xml::escape::unescape(&a.value)
                             .map_err(|e| e.to_string())?
                             .into_owned();
                         attrs.push((key, val));
@@ -568,13 +569,12 @@ impl Document {
                     });
                 }
                 Event::Empty(e) => {
-                    let name = interner.intern(e.name().as_ref());
+                    let name = interner.intern(e.name().into_inner());
                     let mut attrs = Vec::new();
                     for a in e.attributes() {
                         let a = a.map_err(|e| e.to_string())?;
-                        let key = interner.intern(a.key.as_ref());
-                        let val = a
-                            .decode_and_unescape_value(reader.decoder())
+                        let key = interner.intern(a.key.into_inner());
+                        let val = quick_xml::escape::unescape(&a.value)
                             .map_err(|e| e.to_string())?
                             .into_owned();
                         attrs.push((key, val));
@@ -600,16 +600,16 @@ impl Document {
                     }
                 }
                 Event::Text(e) => {
-                    let raw = String::from_utf8_lossy(e.as_ref());
+                    let raw: &str = &e;
                     // fast path: no '&' => nothing to unescape, keep the single
                     // allocation instead of copy + re-copy
                     let t = if raw.contains('&') {
-                        match quick_xml::escape::unescape(&raw) {
+                        match quick_xml::escape::unescape(raw) {
                             Ok(c) => c.into_owned(),
-                            Err(_) => raw.into_owned(),
+                            Err(_) => raw.to_owned(),
                         }
                     } else {
-                        raw.into_owned()
+                        raw.to_owned()
                     };
                     if let Some(parent) = stack.last_mut() {
                         parent.children.push(Node::Text(t));
@@ -618,20 +618,20 @@ impl Document {
                     }
                 }
                 Event::CData(e) => {
-                    let raw = String::from_utf8_lossy(e.as_ref()).to_string();
+                    let raw = e.into_inner().into_owned();
                     // keep CDATA content as raw text (will be escaped on serialize)
                     if let Some(parent) = stack.last_mut() {
                         parent.children.push(Node::Text(raw));
                     }
                 }
                 Event::Decl(e) => {
-                    let s = String::from_utf8_lossy(e.as_ref()).to_string();
+                    let s: &str = &e;
                     prolog.push_str("<?");
-                    prolog.push_str(&s);
+                    prolog.push_str(s);
                     prolog.push_str("?>");
                 }
                 Event::Comment(e) => {
-                    let s = String::from_utf8_lossy(e.as_ref()).to_string();
+                    let s: &str = &e;
                     let comment = format!("<!--{}-->", s);
                     if let Some(parent) = stack.last_mut() {
                         // preserve comments as unescaped text via placeholder? simpler: drop into prolog only if outside root
@@ -641,18 +641,19 @@ impl Document {
                     }
                 }
                 Event::PI(e) => {
-                    let s = String::from_utf8_lossy(e.as_ref()).to_string();
+                    let s: &str = &e;
                     let pi = format!("<?{}?>", s);
                     if stack.is_empty() {
                         prolog.push_str(&pi);
                     }
                 }
                 Event::DocType(e) => {
-                    let s = String::from_utf8_lossy(e.as_ref()).to_string();
+                    let s: &str = &e;
                     prolog.push_str("<!DOCTYPE");
-                    prolog.push_str(&s);
+                    prolog.push_str(s);
                     prolog.push('>');
                 }
+                Event::GeneralRef(_) => unreachable!("TextRuns joins references into text"),
                 Event::Eof => break,
             }
         }
@@ -718,7 +719,7 @@ pub fn body_inner_xml(xml: &str) -> Option<String> {
 #[allow(dead_code)]
 pub fn decl(version: &str, encoding: &str, standalone: bool) -> String {
     let d = BytesDecl::new(version, Some(encoding), if standalone { Some("yes") } else { None });
-    format!("<?{}?>", String::from_utf8_lossy(d.as_ref()))
+    format!("<?{}?>", &*d)
 }
 
 #[cfg(test)]
@@ -1144,5 +1145,74 @@ mod tests {
         let xml = "<w:document xmlns:w=\"urn:w\"><w:body><w:p><w:r><w:t>hi</w:t></w:r></w:p><w:sectPr><w:pgSz/></w:sectPr></w:body></w:document>";
         let out = body_inner_xml(xml).unwrap();
         assert_eq!(out, "<w:p><w:r><w:t>hi</w:t></w:r></w:p>");
+    }
+}
+
+/// References in text and attribute values give the results quick-xml 0.36
+/// gave: one text node per run of character data, resolved as a whole, or
+/// kept as written when any reference in it cannot be resolved.
+#[cfg(test)]
+mod reference_tests {
+    use super::*;
+
+    fn children(xml: &str) -> Vec<String> {
+        let doc = Document::parse(xml).unwrap();
+        doc.root.children.iter().map(|node| match node {
+            Node::Text(text) => format!("text {text}"),
+            Node::Elem(element) => format!("element {}", element.name),
+        }).collect()
+    }
+
+    #[test]
+    fn a_run_with_references_is_one_resolved_text_node() {
+        assert_eq!(children("<r>&amp;</r>"), ["text &"]);
+        assert_eq!(children("<r>a &amp; b&lt;&gt;&quot;&apos;c</r>"), ["text a & b<>\"'c"]);
+        assert_eq!(children("<r>x&#38;&#x26;&#60;&#x1D11E;y</r>"), ["text x&&<\u{1D11E}y"]);
+        assert_eq!(children("<r>&lt;<b/>&amp;x<c/>&gt;</r>"), ["text <", "element b", "text &x", "element c", "text >"]);
+        assert_eq!(children("<r>a&amp;<!--c-->&lt;b</r>"), ["text a&", "text ", "text <b"]);
+        assert_eq!(children("<r>&amp;<![CDATA[&amp;]]>&lt;</r>"), ["text &", "text &amp;", "text <"]);
+    }
+
+    #[test]
+    fn a_run_with_an_unresolvable_reference_keeps_its_source() {
+        assert_eq!(children("<r>R&D</r>"), ["text R&D"]);
+        assert_eq!(children("<r>&amp; &foo;</r>"), ["text &amp; &foo;"]);
+        assert_eq!(children("<r>&#X41;&amp;</r>"), ["text &#X41;&amp;"]);
+        assert_eq!(children("<r>&#0;</r>"), ["text &#0;"]);
+        assert_eq!(children("<r>&amp</r>"), ["text &amp"]);
+        assert_eq!(children("<r>&a&b;</r>"), ["text &a&b;"]);
+        assert_eq!(children("<r>&lt;<b/>&</r>"), ["text <", "element b", "text &"]);
+    }
+
+    #[test]
+    fn attribute_references_resolve_and_whitespace_is_kept() {
+        let doc = Document::parse("<r a=\"&amp;&#38;&#x26;&lt;\" b='x\ty\nz&#10;&#9;'/>").unwrap();
+        assert_eq!(doc.root.get_attr("a"), Some("&&&<"));
+        assert_eq!(doc.root.get_attr("b"), Some("x\ty\nz\n\t"));
+        assert!(Document::parse("<r a=\"&foo;\"/>").is_err());
+        assert!(Document::parse("<r a=\"R&D\"/>").is_err());
+    }
+
+    #[test]
+    fn references_survive_a_round_trip() {
+        let xml = "<?xml version=\"1.0\"?>\n<r a=\"&quot;&amp;\">a&amp;b<c/>&lt;&#38;<d/>R&D</r>";
+        assert_eq!(Document::parse(xml).unwrap().serialize(), "<?xml version=\"1.0\"?>\n<r a=\"&quot;&amp;\">a&amp;b<c/>&lt;&amp;<d/>R&amp;D</r>");
+        // A run that cannot be resolved is kept as written, so its resolvable
+        // references are escaped again on output.
+        let xml = "<r>&lt;&#38;R&D</r>";
+        assert_eq!(Document::parse(xml).unwrap().serialize(), "<r>&amp;lt;&amp;#38;R&amp;D</r>");
+    }
+
+    #[test]
+    fn rewriting_passes_copy_text_with_references_verbatim() {
+        let xml = r#"<document xmlns="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:d="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><body><t>a &amp; b&#38;R&D&</t><d:docPr id="9" name="&lt;x&gt;"/>&lt;</body></document>"#;
+        let mut drawing = 0;
+        let output = renumber_expanded_drawings(xml, true, Some(&mut drawing), None).unwrap();
+        assert_eq!(output, xml.replace(r#"id="9""#, r#"id="1""#));
+        let (body, _) = document_body_source(xml).unwrap();
+        assert!(body.ends_with(r#"><t>a &amp; b&#38;R&D&</t><d:docPr id="9" name="&lt;x&gt;"/>&lt;</body>"#), "{body}");
+        let parent = r#"<w:document xmlns:w="W"><w:body/></w:document>"#;
+        let adopted = adopt_body_namespaces(parent, r#"<w:body xmlns:w="W"><w:t>R&D &amp;</w:t></w:body>"#).unwrap();
+        assert_eq!(adopted, "<w:body><w:t>R&D &amp;</w:t></w:body>");
     }
 }

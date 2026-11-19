@@ -286,3 +286,19 @@ empty match is retried for a non-empty one). The fused strip/space/clean scan
 is used only when `fused_scan_exact` shows it equals those passes. Tests with
 expected values from Python's results are in `patch.rs`; a test that pinned
 an unclosed element being replaced was corrected against docxtpl.
+
+# quick-xml 0.42
+
+The manifest requires quick-xml 0.42 instead of upstream's 0.36, for
+RUSTSEC-2026-0194 and RUSTSEC-2026-0195. `xml_events` keeps the event
+contract the parsers were written for: quick-xml reports a reference in
+character data as its own `GeneralRef` event and rejects a `&` that starts no
+reference, so every reader accepts a lone `&` as text again, and `TextRuns`
+joins the pieces of each run of character data back into one text event with
+the run's source text. `xmldom`, `recover` and `subdoc` unescape that source,
+and attribute values, with `quick_xml::escape::unescape`, as quick-xml 0.36's
+`unescape` and `unescape_value` did; attribute values are not normalized.
+Name, namespace and attribute comparisons are on `str` with the same bytes.
+Tests named `reference_tests` pin the results of the 0.36 parsers. The
+namespace readers keep quick-xml's default limit of 128 namespace bindings in
+scope; a document beyond it is a parse error.

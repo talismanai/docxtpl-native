@@ -34,6 +34,7 @@ pub mod numbering;
 pub mod recover;
 pub mod template;
 pub mod xmldom;
+mod xml_events;
 
 #[cfg(feature = "python")]
 use pyo3::prelude::*;

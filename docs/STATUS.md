@@ -117,6 +117,22 @@ with both engines and asserts both results.
 | Ill-formed text in the body (a stray `&` or `<`, entities after the first error) | libxml2's recovery drops it | Kept | Losing the user's content is worse than differing from the reference | `tests/test_deliberate_differences.py`; corpus case `protocol/unescaped_body_recovery` |
 | `w:nsid` of a copied list | Drawn from Python's `random` in docxcompose | Derived from the list definition | The same input yields the same bytes | `tests/test_native_deferred_marker.py`; corpus case `protocol/composer_add_numberings` |
 
+### Namespace binding limit
+
+The namespace-aware XML readers keep quick-xml 0.42's default limit of 128
+simultaneous namespace bindings, excluding the built-in `xml` and `xmlns`
+bindings. Declarations inherited from ancestors count toward the limit;
+bindings leave scope when their element closes. Exceeding the limit rejects
+the document instead of allowing unbounded namespace allocation
+(RUSTSEC-2026-0195). This is a deliberate security boundary: the previous
+quick-xml 0.36 readers had no such limit. It does not change the public ABI.
+
+`cargo test -p docxtpl-markers --release --locked namespace_bindings` checks
+the boundary at 128 and 129 bindings, including inherited and closed scopes.
+`tests/test_deliberate_differences.py` renders documents at both sizes with
+both engines: docxtpl accepts both, while this engine accepts 128 and rejects
+129.
+
 ## API differences
 
 The classes are this package's own and docxtpl is not a dependency. What that
