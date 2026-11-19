@@ -10,6 +10,8 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-18
+
 The first release. Experimental: read [Status and limits](README.md#status-and-limits)
 before depending on it.
 
