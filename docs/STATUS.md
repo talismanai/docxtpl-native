@@ -23,9 +23,11 @@ every number comes from a command in [How to check](#how-to-check).
 a surviving one. Focused coverage is in `crates/docxtpl-pdf/tests/convert.rs`
 and `crates/docxtpl-markers/tests/anchors.rs`; run
 `cargo test -p docxtpl-markers -p docxtpl-pdf --release --locked`.
-The converter dependency must be updated to a release containing range links
-before this engine change is released. A local path override is validation
-only. Body/cell text and inline pictures are supported; headers, footers, notes,
+The converter is pinned to merged revision
+`a4a2a6f267c1bf255f0f5f72abef458b3009031d`, which contains the range-link API.
+The committed lockfile lets CI exercise it without a local path override.
+Replace this pin with a converter release containing range links before
+releasing this engine change. Body/cell text and inline pictures are supported; headers, footers, notes,
 list labels, floating pictures and rotated text-box geometry remain outside
 coverage. This feature does not claim PDF layout parity with Word.
 
