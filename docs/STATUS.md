@@ -16,18 +16,16 @@ every number comes from a command in [How to check](#how-to-check).
 | Platforms | Linux arm64 and x86_64, CPython 3.11 and 3.12: the four targets declared in `deployment_targets`, each with a machine-checked installation report. |
 | Distribution | A `linux` wheel that links the system libxml2, and a portable `manylinux_2_28` wheel with libxml2 bundled. |
 
-## Native PDF range links (unreleased)
+## Native PDF range links (0.2.2)
 
 `PdfOptions::range_links` forwards generic bookmark ranges to the converter.
 `place_relative_markers` restores a lost bookmark at a character offset before
 a surviving one. Focused coverage is in `crates/docxtpl-pdf/tests/convert.rs`
 and `crates/docxtpl-markers/tests/anchors.rs`; run
 `cargo test -p docxtpl-markers -p docxtpl-pdf --release --locked`.
-The converter is pinned to merged revision
-`a4a2a6f267c1bf255f0f5f72abef458b3009031d`, which contains the range-link API.
-The committed lockfile lets CI exercise it without a local path override.
-Replace this pin with a converter release containing range links before
-releasing this engine change. Body/cell text and inline pictures are supported; headers, footers, notes,
+The converter is pinned to release `v0.21.4-talisman.3`, which contains the
+range-link API. The committed lockfile lets CI exercise it without a local
+path override. Body/cell text and inline pictures are supported; headers, footers, notes,
 list labels, floating pictures and rotated text-box geometry remain outside
 coverage. This feature does not claim PDF layout parity with Word.
 

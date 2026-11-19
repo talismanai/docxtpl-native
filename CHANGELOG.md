@@ -10,6 +10,8 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-11-19
+
 ### Added
 
 - **Range links** (`docxtpl-pdf`): `PdfOptions::range_links` takes

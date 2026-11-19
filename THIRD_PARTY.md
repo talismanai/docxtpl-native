@@ -6,7 +6,7 @@
 | docxtplrs compatibility fork | 93daab8b6441bfb2e356007ab13b8eb884148d1f, audited local delta | LGPL-2.1-or-later |
 | zlib-rs compatibility fork | 0.6.8; upstream 0254e07204884bfc902d6ebb68c8b703d0ea49cf; level-6 strategy delta in vendor/zlib-rs/FORK.md | Zlib |
 | rsyi/jinja | 52d077512af9b943b005ef374412ec96ee3a7a3d | Apache-2.0 |
-| docxide-pdf, with the bare-wasm host delta | 0.21.4; the fork talismanai/docxide-pdf at revision `a4a2a6f267c1bf255f0f5f72abef458b3009031d`: upstream sverrejb/docxide-pdf 5502642e6 plus the wasm32 build, fonts in memory, font requests, bookmark positions, a fast compression option, a faster layout and bookmark range links; used only by crates/docxtpl-pdf | Apache-2.0 |
+| docxide-pdf, with the bare-wasm host delta | 0.21.4; the fork talismanai/docxide-pdf at tag `v0.21.4-talisman.3`: upstream sverrejb/docxide-pdf 5502642e6 plus the wasm32 build, fonts in memory, font requests, bookmark positions, a fast compression option, a faster layout and bookmark range links; used only by crates/docxtpl-pdf | Apache-2.0 |
 | docxide-pdf test font | `nb-hyphen-ascii.ttf`, a synthetic font (generated outlines, family "NB Hyphen Fixture ascii") from `src/fonts/testdata`, in crates/docxtpl-pdf/tests/fixtures | Apache-2.0 |
 | corosensei | 0.3.4; registry checksum in Cargo.lock | MIT OR Apache-2.0; MIT notice in vendor/notices/corosensei-LICENSE-MIT |
 | scoped-tls | 1.0.1; registry checksum in Cargo.lock | MIT OR Apache-2.0; MIT notice in vendor/notices/scoped-tls-LICENSE-MIT |
