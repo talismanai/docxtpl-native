@@ -10,6 +10,11 @@
 //! own, [`use_system_fonts`] decides whether they are used as well (on wasm32
 //! there are none).
 //!
+//! [`PdfOptions::range_links`] asks the converter for invisible link
+//! annotations over the text laid out between pairs of bookmarks — wherever
+//! they sit, between paragraphs or between the runs of a line — so a viewer
+//! can link a place in the PDF back to the template that produced it.
+//!
 //! [`docx_to_pdf_marked`] also reports where the document's bookmarks were
 //! laid out, which lets a caller link a place in the PDF back to the template
 //! that produced it. Only body paragraphs are reported: headers, footers and
@@ -33,7 +38,7 @@
 //! `wasm_js` feature that only exists when the `wasm_js` backend is the one
 //! compiled, so the two cannot be separated from the outside.
 
-pub use docxide_pdf::{Compression, FontRequest};
+pub use docxide_pdf::{Compression, FontRequest, RangeLink};
 
 /// Settings of one conversion. The defaults are the converter's own (on a
 /// host with an environment, what its `DOCXIDE_*` variables select).
@@ -44,6 +49,12 @@ pub struct PdfOptions {
     /// writes the same PDF several times faster as a larger file: for a PDF
     /// shown where it is made, such as a live preview.
     pub compression: Option<Compression>,
+    /// Link annotations over the text between two bookmarks ([`RangeLink`]:
+    /// start and end bookmark names, the link's URI and an optional second
+    /// URI over the range's leading bold lines). Per range and page, the
+    /// first and last lines get their own rectangle and the lines between
+    /// share one. Only the document body is covered. None by default.
+    pub range_links: Vec<RangeLink>,
 }
 
 impl PdfOptions {
@@ -56,12 +67,20 @@ impl PdfOptions {
         self
     }
 
+    pub fn range_links(mut self, links: impl IntoIterator<Item = RangeLink>) -> Self {
+        self.range_links = links.into_iter().collect();
+        self
+    }
+
     fn converter(&self) -> docxide_pdf::ConvertOptions {
-        let options = docxide_pdf::ConvertOptions::from_env();
-        match self.compression {
-            Some(compression) => options.compression(compression),
-            None => options,
+        let mut options = docxide_pdf::ConvertOptions::from_env();
+        if let Some(compression) = self.compression {
+            options = options.compression(compression);
         }
+        if !self.range_links.is_empty() {
+            options = options.range_links(self.range_links.iter().cloned());
+        }
+        options
     }
 }
 

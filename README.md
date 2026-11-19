@@ -182,8 +182,8 @@ that check them.
 | `crates/docxtpl` | The facade: one dependency, one revision, a feature per layer |
 | `crates/docxtpl-wasm` | Render API for embedders, Jinja2 builtins, the WebAssembly ABI |
 | `crates/docxtpl-pycompat` | Behaviours of Python libraries that compatible pipelines need: lxml trees, python-docx relationships, pictures as Pillow reads them, `str`/`repr`, `re` templates |
-| `crates/docxtpl-markers` | In-line markers moved to paragraph anchors, so a caller can link a place in the output back to the template without changing the layout |
-| `crates/docxtpl-pdf` | DOCX to PDF with a Word-compatible layout, for a host with no file system: fonts registered in memory, on demand, and the page positions of the document's bookmarks |
+| `crates/docxtpl-markers` | In-line markers moved to paragraph anchors, so a caller can link a place in the output back to the template without changing the layout; markers the render lost placed again by counting back from another |
+| `crates/docxtpl-pdf` | DOCX to PDF with a Word-compatible layout, for a host with no file system: fonts registered in memory, on demand, the page positions of the document's bookmarks, and link annotations over the text between two bookmarks |
 | `crates/docxtpl-core` | Host core shared by language bindings: OPC writer, libxml2 policies |
 | `vendor/` | Audited forks (`docxtplrs`, `minijinja`, `zlib-rs`) with provenance manifests |
 | `bindings/python` | The PyO3 extension crate |

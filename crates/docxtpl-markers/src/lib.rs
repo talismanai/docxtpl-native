@@ -19,8 +19,13 @@
 //!
 //! Markers with nothing at all on one side of them (not even a space) do not
 //! split a line and are left where they are.
+//!
+//! A converter that places bookmarks inside a line itself (link annotations
+//! over a bookmarked range) needs none of this: the markers stay where the
+//! render put them, and [`place_relative_markers`] adds the ones the render
+//! lost.
 
-use docxtpl_pycompat::dom::{Attr, Dom, Name, NodeId};
+use docxtpl_pycompat::dom::{Attr, Dom, Name, NodeId, XML_NS};
 use docxtpl_pycompat::pyvalue::py_is_space;
 use docxtplrs::package::Package;
 
@@ -216,6 +221,141 @@ pub fn anchor_inline_markers(docx: &[u8], naming: &Naming, relative: &[RelativeM
     }
     package.set(DOCUMENT, dom.serialize().into_bytes());
     Ok(Anchored { content: package.to_bytes()?, inline_markers })
+}
+
+/// Insert each of the `relative` markers the render did not keep as a point
+/// bookmark of its own, `chars_before` non-whitespace characters before the
+/// marker it counts back from, splitting the run that holds that spot when it
+/// falls inside one. The other markers stay where they are: this is for a
+/// converter that places bookmarks inside a line precisely (link annotations
+/// over a bookmarked range), where [`anchor_inline_markers`] is not needed.
+///
+/// A marker whose `relative_to` is not in the document is skipped; the
+/// document comes back unchanged when nothing is placed. Fails like
+/// [`anchor_inline_markers`] on a document a strict parser rejects.
+pub fn place_relative_markers(docx: &[u8], naming: &Naming, relative: &[RelativeMarker]) -> Result<Vec<u8>, String> {
+    if relative.is_empty() {
+        return Ok(docx.to_vec());
+    }
+    let mut package = Package::from_bytes(docx)?;
+    let xml = package.get_string(DOCUMENT).ok_or("word/document.xml is missing")?;
+    if !is_strictly_parseable(&xml) {
+        return Err("document.xml is not namespace-well-formed".into());
+    }
+    let mut dom = Dom::parse(&xml)?;
+    let mut next_id = naming.first_anchor_id;
+    let mut placed = false;
+    for marker in relative {
+        let Some(target) = dom.all_elements().into_iter().find(|&e| {
+            dom.is(e, W, "bookmarkStart") && dom.attr(e, Some(W), "name") == Some(marker.relative_to.as_str())
+        }) else { continue };
+        let Some(paragraph) = owning_paragraph(&dom, target) else { continue };
+        // The paragraph's laid-out text before the target, as
+        // `move_inline_markers` counts it: w:t elements, whitespace left out.
+        let mut texts: Vec<(NodeId, usize)> = Vec::new();
+        let mut before = 0usize;
+        for element in dom.descendants(paragraph) {
+            if element == target { break; }
+            if !dom.is(element, W, "t") || owning_paragraph(&dom, element) != Some(paragraph) || is_hidden(&dom, element) {
+                continue;
+            }
+            let count = dom.text(element).unwrap_or_default().chars().filter(|&c| !py_is_space(c)).count();
+            texts.push((element, before));
+            before += count;
+        }
+        let wanted = before.saturating_sub(marker.chars_before);
+        let id = next_id.to_string();
+        next_id += 1;
+        // The text element holding the wanted character, and the character's
+        // index in it; none when the marker goes right before the target.
+        let spot = texts.iter().find_map(|&(text, start)| {
+            let content = dom.text(text).unwrap_or_default();
+            let mut seen = start;
+            for (index, c) in content.chars().enumerate() {
+                if py_is_space(c) { continue; }
+                if seen == wanted { return Some((text, index)); }
+                seen += 1;
+            }
+            None
+        });
+        match spot {
+            None => {
+                let parent = dom.parent(target).ok_or("marker has no parent")?;
+                let index = dom.index(parent, target).ok_or("marker not found in its parent")?;
+                insert_point_bookmark(&mut dom, parent, index, &marker.name, &id);
+            }
+            Some((text, index)) => split_before(&mut dom, text, index, &marker.name, &id)?,
+        }
+        placed = true;
+    }
+    if !placed {
+        return Ok(docx.to_vec());
+    }
+    package.set(DOCUMENT, dom.serialize().into_bytes());
+    package.to_bytes()
+}
+
+/// Insert a point bookmark (`w:bookmarkStart` and `w:bookmarkEnd`) as the
+/// `index`th child of `parent`.
+fn insert_point_bookmark(dom: &mut Dom, parent: NodeId, index: usize, name: &str, id: &str) {
+    let prefix = dom.prefix_for(parent, W).unwrap_or(Some("w".into()));
+    let w = |local: &str| Name { prefix: prefix.clone(), local: local.into(), ns: Some(W.into()) };
+    let start = dom.new_element(w("bookmarkStart"), vec![Attr { name: w("id"), value: id.into() }, Attr { name: w("name"), value: name.into() }]);
+    let end = dom.new_element(w("bookmarkEnd"), vec![Attr { name: w("id"), value: id.into() }]);
+    dom.insert(parent, index, start);
+    dom.insert(parent, index + 1, end);
+}
+
+/// A `w:t` like `model` holding `text`, with its spaces preserved.
+fn text_like(dom: &mut Dom, model: NodeId, text: &str) -> NodeId {
+    let name = dom.name(model).cloned().expect("w:t is an element");
+    let space = Name { prefix: Some("xml".into()), local: "space".into(), ns: Some(XML_NS.into()) };
+    let element = dom.new_element(name, vec![Attr { name: space, value: "preserve".into() }]);
+    let content = dom.new_text(text);
+    dom.append(element, content);
+    element
+}
+
+/// Put a point bookmark right before character `index` of the `w:t`
+/// element `text`: before its run when nothing of the run is laid out before
+/// that character, otherwise between the two halves of the run, split there.
+fn split_before(dom: &mut Dom, text: NodeId, index: usize, name: &str, id: &str) -> Result<(), String> {
+    let run = dom.parent(text).filter(|&r| dom.is(r, W, "r")).ok_or("text outside a run")?;
+    let parent = dom.parent(run).ok_or("run has no parent")?;
+    let content: Vec<char> = dom.text(text).unwrap_or_default().chars().collect();
+    let children = dom.children(run);
+    let at = children.iter().position(|&c| c == text).ok_or("text not in its run")?;
+    let laid_out_before = children[..at].iter().any(|&c| {
+        dom.is(c, W, "t") || LAID_OUT_CHARS.iter().any(|local| dom.is(c, W, local)) || dom.is(c, W, "drawing")
+    });
+    let run_index = dom.index(parent, run).ok_or("run not found in its parent")?;
+    if index == 0 && !laid_out_before {
+        insert_point_bookmark(dom, parent, run_index, name, id);
+        return Ok(());
+    }
+    // The second half: the run's properties, the rest of the text and what
+    // followed it.
+    let second = dom.deep_copy(run);
+    for child in dom.children(second) {
+        if !dom.is(child, W, "rPr") { dom.remove(child); }
+    }
+    let after: String = content[index..].iter().collect();
+    let tail = text_like(dom, text, &after);
+    dom.append(second, tail);
+    for &child in &children[at + 1..] {
+        dom.remove(child);
+        dom.append(second, child);
+    }
+    // The first half keeps what came before the character.
+    let before: String = content[..index].iter().collect();
+    if !before.is_empty() {
+        let head = text_like(dom, text, &before);
+        dom.insert(run, at, head);
+    }
+    dom.remove(text);
+    dom.insert(parent, run_index + 1, second);
+    insert_point_bookmark(dom, parent, run_index + 1, name, id);
+    Ok(())
 }
 
 /// Anchored markers, or a document with no markers at all when anchoring
