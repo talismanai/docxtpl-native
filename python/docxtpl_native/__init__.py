@@ -40,7 +40,7 @@ def _plain_environment(environment: object) -> bool:
             and environment.filters == baseline.filters and environment.tests == baseline.tests
             and environment.globals == baseline.globals and environment.policies == baseline.policies)
 
-__version__ = "0.2.2"
+__version__ = "0.3.0"
 
 class UnsupportedFeature(NotImplementedError):
     pass
