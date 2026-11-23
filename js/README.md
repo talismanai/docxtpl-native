@@ -39,10 +39,11 @@ registered into it is gone with it, which is what `onReset` is for.
 ## Fonts on demand
 
 A module built for a browser has no fonts. After a conversion it can report
-the font lookups that found nothing — per lookup, the families it tried, in
-order. The host picks a face for the first family it has, registers it and
-converts again, so only the faces a document uses are fetched and the result
-is the one a fully registered catalog would give.
+the document fonts that are missing. With docxtpl-pdf 0.3, each request keeps
+its `{names, bold, italic}` shape, but `names` contains one selected family.
+The host supplies the matching face, registers it and converts again. The
+converter no longer reports glyph-rescue fallback probes, so on-demand loading
+does not guarantee the result of preloading a complete fallback catalog.
 
 ```js
 import { FontLoader, convertWithFontsOnDemand } from "@docxtpl/wasm";

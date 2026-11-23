@@ -242,3 +242,12 @@ is drawn, are in
 Any of the [accepted debts](#accepted-debts) can be taken on if it becomes
 worth its cost, which the table states; several would mean generating Python
 code.
+
+### PDF converter 0.22
+
+The PDF adapter targets docxide-pdf 0.22 and obtains the PDF, bookmarks and
+missing document fonts from one `Conversion`. Its font-registration API and
+`{names, bold, italic}` JSON shape remain available. A request now has one
+selected document family; glyph-rescue fallback probes are not exposed, so
+on-demand loading is not guaranteed to match a fully preloaded catalog.
+Library conversions no longer read `DOCXIDE_*` environment variables.

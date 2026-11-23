@@ -10,6 +10,20 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-23
+
+### Changed
+
+- **PDF converter** (`docxtpl-pdf`): docxide-pdf `v0.22.0-talisman.1`, based
+  on upstream 0.22 with the fork's compression, layout optimizations and
+  bookmark range links. The adapter uses `convert()` and its returned PDF,
+  bookmarks and missing fonts. Font registration remains thread-local.
+- **Font requests** keep the `{names, bold, italic}` JSON shape, but `names`
+  now contains one selected document family. The converter no longer exposes
+  its fallback probes for glyph rescue; on-demand loading does not guarantee
+  the result of preloading a complete fallback catalog. A failed conversion
+  clears pending requests. Library conversions no longer read `DOCXIDE_*`.
+
 ## [0.2.2] - 2026-11-19
 
 ### Added

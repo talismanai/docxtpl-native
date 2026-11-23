@@ -3,10 +3,9 @@
 //!
 //! The converter never reads files, so the host supplies the fonts: it
 //! registers font files ([`register_font`]), converts, asks which lookups
-//! found nothing ([`font_requests`]: per lookup, the family names tried in
-//! order), fetches a face for the first name it has in each, registers it and
-//! converts again. Only the fonts a document uses are fetched, and the result
-//! is what a full font catalog would give. Where the host has fonts of its
+//! are missing ([`font_requests`]: one selected family per request), fetches
+//! those faces, registers them and converts again. Fallback probes for glyph
+//! rescue are not reported by the converter's 0.22 API. Where the host has fonts of its
 //! own, [`use_system_fonts`] decides whether they are used as well (on wasm32
 //! there are none).
 //!
@@ -38,10 +37,59 @@
 //! `wasm_js` feature that only exists when the `wasm_js` backend is the one
 //! compiled, so the two cannot be separated from the outside.
 
-pub use docxide_pdf::{Compression, FontRequest, RangeLink};
+use std::cell::RefCell;
 
-/// Settings of one conversion. The defaults are the converter's own (on a
-/// host with an environment, what its `DOCXIDE_*` variables select).
+pub use docxide_pdf::{Compression, RangeLink};
+
+/// A font to supply for the latest conversion. `names` contains the family
+/// selected by the converter, rather than the old fallback lookup chain.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FontRequest {
+    pub names: Vec<String>,
+    pub bold: bool,
+    pub italic: bool,
+}
+
+struct Host {
+    options: docxide_pdf::ConvertOptions,
+    system_fonts: bool,
+    requests: Vec<FontRequest>,
+}
+
+impl Default for Host {
+    fn default() -> Self {
+        Self {
+            options: docxide_pdf::ConvertOptions::new(),
+            system_fonts: !cfg!(all(target_arch = "wasm32", target_os = "unknown")),
+            requests: Vec::new(),
+        }
+    }
+}
+
+thread_local! {
+    static HOST: RefCell<Host> = RefCell::new(Host::default());
+}
+
+fn convert(docx: &[u8], options: &PdfOptions) -> Result<docxide_pdf::Conversion, String> {
+    HOST.with_borrow_mut(|host| host.requests.clear());
+    let converted = docxide_pdf::convert(docx, &options.converter())
+        .map_err(|error| format!("render PDF: {error}"))?;
+    HOST.with_borrow_mut(|host| {
+        host.requests = converted
+            .missing_fonts
+            .iter()
+            .map(|font| FontRequest {
+                names: vec![font.name.clone()],
+                bold: font.bold,
+                italic: font.italic,
+            })
+            .collect();
+    });
+    Ok(converted)
+}
+
+/// Settings of one conversion. Defaults match the converter's online-export
+/// settings. Library conversions do not read `DOCXIDE_*` environment variables.
 #[derive(Debug, Clone, Default)]
 #[non_exhaustive]
 pub struct PdfOptions {
@@ -73,7 +121,7 @@ impl PdfOptions {
     }
 
     fn converter(&self) -> docxide_pdf::ConvertOptions {
-        let mut options = docxide_pdf::ConvertOptions::from_env();
+        let mut options = HOST.with_borrow(|host| host.options.clone());
         if let Some(compression) = self.compression {
             options = options.compression(compression);
         }
@@ -125,14 +173,16 @@ pub fn docx_to_pdf(docx: &[u8]) -> Result<Vec<u8>, String> {
 
 /// [`docx_to_pdf`] with `options`.
 pub fn docx_to_pdf_with(docx: &[u8], options: &PdfOptions) -> Result<Vec<u8>, String> {
-    docxide_pdf::convert_docx_bytes_to_pdf_bytes_with(docx, &options.converter())
-        .map_err(|error| format!("render PDF: {error}"))
+    convert(docx, options).map(|converted| converted.pdf)
 }
 
 /// Convert `docx` and report where its markers were laid out. `side` names a
 /// bookmark's marker side, or returns `None` for a bookmark that is not a
 /// marker.
-pub fn docx_to_pdf_marked(docx: &[u8], side: impl Fn(&str) -> Option<MarkerSide>) -> Result<MarkedPdf, String> {
+pub fn docx_to_pdf_marked(
+    docx: &[u8],
+    side: impl Fn(&str) -> Option<MarkerSide>,
+) -> Result<MarkedPdf, String> {
     docx_to_pdf_marked_with(docx, &PdfOptions::default(), side)
 }
 
@@ -142,9 +192,9 @@ pub fn docx_to_pdf_marked_with(
     options: &PdfOptions,
     side: impl Fn(&str) -> Option<MarkerSide>,
 ) -> Result<MarkedPdf, String> {
-    let pdf = docx_to_pdf_with(docx, options)?;
+    let converted = convert(docx, options)?;
     let mut markers = Vec::new();
-    for bookmark in docxide_pdf::take_bookmark_positions() {
+    for bookmark in converted.bookmarks {
         let position = match side(&bookmark.name) {
             None => continue,
             Some(MarkerSide::End) => MarkerPosition {
@@ -160,7 +210,10 @@ pub fn docx_to_pdf_marked_with(
         };
         markers.push((bookmark.name, position));
     }
-    Ok(MarkedPdf { pdf, markers })
+    Ok(MarkedPdf {
+        pdf: converted.pdf,
+        markers,
+    })
 }
 
 impl MarkedPdf {
@@ -169,9 +222,12 @@ impl MarkedPdf {
     pub fn markers_json(&self) -> serde_json::Value {
         let mut markers = serde_json::Map::new();
         for (name, position) in &self.markers {
-            markers.insert(name.clone(), serde_json::json!({
-                "page": position.page, "x": position.x, "y_from_bottom": position.y_from_bottom,
-            }));
+            markers.insert(
+                name.clone(),
+                serde_json::json!({
+                    "page": position.page, "x": position.x, "y_from_bottom": position.y_from_bottom,
+                }),
+            );
         }
         serde_json::Value::Object(markers)
     }
@@ -180,23 +236,46 @@ impl MarkedPdf {
 /// Register a font file (every face of a collection) for later conversions.
 /// Returns the number of faces registered (0: not a font).
 pub fn register_font(font: &[u8]) -> usize {
-    docxide_pdf::register_font(font.to_vec())
+    let count = (0..ttf_parser::fonts_in_collection(font).unwrap_or(1))
+        .filter_map(|index| ttf_parser::Face::parse(font, index).ok())
+        .filter(|face| {
+            face.names().into_iter().any(|name| {
+                name.name_id == ttf_parser::name_id::FAMILY
+                    && ((name.is_unicode() && name.to_string().is_some())
+                        || (name.platform_id == ttf_parser::PlatformId::Macintosh
+                            && name.encoding_id == 0
+                            && name.name.is_ascii()))
+            })
+        })
+        .count();
+    if count > 0 {
+        HOST.with_borrow_mut(|host| {
+            host.options = std::mem::take(&mut host.options).font(font.to_vec())
+        });
+    }
+    count
 }
 
 /// Forget every registered font.
 pub fn clear_fonts() {
-    docxide_pdf::clear_fonts();
+    HOST.with_borrow_mut(|host| {
+        host.options = docxide_pdf::ConvertOptions::new().system_fonts(host.system_fonts);
+    });
 }
 
 /// Whether the host's own fonts are used as well (on wasm32 there are none).
 pub fn use_system_fonts(enabled: bool) {
-    docxide_pdf::use_system_fonts(enabled);
+    HOST.with_borrow_mut(|host| {
+        host.system_fonts = enabled;
+        host.options = std::mem::take(&mut host.options).system_fonts(enabled);
+    });
 }
 
-/// The font lookups that found nothing in the last conversion, with the
-/// family names tried in order.
+/// Missing document fonts from the last conversion on this thread. Each
+/// request has one family name to supply, including a substituted family
+/// when Word uses one. Calling this drains the requests.
 pub fn font_requests() -> Vec<FontRequest> {
-    docxide_pdf::take_font_requests()
+    HOST.with_borrow_mut(|host| std::mem::take(&mut host.requests))
 }
 
 /// [`font_requests`] as JSON: `[{"names": [family, ...], "bold": bool,
