@@ -292,7 +292,12 @@ impl Dom {
     pub fn all_elements(&self) -> Vec<NodeId> { self.descendants(self.root) }
 
     pub fn has_descendant_local(&self, id: NodeId, local: &str) -> bool {
-        self.descendants(id).into_iter().any(|d| self.is_local(d, local))
+        let mut stack: Vec<NodeId> = self.nodes[id].children.iter().rev().copied().collect();
+        while let Some(node) = stack.pop() {
+            if self.is_local(node, local) { return true; }
+            stack.extend(self.nodes[node].children.iter().rev().copied());
+        }
+        false
     }
 
     pub fn attr(&self, id: NodeId, ns: Option<&str>, local: &str) -> Option<&str> {
@@ -534,6 +539,16 @@ mod tests {
         assert_eq!(dom.serialize_node(copy), expected);
         dom.append(root, copy);
         assert_eq!(dom.parent(copy), Some(root));
+    }
+
+    #[test]
+    fn has_descendant_local_matches_the_descendant_element_set() {
+        let dom = Dom::parse("<root>head<a><nested/></a><!--c--><other>text</other></root>").unwrap();
+        for node in 0..dom.nodes.len() {
+            for name in ["root", "a", "nested", "other", "missing"] {
+                assert_eq!(dom.has_descendant_local(node, name), dom.descendants(node).into_iter().any(|id| dom.is_local(id, name)));
+            }
+        }
     }
 
     #[test]
