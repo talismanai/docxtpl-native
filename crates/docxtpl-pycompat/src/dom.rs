@@ -391,8 +391,15 @@ impl Dom {
     }
 
     pub fn deep_copy(&mut self, id: NodeId) -> NodeId {
-        let snapshot = self.clone();
-        self.import(&snapshot, id)
+        let kind = self.nodes[id].kind.clone();
+        let children = self.nodes[id].children.clone();
+        let copy = self.nodes.len();
+        self.nodes.push(Node { kind, parent: None, children: Vec::new() });
+        for child in children {
+            let child_copy = self.deep_copy(child);
+            self.append(copy, child_copy);
+        }
+        copy
     }
 
     /// Namespace prefix in scope at `id` for `uri` (element ancestors only).
@@ -511,6 +518,23 @@ impl Dom {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn deep_copy_keeps_all_node_kinds_and_does_not_share_nodes() {
+        let xml = r#"<root xmlns:w="urn:test"><other/><w:part w:id="3">start<![CDATA[data]]><!--comment--><?test x?><child>text</child>end</w:part></root>"#;
+        let mut dom = Dom::parse(xml).unwrap();
+        let root = dom.document_element().unwrap();
+        let original = dom.children(root)[1];
+        let expected = dom.serialize_node(original);
+        let copy = dom.deep_copy(original);
+        assert!(dom.parent(copy).is_none());
+        assert_eq!(dom.serialize_node(copy), expected);
+        let original_child = dom.children(original).into_iter().find(|&id| dom.is_local(id, "child")).unwrap();
+        dom.remove(original_child);
+        assert_eq!(dom.serialize_node(copy), expected);
+        dom.append(root, copy);
+        assert_eq!(dom.parent(copy), Some(root));
+    }
 
     #[test]
     fn remove_takes_tail_and_next_skips_text() {
