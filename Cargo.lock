@@ -306,8 +306,8 @@ dependencies = [
 
 [[package]]
 name = "docxide-pdf"
-version = "0.22.0-talisman.1"
-source = "git+https://github.com/talismanai/docxide-pdf?tag=v0.22.0-talisman.1#56869e933b0dc6213162204ebcaac6b2f8b9b03c"
+version = "0.22.0-talisman.2"
+source = "git+https://github.com/talismanai/docxide-pdf?tag=v0.22.0-talisman.2#f4eab00bdb1160af39eacb3ed74d7574dd628e3e"
 dependencies = [
  "image",
  "log",
@@ -324,7 +324,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "docxtpl-core",
  "docxtpl-markers",
@@ -337,7 +337,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-core"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "base64",
  "docxtplrs",
@@ -354,7 +354,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-markers"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "docxtpl-pycompat",
  "docxtplrs",
@@ -364,7 +364,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-native"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "base64",
  "corosensei",
@@ -384,7 +384,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-pdf"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "docxide-pdf",
  "docxtplrs",
@@ -395,7 +395,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-pycompat"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "image",
  "png",
@@ -408,7 +408,7 @@ dependencies = [
 
 [[package]]
 name = "docxtpl-wasm"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "docxtplrs",
  "fancy-regex",
