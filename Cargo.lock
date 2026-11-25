@@ -306,8 +306,8 @@ dependencies = [
 
 [[package]]
 name = "docxide-pdf"
-version = "0.22.0-talisman.1"
-source = "git+https://github.com/talismanai/docxide-pdf?tag=v0.22.0-talisman.1#56869e933b0dc6213162204ebcaac6b2f8b9b03c"
+version = "0.22.0-talisman.2"
+source = "git+https://github.com/talismanai/docxide-pdf?tag=v0.22.0-talisman.2#f4eab00bdb1160af39eacb3ed74d7574dd628e3e"
 dependencies = [
  "image",
  "log",

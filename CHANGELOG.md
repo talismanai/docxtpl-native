@@ -14,6 +14,7 @@ write it for someone deciding whether to upgrade.
 
 ### Changed
 
+- Update the PDF converter to docxide-pdf `v0.22.0-talisman.2`.
 - Copy only the requested XML subtree when duplicating a DOM node, reducing
   allocation work for templates with repeated formatting copies.
 - Stop searching descendants as soon as a matching element is found.
