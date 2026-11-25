@@ -10,6 +10,11 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+### Changed
+
+- Copy only the requested XML subtree when duplicating a DOM node, reducing
+  allocation work for templates with repeated formatting copies.
+
 ## [0.3.0] - 2026-11-23
 
 ### Changed
