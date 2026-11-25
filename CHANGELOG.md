@@ -10,6 +10,8 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-25
+
 ### Changed
 
 - Copy only the requested XML subtree when duplicating a DOM node, reducing
