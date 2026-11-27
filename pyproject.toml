@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "docxtpl-native"
-version = "0.3.2"
+version = "0.3.3"
 description = "Rust DOCX engine and an explicit differential parity laboratory"
 requires-python = ">=3.11"
 license = "LGPL-2.1-or-later"
