@@ -10,6 +10,16 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.3] - 2026-11-27
+
+### Fixed
+
+- Update the PDF converter to docxide-pdf `v0.22.0-talisman.4`: a floating
+  picture now keeps its own range-link rectangle. In 0.3.2, contrary to its
+  notes, a floating picture laid out between a range's first and last lines
+  was merged into the middle rectangle, which could then cover content
+  outside the range.
+
 ## [0.3.2] - 2026-11-27
 
 ### Changed
