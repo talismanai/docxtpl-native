@@ -23,8 +23,9 @@ every number comes from a command in [How to check](#how-to-check).
 a surviving one. Focused coverage is in `crates/docxtpl-pdf/tests/convert.rs`
 and `crates/docxtpl-markers/tests/anchors.rs`; run
 `cargo test -p docxtpl-markers -p docxtpl-pdf --release --locked`.
-The converter is pinned to release `v0.22.0-talisman.4`, which contains the
-range-link API. The committed lockfile lets CI exercise it without a local
+The converter is pinned to release `v0.22.0-talisman.5`, which contains the
+range-link API and the picture options `PdfOptions` forwards
+(`picture_resolution`, `draft_pictures`, `picture_cache`). The committed lockfile lets CI exercise it without a local
 path override. Body/cell text, inline pictures and floating pictures are
 supported, each floating picture with its own rectangle; headers, footers,
 notes, list labels and rotated text-box geometry remain outside coverage. This feature does not claim PDF layout parity with Word.

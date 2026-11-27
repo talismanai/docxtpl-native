@@ -206,6 +206,80 @@ fn inflated(pdf: &[u8]) -> String {
     text
 }
 
+/// A `width`×`height` PNG of one flat colour, where Word's export keeps the
+/// lossless (Flate) copy.
+fn flat_png(width: u32, height: u32) -> Vec<u8> {
+    fn chunk(out: &mut Vec<u8>, kind: &[u8], data: &[u8]) {
+        let mut crc = flate2::Crc::new();
+        crc.update(kind);
+        crc.update(data);
+        out.extend((data.len() as u32).to_be_bytes());
+        out.extend(kind);
+        out.extend(data);
+        out.extend(crc.sum().to_be_bytes());
+    }
+    let mut header = Vec::new();
+    header.extend(width.to_be_bytes());
+    header.extend(height.to_be_bytes());
+    header.extend([8, 2, 0, 0, 0]);
+    let row: Vec<u8> = std::iter::once(0).chain((0..width).flat_map(|_| [40, 90, 160])).collect();
+    let mut encoder = flate2::write::ZlibEncoder::new(Vec::new(), flate2::Compression::default());
+    for _ in 0..height {
+        std::io::Write::write_all(&mut encoder, &row).unwrap();
+    }
+    let mut png = b"\x89PNG\r\n\x1a\n".to_vec();
+    chunk(&mut png, b"IHDR", &header);
+    chunk(&mut png, b"IDAT", &encoder.finish().unwrap());
+    chunk(&mut png, b"IEND", &[]);
+    png
+}
+
+/// A letter page with `picture` drawn 100×50pt.
+fn picture_document(picture: &[u8]) -> Vec<u8> {
+    const IMAGE: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
+    let drawing = r#"<w:p><w:r><w:drawing><wp:inline xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"><wp:extent cx="1270000" cy="635000"/><wp:docPr id="1" name="p"/><a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:nvPicPr><pic:cNvPr id="1" name="p"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="RID"/></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="1270000" cy="635000"/></a:xfrm></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>"#;
+    let mut package =
+        docxtplrs::package::Package::from_bytes(&minimal_docx(SECTION)).expect("package");
+    let mut rels = (*package.rels("word/document.xml")).clone();
+    let id = rels.add(IMAGE, "media/image1.png", false);
+    package.save_rels("word/document.xml", &rels);
+    package.set("word/media/image1.png", picture.to_vec());
+    let types = package.get_string("[Content_Types].xml").expect("content types").replace(
+        "</Types>",
+        r#"<Default Extension="png" ContentType="image/png"/></Types>"#,
+    );
+    package.set("[Content_Types].xml", types.into_bytes());
+    let body = package.get_string("word/document.xml").expect("body");
+    let body = body.replacen("<w:sectPr", &format!("{}<w:sectPr", drawing.replace("RID", &id)), 1);
+    package.set("word/document.xml", body.into_bytes());
+    package.to_bytes().expect("docx")
+}
+
+#[test]
+fn picture_options_reach_the_converter() {
+    let _fonts = FONTS
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    only_fixture_fonts();
+    // 1600×800 drawn at 100×50pt: 1152 ppi.
+    let document = picture_document(&flat_png(1600, 800));
+    let convert = |options: &PdfOptions| {
+        docxtpl_pdf::docx_to_pdf_marked_with(&document, options, side)
+            .expect("convert")
+            .pdf
+    };
+    let word = inflated(&convert(&PdfOptions::new()));
+    assert!(word.contains("/Width 267") && word.contains("/FlateDecode"), "192 ppi, lossless");
+    let draft = PdfOptions::new().picture_resolution(144.0).draft_pictures(true);
+    let drafted = convert(&draft);
+    let text = inflated(&drafted);
+    assert!(text.contains("/Width 200") && text.contains("/DCTDecode"), "144 ppi JPEG");
+    // The cache hands back the same picture: the same PDF.
+    let cached = draft.picture_cache(true);
+    assert_eq!(convert(&cached), drafted);
+    assert_eq!(convert(&cached), drafted);
+}
+
 #[test]
 fn links_the_lines_between_two_bookmarks() {
     let _fonts = FONTS

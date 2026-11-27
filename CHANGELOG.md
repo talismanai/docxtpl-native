@@ -10,6 +10,27 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.4] - 2026-11-28
+
+### Added
+
+- `docxtpl-pdf`: `PdfOptions::picture_resolution`, `draft_pictures` and
+  `picture_cache`, for a PDF shown where it is made (a live preview that
+  converts again after every edit): resample pictures to a lower resolution,
+  resample them cheaply and write them as JPEG, and reuse the pictures earlier
+  conversions in the process encoded with the same settings (up to 64 MiB).
+  Off by default: without them the output does not change.
+
+### Changed
+
+- Update the PDF converter to docxide-pdf `v0.22.0-talisman.5`, on upstream
+  `fe2cd29fb`. `Compression::Fast` now also changes pictures: JPEGs that need
+  no change are embedded as stored, other pictures are written as Flate
+  without a JPEG trial, and only pictures above 384 ppi are resampled, with
+  the thumbnail filter. That is faster and can be several times larger with
+  screenshots; `draft_pictures` keeps them small. The default compression
+  writes the same PDF as before.
+
 ### Fixed
 
 - `docxtpl-wasm`: the `string` filter turns a picture into its run XML, as
