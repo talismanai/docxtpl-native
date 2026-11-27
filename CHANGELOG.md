@@ -10,6 +10,15 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+### Fixed
+
+- `docxtpl-wasm`: the `string` filter turns a picture into its run XML, as
+  `str(InlineImage)` does under docxtpl. It returned the picture's internal
+  placeholder, so a template that tests or edits a picture's markup
+  (`'pic:pic' in picture|string`, `picture|string|replace(...)`) dropped the
+  picture or left it unchanged in `render_document`, while docxtpl kept or
+  changed it.
+
 ## [0.3.3] - 2026-11-27
 
 ### Fixed

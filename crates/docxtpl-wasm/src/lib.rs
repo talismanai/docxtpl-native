@@ -134,6 +134,69 @@ mod tests {
         assert!(notes.contains(">Ana</w:t>") && !notes.contains("{{"), "{notes}");
     }
 
+    /// A 1x1 PNG.
+    const PIXEL: &[u8] = &[
+        0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
+        0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
+        0x89, 0x00, 0x00, 0x00, 0x0a, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9c, 0x63, 0x00, 0x01, 0x00, 0x00,
+        0x05, 0x00, 0x01, 0x0d, 0x0a, 0x2d, 0xb4, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae,
+        0x42, 0x60, 0x82,
+    ];
+
+    /// The body of `body` rendered with a `picture`; filters from `configure`.
+    fn render_picture_body(body: &str, options: &DocumentOptions,
+        configure: &dyn Fn(&mut minijinja::Environment<'static>, &crate::document::Pictures)) -> (String, String) {
+        let template = docxtplrs::package::minimal_docx(&format!("<w:p><w:r><w:t>{body}</w:t></w:r></w:p>"));
+        let context = Ctx::Map(vec![("picture".into(), Ctx::Image(Image { bytes: PIXEL.into(), width: None, height: None }))]);
+        let output = render_document(&template, &context, options, configure).unwrap();
+        let package = docxtplrs::package::Package::from_bytes(&output).unwrap();
+        (package.get_string("word/document.xml").unwrap(), package.get_string("word/_rels/document.xml.rels").unwrap_or_default())
+    }
+
+    /// `str(InlineImage)` is the picture's run XML, so a template can test or
+    /// edit a picture's markup while the part renders.
+    #[test]
+    fn stringifies_pictures_as_their_markup() {
+        for python_numbering in [false, true] {
+            let options = DocumentOptions { python_numbering, ..Default::default() };
+            let (body, rels) = render_picture_body(
+                "{% set piece = picture|string %}[{{ 'pic:pic' in piece }}]{{ piece|replace('</pic:spPr>', '<a:ln/></pic:spPr>')|safe }}{{ picture }}",
+                &options, &|_, _| {});
+            assert!(body.contains("[True]") || body.contains("[true]"), "{body}");
+            assert_eq!(body.matches("<w:drawing>").count(), 2, "{body}");
+            assert_eq!(body.matches("<a:ln/></pic:spPr>").count(), 1, "{body}");
+            assert!(!body.contains("\u{1}DTPLD"), "{body}");
+            let embeds: Vec<&str> = body.split("r:embed=\"").skip(1).map(|rest| &rest[..rest.find('"').unwrap()]).collect();
+            assert_eq!(embeds.len(), 2, "{body}");
+            assert!(embeds.iter().all(|id| rels.contains(&format!("Id=\"{id}\""))), "{rels}");
+            if !python_numbering {
+                let ids: Vec<&str> = body.split("<wp:docPr id=\"").skip(1).map(|rest| &rest[..rest.find('"').unwrap()]).collect();
+                assert_eq!(ids.len(), 2, "{body}");
+                assert_ne!(ids[0], ids[1], "{body}");
+            }
+        }
+    }
+
+    /// A picture a filter creates while the part renders stringifies too.
+    #[test]
+    fn stringifies_pictures_created_by_filters() {
+        let (body, _) = render_picture_body("[{{ 'pic:pic' in (picture|copy|string) }}]", &DocumentOptions::default(), &|env, pictures| {
+            let pictures = pictures.clone();
+            env.add_filter("copy", move |value: minijinja::Value| match pictures.get(&value) {
+                Some(image) => pictures.create(image),
+                None => value,
+            });
+        });
+        assert!(body.contains("[True]") || body.contains("[true]"), "{body}");
+    }
+
+    /// Text without pictures stringifies as before.
+    #[test]
+    fn stringifies_other_values_unchanged() {
+        let (body, _) = render_picture_body("[{{ 12|string }}][{{ ('a' ~ 'b')|string }}]", &DocumentOptions::default(), &|_, _| {});
+        assert!(body.contains("[12][ab]"), "{body}");
+    }
+
     #[test]
     fn compares_like_python() {
         let value = Ctx::from_json(&serde_json::json!({"a": [true, 1.0]}));
