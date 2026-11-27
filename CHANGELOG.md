@@ -10,6 +10,14 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-11-27
+
+### Changed
+
+- Update the PDF converter to docxide-pdf `v0.22.0-talisman.3`: range links
+  now cover floating pictures anchored in a range (body, table cells, VML) and
+  a picture alone in a text box, each floating picture with its own rectangle.
+
 ## [0.3.1] - 2026-11-25
 
 ### Changed
