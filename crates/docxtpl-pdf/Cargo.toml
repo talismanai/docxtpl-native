@@ -11,7 +11,7 @@ description = "DOCX to PDF for hosts without a filesystem: fonts supplied by the
 
 [dependencies]
 # Upstream 0.22 host APIs, plus compression, layout optimizations and range links.
-docxide-pdf = { git = "https://github.com/talismanai/docxide-pdf", tag = "v0.22.0-talisman.4", default-features = false }
+docxide-pdf = { git = "https://github.com/talismanai/docxide-pdf", tag = "v0.22.0-talisman.5", default-features = false }
 ttf-parser = "0.25"
 serde_json = { version = "1", features = ["preserve_order"] }
 

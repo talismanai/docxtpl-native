@@ -103,6 +103,18 @@ pub struct PdfOptions {
     /// first and last lines get their own rectangle and the lines between
     /// share one. Only the document body is covered. None by default.
     pub range_links: Vec<RangeLink>,
+    /// The resolution pictures shown above it are resampled to (192 ppi by
+    /// default, as Word's online export). Lower writes a smaller PDF faster,
+    /// with softer pictures when zoomed in.
+    pub picture_resolution: Option<f32>,
+    /// Resample pictures by area averaging and write them as JPEG without
+    /// also trying a lossless copy: several times faster and a little softer,
+    /// for a PDF shown where it is made.
+    pub draft_pictures: bool,
+    /// Reuse the pictures earlier conversions in this process encoded with
+    /// the same settings (up to 64 MiB of encoded data): converting an edited
+    /// document again skips decoding, resampling and encoding them.
+    pub picture_cache: bool,
 }
 
 impl PdfOptions {
@@ -120,6 +132,21 @@ impl PdfOptions {
         self
     }
 
+    pub fn picture_resolution(mut self, ppi: f32) -> Self {
+        self.picture_resolution = Some(ppi);
+        self
+    }
+
+    pub fn draft_pictures(mut self, on: bool) -> Self {
+        self.draft_pictures = on;
+        self
+    }
+
+    pub fn picture_cache(mut self, on: bool) -> Self {
+        self.picture_cache = on;
+        self
+    }
+
     fn converter(&self) -> docxide_pdf::ConvertOptions {
         let mut options = HOST.with_borrow(|host| host.options.clone());
         if let Some(compression) = self.compression {
@@ -128,7 +155,10 @@ impl PdfOptions {
         if !self.range_links.is_empty() {
             options = options.range_links(self.range_links.iter().cloned());
         }
-        options
+        if let Some(ppi) = self.picture_resolution {
+            options = options.picture_resolution(ppi);
+        }
+        options.draft_pictures(self.draft_pictures).picture_cache(self.picture_cache)
     }
 }
 
