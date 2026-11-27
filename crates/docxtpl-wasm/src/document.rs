@@ -1,7 +1,10 @@
 //! Render a DOCX with a prepared context (`value::Ctx`): pictures and
 //! subdocuments become docxtpl deferred objects, filters can create pictures
-//! while a part renders, and options select python-docx numbering compatibility.
+//! while a part renders, `string` turns a picture into its run XML as
+//! `str(InlineImage)` does, and options select python-docx numbering
+//! compatibility.
 
+use std::cell::RefCell;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
@@ -49,16 +52,99 @@ impl Pictures {
         state.images.insert(index, image);
         Value::from_safe_string(deferred_token(index))
     }
+
+    fn image(&self, index: usize) -> Option<Image> {
+        self.0.lock().ok()?.images.get(&index).cloned()
+    }
 }
 
 fn deferred_image(image: &Image) -> Deferred {
     Deferred::Image { blob: image.bytes.clone(), info: None, filename: None, width: image.width, height: image.height, anchor: None, title: None, descr: None }
 }
 
+const TOKEN_START: &str = "\u{1}DTPLD";
+const TOKEN_END: char = '\u{1}';
+
 fn token_index(value: &Value) -> Option<usize> {
     if !value.is_safe() { return None; }
     let text = value.as_str()?;
-    text.strip_prefix("\u{1}DTPLD")?.strip_suffix('\u{1}')?.parse().ok()
+    text.strip_prefix(TOKEN_START)?.strip_suffix(TOKEN_END)?.parse().ok()
+}
+
+/// What turning a picture into its XML changes in the package, moved out of
+/// the core while a part's template runs (the template does not read it).
+struct PartPictures {
+    core: TplCore,
+    part: String,
+}
+
+thread_local! {
+    static PART_PICTURES: RefCell<Option<PartPictures>> = const { RefCell::new(None) };
+}
+
+/// Run a part's template with its package available to [`materialize_pictures`].
+fn with_part_pictures(core: &mut TplCore, part: &str,
+    execute: &dyn Fn(&mut TplCore) -> Result<String, String>) -> Result<String, String> {
+    let staged = TplCore {
+        package: core.package.take(),
+        next_shape_ids: std::mem::take(&mut core.next_shape_ids),
+        python_image_contract: core.python_image_contract,
+        ..TplCore::default()
+    };
+    let previous = PART_PICTURES.replace(Some(PartPictures { core: staged, part: part.to_owned() }));
+    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| execute(core)));
+    let staged = PART_PICTURES.replace(previous).expect("part pictures").core;
+    core.package = staged.package;
+    core.next_shape_ids = staged.next_shape_ids;
+    match result { Ok(result) => result, Err(panic) => std::panic::resume_unwind(panic) }
+}
+
+/// `text` with each picture placeholder replaced by the picture's run XML,
+/// the picture added to the part being rendered as `str(InlineImage)` adds
+/// it. `None` when `text` holds no picture or no part is rendering; other
+/// placeholders (subdocuments) stay for the end of the part.
+fn materialize_pictures(text: &str, pictures: &Pictures) -> Result<Option<String>, String> {
+    if !text.contains(TOKEN_START) { return Ok(None); }
+    PART_PICTURES.with_borrow_mut(|scope| {
+        let Some(scope) = scope else { return Ok(None) };
+        let mut output = String::with_capacity(text.len());
+        let mut rest = text;
+        let mut changed = false;
+        while let Some(start) = rest.find(TOKEN_START) {
+            let after = &rest[start + TOKEN_START.len()..];
+            let Some(end) = after.find(TOKEN_END) else { break };
+            output.push_str(&rest[..start]);
+            match after[..end].parse().ok().and_then(|index| pictures.image(index)) {
+                Some(image) => {
+                    scope.core.deferred = vec![deferred_image(&image)];
+                    output.push_str(&scope.core.materialize_one(&scope.part, 0)?);
+                    changed = true;
+                }
+                None => output.push_str(&rest[start..start + TOKEN_START.len() + end + TOKEN_END.len_utf8()]),
+            }
+            rest = &after[end + TOKEN_END.len_utf8()..];
+        }
+        output.push_str(rest);
+        Ok(changed.then_some(output))
+    })
+}
+
+/// `string` as Python's `str()`: a picture is its run XML, as docxtpl's
+/// `InlineImage` gives it, so a template can test or edit it
+/// (`'pic:pic' in picture|string`, `|replace`). Markup holding pictures stays
+/// markup; any other value stringifies as before.
+fn add_string_filter(env: &mut minijinja::Environment<'static>, pictures: &Pictures) {
+    let pictures = pictures.clone();
+    env.add_filter("string", move |state: &minijinja::State<'_, '_>, value: &Value| -> Result<Value, minijinja::Error> {
+        if let Some(text) = value.as_str().filter(|_| value.is_safe()) {
+            let materialized = materialize_pictures(text, &pictures)
+                .map_err(|error| minijinja::Error::new(minijinja::ErrorKind::InvalidOperation, error))?;
+            if let Some(xml) = materialized {
+                return Ok(if token_index(value).is_some() { Value::from(xml) } else { Value::from_safe_string(xml) });
+            }
+        }
+        minijinja::filters::string(state, value)
+    });
 }
 
 fn to_value(value: &Ctx, core: &mut TplCore, pictures: &Pictures, subdocument: bool) -> Value {
@@ -108,15 +194,16 @@ impl Object for Root {
 }
 
 /// Per-part scope: pictures created by filters during the part are appended
-/// to the core after it renders, in the order their placeholders were issued.
+/// to the core after it renders, in the order their placeholders were issued,
+/// and the part's package is where `string` adds the pictures it turns into XML.
 fn picture_scope(pictures: Option<Pictures>) -> HostPartScope {
-    HostPartScope(Arc::new(move |core, _part, execute| {
+    HostPartScope(Arc::new(move |core, part, execute| {
         if let Some(pictures) = &pictures {
             let mut state = pictures.0.lock().expect("pictures");
             state.base = core.deferred.len();
             state.pending.clear();
         }
-        let result = execute(core);
+        let result = if pictures.is_some() { with_part_pictures(core, part, execute) } else { execute(core) };
         if let Some(pictures) = &pictures {
             let pending = std::mem::take(&mut pictures.0.lock().expect("pictures").pending);
             for image in &pending { core.deferred.push(deferred_image(image)); }
@@ -152,6 +239,7 @@ pub fn render_document(
     let mut core = core_for(template, options);
     let pictures = Pictures::default();
     let mut env = crate::environment(&core, options.autoescape);
+    add_string_filter(&mut env, &pictures);
     configure(&mut env, &pictures);
     install(&mut core, env, options.autoescape);
     core.host_part_scope = Some(picture_scope(Some(pictures.clone())));

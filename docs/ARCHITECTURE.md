@@ -66,6 +66,10 @@ A render goes through these steps, all in Rust:
 - `document::render_document` takes a prepared context (`value::Ctx`) with
   pictures, rich text and subdocuments, and a closure that adds filters and
   globals. `DocumentOptions` selects python-docx numbering compatibility.
+  Pictures render after their part, except one passed through `string`: as
+  `str(InlineImage)` does, that filter returns the picture's run XML and adds
+  the picture to the part being rendered, so a template can test or edit the
+  markup (`'pic:pic' in picture|string`, `|replace`).
 - `abi` is the WebAssembly ABI: `docxtpl_alloc`, `docxtpl_free`,
   `docxtpl_render`, `docxtpl_render_string`, `docxtpl_output_ptr` and
   `docxtpl_output_len`. A crate that embeds the engine adds its own exports and
