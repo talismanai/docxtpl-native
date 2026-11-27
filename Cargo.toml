@@ -20,7 +20,7 @@ resolver = "3"
 # One version for the engine crates, the Python binding and pyproject.toml
 # (scripts/check_versions.sh keeps them in agreement).
 [workspace.package]
-version = "0.3.1"
+version = "0.3.2"
 edition = "2024"
 rust-version = "1.93"
 license = "LGPL-2.1-or-later"
