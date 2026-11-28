@@ -135,7 +135,7 @@ never falls back to docxtpl or to a Jinja2 render.
 
 | Front | Where it stands |
 | --- | --- |
-| Browser and Rust engine | Renders DOCX without Python. Jinja2 builtins match Jinja2 on every case of the conformance check, on the host and in the `.wasm`. Known gaps: `tuple + tuple` gives a list, `{% break %}` works without the `loopcontrols` extension, and error messages differ from Jinja2. |
+| Browser and Rust engine | Renders DOCX without Python. Jinja2 builtins match Jinja2 on every case of the conformance check, on the host and in the `.wasm`. Known gaps: `tuple + tuple` gives a list, `{% break %}` works without the `loopcontrols` extension, `RichText|length` gives 0 and `'x' in rich_text` gives false where Jinja2 raises, and error messages differ from Jinja2. |
 | Python binding | Passes the whole differential corpus with required visual comparison, apart from the registered divergences, on Linux arm64 and x86_64 with CPython 3.11 and 3.12. Every catalogued partition is bound to a probe. A few paths still run Python code; they are listed in the status document. |
 | Performance | Depends on the workload. Plain text and long documents are faster; lookups, includes, pictures and subdocuments are slower. There is no basis to promise a general speedup. |
 | Not validated | Rendering in Microsoft Word, documents outside the generated corpus, and platforms other than the four declared targets. |

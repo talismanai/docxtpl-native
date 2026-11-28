@@ -2,8 +2,10 @@
 //! `RichText` (run XML) and subdocuments, as a host prepares them before
 //! rendering.
 
+use std::fmt;
 use std::sync::Arc;
 
+use minijinja::value::{Object, ObjectRepr, Value};
 use serde_json::Value as Json;
 
 /// A context value as the template engine receives it.
@@ -105,4 +107,35 @@ pub fn rich_run(text: &str, style: &RunStyle<'_>) -> String {
         Some(id) => format!("<w:hyperlink r:id=\"{id}\" w:tgtFrame=\"_blank\">{xml}</w:hyperlink>"),
         None => xml,
     }
+}
+
+/// docxtpl `RichText` as a template sees it: an object whose `xml` is its run
+/// XML. It prints that XML, unescaped as its `__html__` gives it, and `|e`
+/// keeps it markup. It is not a string (`is string` is false; `== 'text'` is
+/// false) and it is always true, even empty, as Python objects without
+/// `__bool__` or `__len__` are.
+#[derive(Debug)]
+pub struct RichText {
+    pub xml: String,
+}
+
+impl Object for RichText {
+    fn repr(self: &Arc<Self>) -> ObjectRepr { ObjectRepr::Plain }
+
+    fn get_value(self: &Arc<Self>, key: &Value) -> Option<Value> {
+        (key.as_str()? == "xml").then(|| Value::from(self.xml.as_str()))
+    }
+
+    fn is_true(self: &Arc<Self>) -> bool { true }
+
+    fn render(self: &Arc<Self>, f: &mut fmt::Formatter<'_>) -> fmt::Result { f.write_str(&self.xml) }
+}
+
+impl RichText {
+    pub fn value(xml: &str) -> Value { Value::from_object(RichText { xml: xml.to_owned() }) }
+}
+
+/// The run XML of a [`RichText`] value.
+pub fn rich_xml(value: &Value) -> Option<&str> {
+    value.downcast_object_ref::<RichText>().map(|rich| rich.xml.as_str())
 }

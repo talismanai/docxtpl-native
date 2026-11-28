@@ -17,6 +17,8 @@ use minijinja::{AutoEscape, Environment, Error, ErrorKind, State};
 
 pub(crate) fn register(env: &mut Environment<'_>) {
     env.set_formatter(|output, state, value| {
+        // `RichText.__html__`: its XML, never escaped.
+        if let Some(xml) = crate::value::rich_xml(value) { return output.write_str(xml).map_err(Error::from); }
         let text = if value.is_safe() { value.to_string() } else { py_str(value) };
         let text = if state.auto_escape() != AutoEscape::None && !value.is_safe() { html_escape(&text) } else { text };
         output.write_str(&text).map_err(Error::from)
@@ -37,6 +39,8 @@ pub(crate) fn register(env: &mut Environment<'_>) {
             None => docxtplrs::template::py_like_method(value, method, args),
         }
     });
+    // `escaped`: Jinja2 tests for `__html__`, which safe strings and RichText have.
+    env.add_test("escaped", |value: Value| value.is_safe() || crate::value::rich_xml(&value).is_some());
     env.add_filter("attr", attr);
     env.add_filter("dictsort", dictsort);
     env.add_filter("e", escape);
@@ -364,6 +368,7 @@ fn item_pairs(value: &Value) -> Result<Vec<(Value, Value)>, Error> {
 /// `escape(value)`: markupsafe escaping that leaves safe strings unchanged.
 fn escape(value: Value) -> Value {
     if value.is_safe() { return value; }
+    if let Some(xml) = crate::value::rich_xml(&value) { return Value::from_safe_string(xml.to_owned()); }
     Value::from_safe_string(html_escape(&py_str(&value)))
 }
 
@@ -518,17 +523,25 @@ fn items(value: Value) -> Result<Value, Error> {
 }
 
 /// `join(value, d='', attribute=None)`.
-fn join(value: Value, args: Rest<Value>, kwargs: Kwargs) -> Result<Value, Error> {
-    let separator = param(&args, &kwargs, 0, "d")?.map(|v| py_str(&v)).unwrap_or_default();
+fn join(state: &State, value: Value, args: Rest<Value>, kwargs: Kwargs) -> Result<Value, Error> {
+    let separator = param(&args, &kwargs, 0, "d")?.unwrap_or_else(|| Value::from(""));
     let attribute = param(&args, &kwargs, 1, "attribute")?.map(|v| v.to_string());
     check_arity(&args, &kwargs, 2)?;
     if value.is_undefined() { return Ok(Value::from("")); }
-    let mut parts = Vec::new();
+    let mut items = Vec::new();
     for item in value.try_iter()? {
-        let item = match &attribute { Some(path) => attribute_path(&item, path)?, None => item };
-        parts.push(py_str(&item));
+        items.push(match &attribute { Some(path) => attribute_path(&item, path)?, None => item });
     }
-    Ok(Value::from(parts.join(&separator)))
+    // With autoescape, markup (anything with `__html__`) among the separator
+    // and the items makes the result markup, the other pieces escaped.
+    let markup = |v: &Value| v.is_safe() || crate::value::rich_xml(v).is_some();
+    if state.auto_escape() != AutoEscape::None && (markup(&separator) || items.iter().any(markup)) {
+        let piece = |v: &Value| if markup(v) { v.to_string() } else { html_escape(&py_str(v)) };
+        let parts: Vec<String> = items.iter().map(piece).collect();
+        return Ok(Value::from_safe_string(parts.join(&piece(&separator))));
+    }
+    let parts: Vec<String> = items.iter().map(py_str).collect();
+    Ok(Value::from(parts.join(&py_str(&separator))))
 }
 
 /// `max`/`min(value, case_sensitive=False, attribute=None)`: the first
@@ -821,7 +834,7 @@ fn urlize(value: Value, args: Rest<Value>, kwargs: Kwargs) -> Result<String, Err
     let email = fancy_regex::Regex::new(r"^\S+@\w[\w.-]*\.\w+$").expect("email pattern");
     let lead = fancy_regex::Regex::new(r"^([(<]|&lt;)+").expect("lead");
     let trail = fancy_regex::Regex::new(r"([)>.,\n]|&gt;)+$").expect("trail");
-    let escaped = if value.is_safe() { value.to_string() } else { html_escape(&py_str(&value)) };
+    let escaped = if value.is_safe() || crate::value::rich_xml(&value).is_some() { value.to_string() } else { html_escape(&py_str(&value)) };
     let mut out = String::new();
     for word in split_keep_whitespace(&escaped) {
         if word.chars().all(char::is_whitespace) { out.push_str(&word); continue; }
@@ -1081,6 +1094,20 @@ fn python_method(value: &Value, method: &str, args: &[Value]) -> Result<Option<V
     let fill = |i: usize| arg(i).and_then(|s| s.chars().next()).unwrap_or(' ');
     let count = text.chars().count();
     let result = match method {
+        // `str.strip(chars=None)`: any character of `chars`, or whitespace
+        // as `str.isspace` sees it (which adds U+001C..U+001F to Unicode's).
+        "strip" | "lstrip" | "rstrip" => {
+            let chars = arg(0);
+            let strip = |c: char| match &chars {
+                Some(chars) => chars.contains(c),
+                None => c.is_whitespace() || ('\u{1c}'..='\u{1f}').contains(&c),
+            };
+            Value::from(match method {
+                "strip" => text.trim_matches(strip),
+                "lstrip" => text.trim_start_matches(strip),
+                _ => text.trim_end_matches(strip),
+            })
+        }
         "swapcase" => Value::from(text.chars().flat_map(|c| if c.is_uppercase() { c.to_lowercase().collect::<Vec<_>>() } else { c.to_uppercase().collect() }).collect::<String>()),
         "casefold" => Value::from(text.to_lowercase()),
         "ljust" => Value::from(format!("{text}{}", fill(1).to_string().repeat(width(0).saturating_sub(count)))),

@@ -11,7 +11,7 @@ use std::sync::{Arc, Mutex};
 use docxtplrs::template::{Deferred, EnvCache, HostPartScope, TplCore, deferred_token};
 use minijinja::value::{Enumerator, Object, ObjectRepr, Value};
 
-use crate::value::{Ctx, Image};
+use crate::value::{Ctx, Image, RichText};
 
 /// How a document renders.
 #[derive(Debug, Clone, Default)]
@@ -153,7 +153,7 @@ fn to_value(value: &Ctx, core: &mut TplCore, pictures: &Pictures, subdocument: b
         Ctx::Bool(b) => Value::from(*b),
         Ctx::Number(n) => if let Some(i) = n.as_i64() { Value::from(i) } else if let Some(u) = n.as_u64() { Value::from(u) } else { Value::from(n.as_f64().unwrap_or(0.0)) },
         Ctx::Str(s) => Value::from(s.as_str()),
-        Ctx::Rich(xml) => Value::from_safe_string(xml.clone()),
+        Ctx::Rich(xml) => RichText::value(xml),
         // docxtpl fails when a subdocument renders a picture of the main template.
         Ctx::Image(_) if subdocument => Value::UNDEFINED,
         Ctx::Image(image) => {
