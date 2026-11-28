@@ -131,6 +131,17 @@ with both engines and asserts both results.
 | Ill-formed text in the body (a stray `&` or `<`, entities after the first error) | libxml2's recovery drops it | Kept | Losing the user's content is worse than differing from the reference | `tests/test_deliberate_differences.py`; corpus case `protocol/unescaped_body_recovery` |
 | `w:nsid` of a copied list | Drawn from Python's `random` in docxcompose | Derived from the list definition | The same input yields the same bytes | `tests/test_native_deferred_marker.py`; corpus case `protocol/composer_add_numberings` |
 
+### RichText where Jinja2 raises
+
+In the browser engine, `RichText|length` gives 0 and `'x' in rich_text`
+gives false; Jinja2 raises `TypeError` for both, as a docxtpl `RichText` has
+no length and no containment. They follow the engine's existing rules for any
+value that cannot be iterated and for any plain object. No render that
+succeeds under Jinja2 depends on either. Everything else a template does with
+a `RichText` matches Jinja2 with docxtpl's object, with and without autoescape;
+`cargo test -p docxtpl-wasm --release --locked richtext` pins both the
+matching cases and these two.
+
 ### Namespace binding limit
 
 The namespace-aware XML readers keep quick-xml 0.42's default limit of 128

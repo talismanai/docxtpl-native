@@ -10,6 +10,25 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+### Fixed
+
+- `docxtpl-wasm`: rich text in a prepared context (`Ctx::Rich`) reaches the
+  template as a `RichText` object, as docxtpl's does, instead of a markup
+  string. `is string` is now false, `xml` holds the run XML, an empty one is
+  true, and `|e` keeps it markup. Templates that read a value's text through
+  `value.xml` when it is not a string now take that branch and compare equal
+  where they did not. Without autoescape, printing it, `{{r }}`, `~`,
+  `|string`, `|safe` and the string filters give the same output as before;
+  with autoescape, `~`, `|string` and the string filters now give plain text,
+  escaped on output, as Jinja2 does.
+- `docxtpl-wasm`: with autoescape, `join` returns markup when the separator or
+  an item is markup, escaping the other pieces, as Jinja2 does. It used to
+  return a plain string, escaped again on output.
+- `docxtpl-wasm`: the `strip`, `lstrip` and `rstrip` string methods take
+  Python's `chars` argument (`'a, '.rstrip(' ,')` is `'a'`) and, without it,
+  also strip U+001C to U+001F as `str.isspace` does. The argument used to be
+  ignored and only whitespace was stripped.
+
 ## [0.3.4] - 2026-11-28
 
 ### Added

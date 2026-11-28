@@ -203,4 +203,163 @@ mod tests {
         assert!(value.py_eq(&serde_json::json!({"a": [1, 1]})));
         assert!(!value.py_eq(&serde_json::json!({"a": [1]})));
     }
+    /// Jinja2 3.1 with docxtpl's `RichText('Keep')` as `r` and `RichText()` as
+    /// `e`: (autoescape, template, Some(output) or None for an error).
+    const RICHTEXT_REFERENCE: &[(bool, &str, Option<&str>)] = &[
+        (false, r#"{{ r is string }}"#, Some(r#"False"#)),
+        (false, r#"{{ r is mapping }}"#, Some(r#"False"#)),
+        (false, r#"{{ r is sequence }}"#, Some(r#"False"#)),
+        (false, r#"{{ r is iterable }}"#, Some(r#"False"#)),
+        (false, r#"{{ r is escaped }}"#, Some(r#"True"#)),
+        (false, r#"{{ r is defined }}"#, Some(r#"True"#)),
+        (false, r#"{{ r is none }}"#, Some(r#"False"#)),
+        (false, r#"{{ r is number }}"#, Some(r#"False"#)),
+        (false, r#"{{ r.xml is defined }}"#, Some(r#"True"#)),
+        (false, r#"{{ r.xml is string }}"#, Some(r#"True"#)),
+        (false, r#"{{ r.xml }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r ~ '|' }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>|"#)),
+        (false, r#"{{ r == 'Keep' }}"#, Some(r#"False"#)),
+        (false, r#"{{ r != 'Keep' }}"#, Some(r#"True"#)),
+        (false, r#"{% if r %}T{% else %}F{% endif %}"#, Some(r#"T"#)),
+        (false, r#"{% if e %}T{% else %}F{% endif %}"#, Some(r#"T"#)),
+        (false, r#"[{{ e }}]"#, Some(r#"[]"#)),
+        (false, r#"{{ e is string }}"#, Some(r#"False"#)),
+        (false, r#"{{ r|e }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|escape }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|safe }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|string }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|forceescape }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (false, r#"{{ r|trim }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|upper }}"#, Some(r#"<W:R><W:T XML:SPACE="PRESERVE">KEEP</W:T></W:R>"#)),
+        (false, r#"{{ r|replace('Keep', 'Drop') }}"#, Some(r#"<w:r><w:t xml:space="preserve">Drop</w:t></w:r>"#)),
+        (false, r#"{{ r|striptags }}"#, Some(r#"Keep"#)),
+        (false, r#"{{ 'Keep' in r|e }}"#, Some(r#"True"#)),
+        (false, r#"{{ 'Keep' in r|string }}"#, Some(r#"True"#)),
+        (false, r#"{{ [r, r]|join(',') }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>,<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r|int }}"#, Some(r#"0"#)),
+        (false, r#"{{ r|float }}"#, Some(r#"0.0"#)),
+        (false, r#"{{ r|default('x') }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (false, r#"{{ r.missing is defined }}"#, Some(r#"False"#)),
+        (false, r#"{{ '%s!'|format(r) }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>!"#)),
+        (false, r#"{{ '%s!' % r }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>!"#)),
+        (false, r#"{{ r + 'x' }}"#, None),
+        (false, r#"{{ r|list }}"#, None),
+        (false, r#"{{ r|tojson }}"#, None),
+        (false, r#"{{ r|first }}"#, None),
+        (true, r#"{{ r is string }}"#, Some(r#"False"#)),
+        (true, r#"{{ r is mapping }}"#, Some(r#"False"#)),
+        (true, r#"{{ r is sequence }}"#, Some(r#"False"#)),
+        (true, r#"{{ r is iterable }}"#, Some(r#"False"#)),
+        (true, r#"{{ r is escaped }}"#, Some(r#"True"#)),
+        (true, r#"{{ r is defined }}"#, Some(r#"True"#)),
+        (true, r#"{{ r is none }}"#, Some(r#"False"#)),
+        (true, r#"{{ r is number }}"#, Some(r#"False"#)),
+        (true, r#"{{ r.xml is defined }}"#, Some(r#"True"#)),
+        (true, r#"{{ r.xml is string }}"#, Some(r#"True"#)),
+        (true, r#"{{ r.xml }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (true, r#"{{ r }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r ~ '|' }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;|"#)),
+        (true, r#"{{ r == 'Keep' }}"#, Some(r#"False"#)),
+        (true, r#"{{ r != 'Keep' }}"#, Some(r#"True"#)),
+        (true, r#"{% if r %}T{% else %}F{% endif %}"#, Some(r#"T"#)),
+        (true, r#"{% if e %}T{% else %}F{% endif %}"#, Some(r#"T"#)),
+        (true, r#"[{{ e }}]"#, Some(r#"[]"#)),
+        (true, r#"{{ e is string }}"#, Some(r#"False"#)),
+        (true, r#"{{ r|e }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r|escape }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r|safe }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r|string }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (true, r#"{{ r|forceescape }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (true, r#"{{ r|trim }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (true, r#"{{ r|upper }}"#, Some(r#"&lt;W:R&gt;&lt;W:T XML:SPACE=&#34;PRESERVE&#34;&gt;KEEP&lt;/W:T&gt;&lt;/W:R&gt;"#)),
+        (true, r#"{{ r|replace('Keep', 'Drop') }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Drop&lt;/w:t&gt;&lt;/w:r&gt;"#)),
+        (true, r#"{{ r|striptags }}"#, Some(r#"Keep"#)),
+        (true, r#"{{ 'Keep' in r|e }}"#, Some(r#"True"#)),
+        (true, r#"{{ 'Keep' in r|string }}"#, Some(r#"True"#)),
+        (true, r#"{{ [r, r]|join(',') }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>,<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r|int }}"#, Some(r#"0"#)),
+        (true, r#"{{ r|float }}"#, Some(r#"0.0"#)),
+        (true, r#"{{ r|default('x') }}"#, Some(r#"<w:r><w:t xml:space="preserve">Keep</w:t></w:r>"#)),
+        (true, r#"{{ r.missing is defined }}"#, Some(r#"False"#)),
+        (true, r#"{{ '%s!'|format(r) }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;!"#)),
+        (true, r#"{{ '%s!' % r }}"#, Some(r#"&lt;w:r&gt;&lt;w:t xml:space=&#34;preserve&#34;&gt;Keep&lt;/w:t&gt;&lt;/w:r&gt;!"#)),
+        (true, r#"{{ r + 'x' }}"#, None),
+        (true, r#"{{ r|list }}"#, None),
+        (true, r#"{{ r|tojson }}"#, None),
+        (true, r#"{{ r|first }}"#, None),
+    ];
+
+    /// `RichText('Keep')` and `RichText()` rendered with the document
+    /// environment.
+    fn render_rich(source: &str, autoescape: bool) -> Result<String, minijinja::Error> {
+        let env = super::environment(&docxtplrs::template::TplCore::default(), autoescape);
+        let context = minijinja::context! {
+            r => crate::value::RichText::value(&rich_run("Keep", &RunStyle::default())),
+            e => crate::value::RichText::value(""),
+        };
+        env.render_str(source, context)
+    }
+
+    /// A RichText behaves as docxtpl's Python object does under Jinja2: it is
+    /// not a string, has its run XML as `xml`, prints that XML unescaped and
+    /// is true even when empty. Errors are compared by occurrence only.
+    #[test]
+    fn richtext_behaves_like_python() {
+        let mismatches: Vec<String> = RICHTEXT_REFERENCE.iter().filter_map(|&(autoescape, source, expected)| {
+            let actual = render_rich(source, autoescape);
+            let same = match expected {
+                Some(expected) => actual.as_deref().ok() == Some(expected),
+                None => actual.is_err(),
+            };
+            (!same).then(|| format!("autoescape={autoescape} {source}: expected {expected:?}, got {actual:?}"))
+        }).collect();
+        assert!(mismatches.is_empty(), "{}", mismatches.join("\n"));
+    }
+
+    /// A prepared RichText reaches the template as RichText, not as a string.
+    #[test]
+    fn documents_receive_richtext_objects() {
+        let template = docxtplrs::package::minimal_docx(
+            "<w:p><w:r><w:t>[{{ r is string }}][{{ r.xml is defined }}][{% if e %}T{% endif %}]</w:t></w:r></w:p><w:p>{{r r }}</w:p>");
+        let context = Ctx::Map(vec![
+            ("r".into(), Ctx::Rich(rich_run("Keep", &RunStyle::default()))),
+            ("e".into(), Ctx::Rich(String::new())),
+        ]);
+        let output = render_document(&template, &context, &DocumentOptions::default(), &|_, _| {}).unwrap();
+        let body = docxtplrs::package::Package::from_bytes(&output).unwrap().get_string("word/document.xml").unwrap();
+        assert!(body.contains("[False][True][T]"), "{body}");
+        assert!(body.contains("<w:t xml:space=\"preserve\">Keep</w:t>"), "{body}");
+    }
+
+    /// Where Jinja2 raises TypeError, `|length` gives 0 (as for any value
+    /// that cannot be iterated) and `in` gives false (as for any plain
+    /// object). No render that succeeds under Jinja2 depends on either.
+    #[test]
+    fn richtext_differences_where_jinja2_raises() {
+        for autoescape in [false, true] {
+            assert_eq!(render_rich("{{ r|length }}", autoescape).unwrap(), "0");
+            assert_eq!(render_rich("{{ 'Keep' in r }}", autoescape).unwrap(), "False");
+        }
+    }
+
+    /// Templates read a value's text through `xml` when it is not a string;
+    /// with RichText as a string the macro returned the run XML and the
+    /// comparison was false.
+    #[test]
+    fn richtext_text_reads_through_xml() {
+        let source = concat!(
+            "{% macro plain(v) %}{% if v is string %}{{ v }}",
+            "{% elif v is not mapping and v.xml is defined and v.xml is string %}",
+            "{% set rt = namespace(text='') %}",
+            "{% for piece in v.xml.split('<w:t xml:space=\"preserve\">')[1:] %}",
+            "{% set rt.text = rt.text ~ piece.split('</w:t>')[0] %}{% endfor %}{{ rt.text }}",
+            "{% endif %}{% endmacro %}",
+            "{% set d = plain(r) if r is defined and r is not string and r is not mapping and r.xml is defined and r.xml is string else r %}",
+            "[{{ plain(r) }}][{{ d == 'Keep' }}][{{ d is string }}]",
+        );
+        for autoescape in [false, true] {
+            assert_eq!(render_rich(source, autoescape).unwrap(), "[Keep][True][True]");
+        }
+    }
 }

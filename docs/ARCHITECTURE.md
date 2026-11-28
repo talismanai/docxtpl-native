@@ -66,6 +66,9 @@ A render goes through these steps, all in Rust:
 - `document::render_document` takes a prepared context (`value::Ctx`) with
   pictures, rich text and subdocuments, and a closure that adds filters and
   globals. `DocumentOptions` selects python-docx numbering compatibility.
+  Rich text reaches the template as a `RichText` object, as docxtpl's does:
+  it prints its run XML unescaped, `xml` holds that XML, it is not a string
+  and it is always true.
   Pictures render after their part, except one passed through `string`: as
   `str(InlineImage)` does, that filter returns the picture's run XML and adds
   the picture to the part being rendered, so a template can test or edit the

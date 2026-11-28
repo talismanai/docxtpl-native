@@ -133,7 +133,9 @@ GLOBALS = [
 
 METHODS = [
     "{{ s.upper() }}", "{{ s.lower() }}", "{{ s.title() }}", "{{ lower_s.capitalize() }}", "{{ pad.strip() }}|",
-    "{{ pad.lstrip() }}|", "{{ pad.rstrip() }}|", "{{ csv.split(',') }}", "{{ s.split() }}", "{{ csv.split(',', 1) }}",
+    "{{ pad.lstrip() }}|", "{{ pad.rstrip() }}|", "{{ csv.strip(',a') }}|", "{{ (csv ~ ', ').rstrip(' ,') }}|",
+    "{{ s.lstrip('HeW') }}|", "{{ s.strip('dlroW H') }}|", "{{ pad.strip(None) }}|", "{{ ('\x1c x \x1f').strip() }}|",
+    "{{ 'Kind regards,'.lower().replace('.', '').rstrip(' ,') }}|", "{{ 'P. S.'.strip(' ,.') }}|", "{{ csv.split(',') }}", "{{ s.split() }}", "{{ csv.split(',', 1) }}",
     "{{ s.replace('l', 'L') }}", "{{ s.startswith('He') }}", "{{ s.endswith('x') }}", "{{ s.find('o') }}", "{{ s.count('o') }}",
     "{{ '-'.join(words) }}", "{{ 'x'.center(5, '-') }}", "{{ int_str.isdigit() }}", "{{ s.isalpha() }}", "{{ int_str.zfill(5) }}",
     "{{ '{} and {}'.format('a', 'b') }}", "{{ '{x}!'.format(x=1) }}", "{{ s.swapcase() }}", "{{ multi.splitlines() }}",
