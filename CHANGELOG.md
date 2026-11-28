@@ -10,6 +10,8 @@ write it for someone deciding whether to upgrade.
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-11-28
+
 ### Fixed
 
 - `docxtpl-wasm`: rich text in a prepared context (`Ctx::Rich`) reaches the
